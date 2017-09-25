@@ -8,7 +8,7 @@ function FunctionalityControl() {
   this.get = function(req, res, next) {
     Functionality.findAll({
       include: [{model: Functionality}],
-      where: {FunctionalityFather_ID: null, System_ID: 4},
+      where: {FunctionalityFather_ID: null, System_ID: process.env.SYSTEM_ID},
       order: sequelize.col('Priority')
     })
     .then(function(functionalities) {
@@ -31,7 +31,7 @@ function FunctionalityControl() {
         ]},
         {model: ProfileFunctionality, where: {Profile_ID: req.session.profileID}}
       ],
-      where: {FunctionalityFather_ID: null, System_ID: 4},
+      where: {FunctionalityFather_ID: null, System_ID: process.env.SYSTEM_ID},
       order: sequelize.col('Priority')
     })
     .then(function(functionalities) {

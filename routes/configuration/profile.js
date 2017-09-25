@@ -37,7 +37,7 @@ router.get('/', ProfileSystemAccessControl.get, FunctionalityControl.get, functi
 })
 
 router.get('/:id', ProfileSystemAccessControl.getByIDWithFunctionalities, function(req, res, next) {
-  Functionality.findAll({where: {System_ID: 4}, order: sequelize.col('Priority')})
+  Functionality.findAll({where: {System_ID: process.env.SYSTEM_ID}, order: sequelize.col('Priority')})
   .then(function(functionalities) {
     res.json({profile: req.profile, functionalities})
   }).catch(function(err) {

@@ -47,8 +47,8 @@ router.post('/login', function(req, res, next) {
                   'INNER JOIN perfis_acesso_sistemas pas ON uca.id_perfil_sistema = pas.idperfilsistema ' +
                   'INNER JOIN unidades ON u.id_site = unidades.idunidade ' +
                   'INNER JOIN departamentos ON u.id_departamento = departamentos.iddepartamento ' +
-                'WHERE s.idsistema = 4 AND matricula = $matricula', {
-    bind: {constante: 'qtd_dia_alter_senha', matricula: parseInt(req.body.enrollment)},
+                'WHERE s.idsistema = $System_ID AND matricula = $matricula', {
+    bind: {constante: 'qtd_dia_alter_senha', matricula: parseInt(req.body.enrollment), System_ID: process.env.SYSTEM_ID},
     type: sequelize.QueryTypes.SELECT
   }).then(function(user) {
     if(user.length === 0) {
@@ -82,7 +82,7 @@ router.post('/login', function(req, res, next) {
             ]},
             {model: ProfileFunctionality, where: {Profile_ID: user[0].id_perfil_sistema}}
           ],
-          where: {FunctionalityFather_ID: null, System_ID: 4},
+          where: {FunctionalityFather_ID: null, System_ID: process.env.SYSTEM_ID},
           order: sequelize.col('Priority')
         })
         .then(function(functionalities) {
