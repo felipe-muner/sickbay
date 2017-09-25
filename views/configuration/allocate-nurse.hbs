@@ -1,0 +1,83 @@
+{{#if flashMsg}}
+  <div class="row">
+    <div class="alert {{flashMsg.styleMsg}} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>{{i18n 'nurse'}}</strong> {{flashMsg.txtMsg}}
+    </div>
+  </div>
+{{/if}}
+
+<div class="row margin-b-10">
+  <div class="col-xs-12 panelPadraoDefault">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center font-bold">{{i18n 'allocateNurse'}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table id="tableNurses" class="dataTable table table-bordered table-hover table-condensed nowrap" cellspacing="0" width="100%">
+            <thead>
+              <tr style="background-color:#337AB7; color:#FFF;">
+                <th>{{i18n 'enrollment'}}</th>
+                <th>{{i18n 'nurse'}}</th>
+                <th>{{i18n 'sickBay'}}</th>
+                <th class="text-center">{{i18n 'edit'}}</th>
+              </tr>
+            </thead>
+            <tbody style="color:#337AB7;">
+              {{#each nurses}}
+                <tr>
+                  <td>{{matricula}}</td>
+                  <td>{{toTitleCase nomeusuario}}</td>
+                  <td>{{SickBayNurseArea.SickBayArea.Name}}</td>
+                  <td class="text-center">
+                    <a href="#" class="not-load" onclick="allocateNurseModal({{matricula}}, '{{toTitleCase nomeusuario}}', {{SickBayNurseArea.SickBayArea.SickBayAreaID}})">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- allocateNurseModal -->
+<div class="modal fade" id="allocateNurseModal" tabindex="-1" role="dialog" aria-labelledby="allocateNurseModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="allocateNurseModalLabel">{{i18n 'allocateNurse'}} - <span id="nameNurse"></span></h4>
+      </div>
+      <div class="modal-body">
+        <form id="formAllocateNurse" action="/configuration/allocate-nurse" method="post">
+          <input type="hidden" id="matriculaNurse" name="matriculaNurse">
+          <div class="row">
+            <div class="col-xs-10">
+              <select class="form-control" id="sickBayArea" name="sickBayArea" required>
+                {{#each sickBayAreas}}
+                  <option value="{{SickBayAreaID}}">{{Name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="col-xs-2">
+              <button type="submit" class="btn btn-success">{{i18n 'save'}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#section 'script'}}
+  <script src="/javascripts/configuration/allocate-nurse.js"></script>
+{{/section}}

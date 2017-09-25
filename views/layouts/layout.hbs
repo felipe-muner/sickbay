@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>British School | Sick Bay</title>
+    <link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/summernote/dist/summernote.css" rel="stylesheet">
+    <link href="/vendor/data-tables/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/select2/dist/css/select2.css" rel="stylesheet">
+    <link href="/vendor/sweetalert/sweetalert2.css" rel="stylesheet">
+    <link href="/vendor/build/css/custom.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/timer.css" rel="stylesheet">
+    {{{_sections.head}}}
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/" class="site_title">
+                <img src="/images/british_logo.png" alt="..." class="img-circle profile_img" style="width:50px;height:50px;margin-bottom:5px;">
+                <span>British School</span>
+              </a>
+            </div>
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3 style="margin-top:65px">{{{i18n 'systemName'}}}</h3>
+                <ul class="nav side-menu">
+                  {{#each sess.functionalityProfile}}
+                    {{#if hasFunctionalities}}
+                      <li>
+                        <a class="not-load"><i class="fa {{Icon}}"></i> {{{i18n Name}}} <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                          {{#each Functionalities}}
+                            <li><a href="{{Action}}">{{{i18n Name}}}</a></li>
+                          {{/each}}
+                        </ul>
+                      </li>
+                    {{else}}
+                      <li><a href="{{Action}}"><i class="fa {{Icon}}"></i> {{{i18n Name}}} </a></li>
+                    {{/if}}
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle" class="not-load"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <a class="user-profile dropdown-toggle not-load" data-toggle="dropdown" aria-expanded="false">
+                    {{{toTitleCase sess.nameUser}}}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="/change-password">{{{i18n 'changePass'}}}</a></li>
+                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i>{{{i18n 'logout'}}}</a></li>
+                  </ul>
+                </li>
+                <li><a href="/pt-BR?redirectUrl={{redirectUrl}}"><img src="/images/brazil.png" style="height:18px;"></a></li>
+                <li><a href="/en?redirectUrl={{redirectUrl}}"><img src="/images/british.png" style="height:16px;"></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="clearfix"></div>
+          {{{body}}}
+          <div class="clearfix"></div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            British School - ICT ADM
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <div id="relogio" style="display:none;">
+      <div style="color: #a0cadb;position:fixed;top: 40%;left: 45%;" class="la-timer la-3x">
+          <div></div>
+      </div>
+    </div>
+
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/summernote/dist/summernote.js"></script>
+    <script src="/vendor/data-tables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/data-tables/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendor/select2/dist/js/select2.js"></script>
+    <script src="/vendor/sweetalert/sweetalert2.js"></script>
+    <script src="/vendor/build/js/custom.js"></script>
+    <script src="/javascripts/init.js"></script>
+
+    <script type="text/javascript">
+      $('a:not(.not-load)').click(function() {
+        $('#relogio').addClass('in modal-backdrop');
+        $('#relogio').css('display','block');
+      })
+
+      $( document ).ajaxStart(function() {
+          $('#relogio').addClass('in modal-backdrop');
+          $('#relogio').css('display','block');
+      })
+
+      $(document).ajaxComplete(function() {
+          $('#relogio').removeClass('in modal-backdrop');
+          $('#relogio').css('display','none');
+      })
+    </script>
+
+    {{{_sections.script}}}
+
+  </body>
+</html>

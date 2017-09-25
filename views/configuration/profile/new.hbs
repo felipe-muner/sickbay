@@ -1,0 +1,50 @@
+<div class="row margin-b-10">
+  <div class="col-xs-12 panelPadraoDefault">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center font-bold">{{{i18n 'newProfile'}}}</h3>
+      </div>
+      <div class="panel-body">
+        <form id="formNewProfile" action="/configuration/profile/save" method="post">
+          <div class="row">
+            <div class="col-xs-12">
+              <span class="font-bold">{{{i18n 'nameProfile'}}}</span>
+              <input class="form-control" id="nameProfile" name="nameProfile" type="text" required>
+            </div>
+          </div>
+          <div class="row" style="margin-top:15px">
+            <div class="col-xs-12">
+              <span class="font-bold">{{{i18n 'allUnits'}}}:</span>
+              <input type="radio" name="allUnits" id="allUnits" value="1" style="margin-left:5px;"> {{{i18n 'yes'}}}
+              <input type="radio" name="allUnits" id="allUnits" value="0" style="margin-left:5px;" checked> {{{i18n 'no'}}}
+            </div>
+          </div>
+          <div class="row" style="margin-top:15px">
+            <div class="col-xs-12">
+              <span class="font-bold">{{{i18n 'functionalities'}}}</span>
+              {{#each functionalities}}
+                <div class="col-xs-12 father">
+                  <input type="checkbox" id="functionalityID" name="functionalityID" value="{{FunctionalityID}}" onchange="checkFunctionalities(this)"> <span style="color:#2E5175">{{{i18n Name}}}</span>
+                  {{#each Functionalities}}
+                    <div class="col-xs-12 son">
+                      <input type="checkbox" id="functionalityID" name="functionalityID" value="{{FunctionalityID}}" onchange="checkFunctionality({{../FunctionalityID}})"> {{{i18n Name}}}
+                    </div>
+                  {{/each}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+          <div class="row text-center" style="margin-top:15px">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-success">{{{i18n 'create'}}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#section 'script'}}
+  <script src="/javascripts/configuration/profile/new.js"></script>
+{{/section}}

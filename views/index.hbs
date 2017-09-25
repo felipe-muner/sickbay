@@ -1,0 +1,18 @@
+{{#if flashMsg}}
+  <div class="row">
+    <div class="alert {{flashMsg.styleMsg}} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>{{flashMsg.strongMsg}}</strong> {{flashMsg.txtMsg}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if sess.isNurse}}
+  {{#if sess.sickBayAreaName}}
+    <h3>{{i18n 'messages.allottedSickBay'}} <strong>{{sess.sickBayAreaName}}</strong></h3>
+  {{else}}
+    <h3>{{i18n 'messages.notAllottedSickBay'}}</h3>
+  {{/if}}
+{{/if}}
