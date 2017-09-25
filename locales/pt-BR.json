@@ -56,5 +56,8 @@
 	"allUnits": "Todas as Unidades",
 	"nurse": "Enfermeira",
 	"sickBay": "Enfermaria",
-	"newAttendance": "Novo Atendimento"
+	"attendance": "Atendimento",
+	"new": "Novo",
+	"list": "Procurar",
+	"medicationControlled": "Medicamento Control."
 }

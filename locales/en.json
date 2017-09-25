@@ -56,5 +56,8 @@
 	"allUnits": "All Units",
 	"nurse": "Nurse",
 	"sickBay": "Sick Bay",
-	"newAttendance": "New Attendance"
+	"attendance": "Attendance",
+	"new": "New",
+	"list": "Find",
+	"medicationControlled": "Medication Controlled"
 }
