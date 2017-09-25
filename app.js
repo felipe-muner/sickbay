@@ -18,6 +18,7 @@ Association.init()
 const index = require(process.env.PWD + '/routes/index')
 const allocateNurse = require(process.env.PWD + '/routes/configuration/allocate-nurse')
 const profile = require(process.env.PWD + '/routes/configuration/profile')
+const medicationControlled = require(process.env.PWD + '/routes/medication-controlled')
 
 const app = express()
 
@@ -53,6 +54,7 @@ app.use(expressSession({
 app.use('/', index)
 app.use('/configuration/allocate-nurse', allocateNurse)
 app.use('/configuration/profile', profile)
+app.use('/medication-controlled', medicationControlled)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
