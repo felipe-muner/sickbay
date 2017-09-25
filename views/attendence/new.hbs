@@ -1,0 +1,99 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">{{{i18n 'new'}}}</div>
+  <div class="panel-body">
+    <form>
+      <div class="row">
+        <div class="col-sm-4">
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="student" checked>{{{i18n 'student'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="employer">{{{i18n 'employer'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="other">{{{i18n 'other'}}}</label>
+        </div>
+        <div class="col-sm-8 text-right">
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="1">{{{i18n 'incidenteInterno'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="2">{{{i18n 'incidenteExterno'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="3">{{{i18n 'accident'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="4">{{{i18n 'visitaEnfermaria'}}}</label>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-8">
+          <div class="groupPatient groupStudent">
+            <select class="form-control" name="Patient" id="Student" style="width:100%;">
+              <option value="">{{{i18n 'student'}}}:</option>
+              {{#each SchoolStudent}}
+                <option value="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="groupPatient groupEmployer" style="display:none;">
+            <select class="form-control" name="Patient" id="Employer" style="width:100%;">
+              <option value="">{{{i18n 'employer'}}}:</option>
+              {{#each Employer}}
+                <option value="{{matricula}}" data-nome="{{nomeusuario}}">{{nomeusuario}} - {{matricula}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="groupPatient groupOther" style="display:none;">
+            <input type="text" name="Patient" value="" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <input type="datetime-local" name="HourAttendance" value="" class="form-control">
+        </div>
+      </div>
+      <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <select name="Remedy" id="Remedy" style="width:100%;" multiple>
+            <option value="a">a</option>
+            <option value="b">b</option>
+            <option value="c">c</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <textarea name="Reason" class="form-control" placeholder="Reason"></textarea>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <textarea name="Procedure" class="form-control" placeholder="Procedure"></textarea>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <textarea name="AmountRemedy" class="form-control" placeholder="Amount Remedy"></textarea>
+        </div>
+      </div>
+      <div class="text-center row" style="margin-top:5px;">
+        <input type="submit" name="" value="Save">
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $("#Student").select2()
+    $("#Employer").select2()
+    $("#Remedy").select2()
+
+    $('input[name=typePatient]').change(function(e){
+      $('.groupPatient').css('display','none')
+      if('student' === this.value){
+        $('.groupStudent').css('display','block')
+      }else if('employer' === this.value){
+        $('.groupEmployer').css('display','block')
+      }else if('other' === this.value){
+        $('.groupOther').css('display','block')
+      }
+    })
+
+
+
+  </script>
+{{/section}}
