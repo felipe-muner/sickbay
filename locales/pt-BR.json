@@ -59,5 +59,13 @@
 	"attendance": "Atendimento",
 	"new": "Novo",
 	"list": "Procurar",
-	"medicationControlled": "Medicamento Control."
+	"medicationControlled": "Medicamento Control.",
+	"student": "Estudante",
+	"employer": "Funcionário",
+	"other": "Outro",
+	"incidenteInterno": "incidenteInterno",
+	"incidenteExterno": "incidenteExterno",
+	"acidente": "acidente",
+	"visitaEnfermaria": "visitaEnfermaria",
+	"accident": "accident"
 }

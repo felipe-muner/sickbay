@@ -24,6 +24,15 @@ function UserControl() {
     })
     .catch(err => { next(err) })
   }
+
+  this.getEmployer = function(req, res, next) {
+    User.findAll().then(Employer => {
+      req.Employer = Employer
+      next()
+    }).catch(err => {
+      next(err)
+    })
+  }
 }
 
 module.exports = new UserControl()

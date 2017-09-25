@@ -59,5 +59,12 @@
 	"attendance": "Attendance",
 	"new": "New",
 	"list": "Find",
-	"medicationControlled": "Medication Controlled"
+	"medicationControlled": "Medication Controlled",
+	"student": "Student",
+	"employer": "Employer",
+	"other": "Other",
+	"incidenteInterno": "incidenteInterno",
+	"incidenteExterno": "incidenteExterno",
+	"acidente": "acidente",
+	"visitaEnfermaria": "visitaEnfermaria"
 }

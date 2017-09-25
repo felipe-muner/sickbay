@@ -42,10 +42,6 @@ div.meuMenu .label{
   margin-bottom: 0px;
 }
 
-textarea.form-control {
-  height: 100px;
-}
-
 .panel-default>.panel-heading {
   color: #FFF;
   background-color: #2A3F54;
@@ -204,4 +200,10 @@ textarea.form-control {
 .panel-categories .panel-heading[data-expanded=true] {
   background-color: #079AD9;
   color: #FFF;
+}
+
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #2A3F54;
+    border-color: #2A3F54;
 }
