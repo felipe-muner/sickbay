@@ -4,11 +4,11 @@ const ProfileFunctionality = require(process.env.PWD + '/models/ProfileFunctiona
 
 function AutorizationControl() {
   this.verify = function(req, res, next) {
-    Functionality.findAll({where: {System_ID: 4}, order: sequelize.col('Priority')})
+    Functionality.findAll({where: {System_ID: process.env.SYSTEM_ID}, order: sequelize.col('Priority')})
     .then(function(allFunctionalities) {
       Functionality.findAll({
         include: [{model: ProfileFunctionality, where: {Profile_ID: req.session.profileID}}],
-        where: {System_ID: 4},
+        where: {System_ID: process.env.SYSTEM_ID},
         order: sequelize.col('Priority')
       })
       .then(function(functionalities) {
