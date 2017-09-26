@@ -1,9 +1,9 @@
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
-const SickbayRemedy = require(process.env.PWD + '/models/SickbayRemedy')
+const SickBayRemedy = require(process.env.PWD + '/models/SickBayRemedy')
 
-function SickbayRemedyControl() {
+function SickBayRemedyControl() {
   this.get = function(req, res, next) {
-    SickbayRemedy.findAll().then(Remedy => {
+    SickBayRemedy.findAll().then(Remedy => {
       req.Remedy = Remedy
       next()
     }).catch(err => {
@@ -12,4 +12,4 @@ function SickbayRemedyControl() {
   }
 }
 
-module.exports = new SickbayRemedyControl()
+module.exports = new SickBayRemedyControl()

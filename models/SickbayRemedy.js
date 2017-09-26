@@ -1,15 +1,15 @@
 const Sequelize = require('sequelize')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 
-const SickbayRemedy = sequelize.define('SickbayRemedy', {
-  idmedicamento: {
+const SickBayRemedy = sequelize.define('SickBayRemedy', {
+  SickBayRemedyID: {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  nomemedicamento: Sequelize.String
+  Name: Sequelize.STRING
 }, {
   timestamps: false,
   freezeTableName: true
 })
 
-module.exports = Remedy
+module.exports = SickBayRemedy
