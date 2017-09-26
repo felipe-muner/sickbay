@@ -60,14 +60,14 @@
           <table class="table styleTableICT">
             <thead>
               <tr>
-                <th style="width:50%;">{{i18n 'medication'}}</th>
-                <th>{{i18n 'unitofmeasure'}}</th>
-                <th>{{i18n 'amount'}}</th>
-                <th></th>
+                <th style="width:60%;">{{i18n 'medication'}}</th>
+                <th style="width:18%;">{{i18n 'unitofmeasure'}}</th>
+                <th style="width:17%;">{{i18n 'amount'}}</th>
+                <th style="width:5%;"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="medicationLine">
                 <td>
                   <select class="standartSelect2 form-control" name="Remedy">
                     <option value="">{{i18n 'medication'}}</option>
@@ -159,7 +159,7 @@
 
     $('#newAttendance').submit(function(e){
       e.preventDefault()
-      console.log($(this).serializeArray())
+      // console.log($(this).serializeArray())
       validateType()
       validatePatient()
       validateMedication()
@@ -167,7 +167,6 @@
     })
 
     function validateType(){
-      debugger
       if( 0 === $('input[name=SickBayAttendanceType_ID]:checked').size() ){
         swal({
           title: "",
@@ -207,7 +206,9 @@
     }
 
     function validateMedication(){
-      
+      $('.medicationLine').each(function(e){
+        console.log(this)
+      })
     }
 
   </script>
