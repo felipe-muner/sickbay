@@ -5,10 +5,11 @@ const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const ssc = require(process.env.PWD + '/controls/SchoolStudentControl')
 const uc = require(process.env.PWD + '/controls/UserControl')
 const satc = require(process.env.PWD + '/controls/SickBayAttendanceTypeControl')
+const sbrc = require(process.env.PWD + '/controls/SickBayRemedyControl')
 
 const router = express.Router()
 
-router.get('/new', ssc.get, uc.getEmployer, satc.get,function(req, res, next) {
+router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get,  function(req, res, next) {
   // console.log(req.SchoolStudent)
   console.log(req.Employer);
   res.render('attendence/new', {
@@ -16,7 +17,8 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get,function(req, res, next) {
     redirectUrl: req.originalUrl,
     SchoolStudent: req.SchoolStudent,
     Employer: req.Employer,
-    AttendanceType: req.AttendanceType
+    AttendanceType: req.AttendanceType,
+    Remedy: req.Remedy
   })
 }).get('/', ssc.get, function(req, res, next) {
   res.render('attendence/list', {

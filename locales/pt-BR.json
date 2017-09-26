@@ -66,5 +66,8 @@
 	"accident": "Acidente",
 	"internalIncident": "Incidente interno",
 	"externalIncident": "Incidente externo",
-	"visit": "Visita à enfermaria"
+	"visit": "Visita à enfermaria",
+	"medication": "medication",
+	"unitofmeasure": "unitofmeasure",
+	"amount": "amount"
 }

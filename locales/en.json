@@ -66,5 +66,8 @@
 	"internalIncident": "Internal incident",
 	"externalIncident": "External incident",
 	"accident": "Accident",
-	"visit": "Visit to sick bay"
+	"visit": "Visit to sick bay",
+	"medication": "medication",
+	"unitofmeasure": "unitofmeasure",
+	"amount": "amount"
 }
