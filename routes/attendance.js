@@ -27,6 +27,9 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     sess: req.session,
     redirectUrl: req.originalUrl
   })
+}).post('/new', function(req, res, next) {
+  console.log(req.body)
+  res.json(req.body)
 })
 
 module.exports = router

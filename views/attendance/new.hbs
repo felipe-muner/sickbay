@@ -35,7 +35,7 @@
             <select class="form-control" name="Patient" id="Student" style="width:100%;">
               <option value="">{{{i18n 'student'}}}:</option>
               {{#each SchoolStudent}}
-                <option value="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
+                <option value="{{Matricula}}" data-matricula="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
               {{/each}}
             </select>
           </div>
@@ -43,7 +43,7 @@
             <select class="form-control" name="Patient" id="Employer" style="width:100%;">
               <option value="">{{{i18n 'employer'}}}:</option>
               {{#each Employer}}
-                <option value="{{matricula}}" data-nome="{{nomeusuario}}">{{nomeusuario}} - {{matricula}}</option>
+                <option value="{{matricula}}" data-matricula="{{matricula}}" data-nome="{{nomeusuario}}">{{nomeusuario}} - {{matricula}}</option>
               {{/each}}
             </select>
           </div>
@@ -163,7 +163,25 @@
       validateType()
       validatePatient()
       validateMedication()
-      alert('validou')
+
+      //PASSOU
+
+      let dataSend = $(this).serializeArray()
+
+
+      dataSend.push({name: 'ThuthPatient', value: JSON.stringify( getThuthPatient() ) })
+      dataSend.push({name: 'listMedication', value: JSON.stringify(serializeMedication())})
+
+      $.ajax({
+        url: '/attendance/new',
+        type: 'POST',
+        data: dataSend,
+        dataType:'json',
+        success: function(data) {
+          console.log(data)
+        }
+      })
+
     })
 
     function validateType(){
@@ -232,6 +250,52 @@
         throw new Error('Favor preencher todas as colunas')
       }
     }
+
+    function serializeMedication(){
+      let arrayMedication = []
+      $('.medicationLine').each(function(e){
+        let remedy = $(this).find('select[name=Remedy]').val()
+        let unitOfMeasure = $(this).find('select[name=UnitMeasure]').val()
+        let amount = $(this).find('input[name=Amount]').val()
+        if(remedy && unitOfMeasure && amount){
+          arrayMedication.push({
+            "MedicationID": remedy,
+            "UnitOfMeasureID": unitOfMeasure,
+            "Amount": amount
+          })
+        }
+      })
+      console.log('----arrayMedication')
+      console.log(arrayMedication)
+      console.log('----arrayMedication')
+      return arrayMedication
+    }
+
+    function getThuthPatient(){
+      let TypePatient = $('input[name=PatienteType]:checked').val()
+      let TruthPatient = {}
+      if('Student' === TypePatient){
+        TruthPatient.Name = $('#Student option:selected').data('nome')
+        TruthPatient.Matricula = $('#Student option:selected').data('matricula')
+        TruthPatient.Alergy = $('#Student option:selected').data('alergia')
+        TruthPatient.Class = $('#Student option:selected').data('class')
+        TruthPatient.YearGroup = $('#Student option:selected').data('year-group')
+        TruthPatient.Filial = $('#Student option:selected').data('unit')
+        TruthPatient.Type = 'Student'
+      }else if('Employer' === TypePatient){
+        TruthPatient.Name = $('#Employer option:selected').data('nome')
+        TruthPatient.Matricula = $('#Employer option:selected').data('matricula')
+        TruthPatient.Type = 'Employer'
+      }else if('Other' === TypePatient){
+        TruthPatient.Name = $('input[name=Patient]').val()
+        TruthPatient.Type = 'Other'
+      }
+      console.log('thuthpatiente');
+      console.log(TruthPatient);
+      console.log('thuthpatiente');
+      return TruthPatient
+    }
+
 
   </script>
 {{/section}}
