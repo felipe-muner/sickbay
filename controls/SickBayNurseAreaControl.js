@@ -8,14 +8,14 @@ function SickBayNurseAreaControl() {
     }).then(result => {
       if(result) {
         SickBayNurseArea.update(
-          {SickBayAreaID: req.body.sickBayArea},
+          {SickBayArea_ID: req.body.sickBayArea},
           {where: {MatriculaNurse: req.body.matriculaNurse}}
         ).then(() => { next() })
         .catch(err => { next(err) })
       } else {
         SickBayNurseArea.create({
           MatriculaNurse: req.body.matriculaNurse,
-          SickBayAreaID: req.body.sickBayArea
+          SickBayArea_ID: req.body.sickBayArea
         }).then(() => { next() })
         .catch(err => { next(err) })
       }

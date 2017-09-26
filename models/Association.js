@@ -20,7 +20,7 @@ function Association() {
     System.hasMany(ProfileSystemAccess, {foreignKey: 'id_sistema', sourceKey: 'idsistema'})
     System.hasMany(UserControlAccess, {foreignKey: 'id_sistema', sourceKey: 'idsistema'})
     Unit.hasMany(User, {foreignKey: 'id_site', sourceKey: 'idunidade'})
-    Unit.hasMany(SickBayArea, {foreignKey: 'UnitID', sourceKey: 'idunidade'})
+    Unit.hasMany(SickBayArea, {foreignKey: 'Unit_ID', sourceKey: 'idunidade'})
     User.hasMany(UserControlAccess, {foreignKey: 'id_perfil_sistema', sourceKey: 'idusuario'})
     SickBayArea.hasMany(SickBayNurseArea, {foreignKey: 'SickBayAreaID', sourceKey: 'SickBayAreaID'})
     SickBayNurseArea.hasMany(User, {foreignKey: 'matricula', sourceKey: 'MatriculaNurse'})
@@ -36,7 +36,7 @@ function Association() {
     UserControlAccess.belongsTo(ProfileSystemAccess, {foreignKey: 'id_usuario', targetKey: 'idperfilsistema'})
     UserControlAccess.belongsTo(System, {foreignKey: 'id_sistema', targetKey: 'idsistema'})
     UserControlAccess.belongsTo(User, {foreignKey: 'id_perfil_sistema', targetKey: 'idusuario'})
-    SickBayArea.belongsTo(Unit, {foreignKey: 'UnitID', targetKey: 'idunidade'})
+    SickBayArea.belongsTo(Unit, {foreignKey: 'Unit_ID', targetKey: 'idunidade'})
     SickBayNurseArea.belongsTo(SickBayArea, {foreignKey: 'SickBayAreaID', targetKey: 'SickBayAreaID'})
   }
 }
