@@ -12,8 +12,7 @@ const moment = require('moment')
 const router = express.Router()
 
 router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, function(req, res, next) {
-
-  res.render('attendence/new', {
+  res.render('attendance/new', {
     sess: req.session,
     redirectUrl: req.originalUrl,
     SchoolStudent: req.SchoolStudent,
@@ -24,7 +23,7 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     momentAtual: moment().format('YYYY-MM-DDT00:00')
   })
 }).get('/', ssc.get, function(req, res, next) {
-  res.render('attendence/list', {
+  res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl
   })

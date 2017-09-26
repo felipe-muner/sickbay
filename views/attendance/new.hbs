@@ -1,0 +1,237 @@
+{{#section 'head'}}
+  <style media="screen">
+    .styleTableICT th{
+      background-color: #2A3F54;
+      color: white;
+      border: 1px solid white;
+      text-align: center;
+    }
+    .styleTableICT{
+      margin-bottom: 0px;
+    }
+
+  </style>
+{{/section}}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">{{{i18n 'new'}}}</div>
+  <div class="panel-body">
+    <form id="newAttendance">
+      <div class="row">
+        <div class="col-sm-4">
+          <label class="checkbox-inline" style="padding-left: 0px;"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Student" checked>{{{i18n 'student'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Employer">{{{i18n 'employer'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Other">{{{i18n 'other'}}}</label>
+        </div>
+        <div class="col-sm-8 text-right">
+          {{#each AttendanceType}}
+            <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="SickBayAttendanceType_ID" value="{{SickBayAttendanceTypeID}}">{{{i18n Name}}}</label>
+          {{/each}}
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-8">
+          <div class="groupPatient groupStudent">
+            <select class="form-control" name="Patient" id="Student" style="width:100%;">
+              <option value="">{{{i18n 'student'}}}:</option>
+              {{#each SchoolStudent}}
+                <option value="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="groupPatient groupEmployer" style="display:none;">
+            <select class="form-control" name="Patient" id="Employer" style="width:100%;">
+              <option value="">{{{i18n 'employer'}}}:</option>
+              {{#each Employer}}
+                <option value="{{matricula}}" data-nome="{{nomeusuario}}">{{nomeusuario}} - {{matricula}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="groupPatient groupOther" style="display:none;">
+            <input type="text" name="Patient" value="" class="form-control" placeholder=" Nome:">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <input type="datetime-local" name="HourAttendance" value="" class="form-control" min="{{momentAtual}}" required>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12">
+          <table class="table styleTableICT">
+            <thead>
+              <tr>
+                <th style="width:60%;">{{i18n 'medication'}}</th>
+                <th style="width:18%;">{{i18n 'unitofmeasure'}}</th>
+                <th style="width:17%;">{{i18n 'amount'}}</th>
+                <th style="width:5%;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="medicationLine">
+                <td>
+                  <select class="standartSelect2 form-control" name="Remedy">
+                    <option value="">{{i18n 'medication'}}</option>
+                    {{#each Remedy}}
+                      <option value="{{SickBayRemedyID}}">{{Name}}</option>
+                    {{/each}}
+                  </select>
+                </td>
+                <td>
+                  <select class="standartSelect2 form-control" name="UnitMeasure">
+                    <option value="">{{i18n 'unitofmeasure'}}</option>
+                    {{#each UnitOfMeasure}}
+                      <option value="{{UnitOfMeasureID}}">{{Name}}</option>
+                    {{/each}}
+                  </select>
+                </td>
+                <td>
+                  <input type="number" name="Amount" value="" class="form-control">
+                </td>
+                <td class="text-center">
+                  <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:30px;" onclick="appendNewLine(this);"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <select name="Remedy" id="Remedy" style="width:100%;" multiple>
+            <option value="a">a</option>
+            <option value="b">b</option>
+            <option value="c">c</option>
+          </select>
+        </div>
+      </div> -->
+
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12">
+          <textarea name="Reason" class="form-control" placeholder="Reason" required></textarea>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12">
+          <textarea name="Procedure" class="form-control" placeholder="Procedure" required></textarea>
+        </div>
+      </div>
+
+      <!-- <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+          <textarea name="AmountRemedy" class="form-control" placeholder="Amount Remedy"></textarea>
+        </div>
+      </div> -->
+      <div class="text-center row" style="margin-top:10px;">
+        <input type="submit" name="" value="Save" class="btn btn-success">
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $("#Student").select2()
+    $("#Employer").select2()
+
+    $('input[name=PatienteType]').change(function(e){
+      $('.groupPatient').css('display','none')
+      if('Student' === this.value){
+        $('.groupStudent').css('display','block')
+      }else if('Employer' === this.value){
+        $('.groupEmployer').css('display','block')
+      }else if('Other' === this.value){
+        $('.groupOther').css('display','block')
+      }
+    })
+
+
+    function appendNewLine(el){
+      let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
+       $(newLine).find('td:last').html('<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>')
+       $(newLine).find('input').val('')
+       $(newLine).find('select').val('')
+       $(newLine).addClass('linhaAdicional')
+       $(newLine).css('background-color', '#FFF')
+       $(el).closest('tbody').append(newLine)
+    }
+
+    $('#newAttendance').submit(function(e){
+      e.preventDefault()
+      // console.log($(this).serializeArray())
+      validateType()
+      validatePatient()
+      validateMedication()
+      alert('validou')
+    })
+
+    function validateType(){
+      if( 0 === $('input[name=SickBayAttendanceType_ID]:checked').size() ){
+        swal({
+          title: "",
+          text: 'Favor selecionar o tipo de atendimento',
+          type: "error"
+        }).then(
+          function () {
+            $('input[name=SickBayAttendanceType_ID]').parent().css('background-color','#EBCCD1')
+          }
+        )
+        throw new Error('Marcar o tipo de atendimento')
+      }
+    }
+
+    function validatePatient(){
+      let TypePatient = $('input[name=PatienteType]:checked').val()
+      let flag = 0
+      if('Student' === TypePatient && '' === $('#Student').val()){
+        flag = 1
+      }else if('Employer' === TypePatient && '' === $('#Employer').val()){
+        flag = 1
+      }else if('Other' === TypePatient && '' === $('#Other').val()){
+        flag = 1
+      }
+
+      if(1 === flag){
+        swal({
+          title: "",
+          text: 'Favor selecionar o nome do paciente',
+          type: "error"
+        }).then(
+          function () {
+          }
+        )
+        throw new Error('Favor selecionar o nome do paciente')
+      }
+    }
+
+    function validateMedication(){
+      let flag = 0
+      $('.medicationLine').css('background-color', '')
+      $('.medicationLine').each(function(e){
+        console.log($(this)[0])
+        let remedy = $(this).find('select[name=Remedy]').val()
+        let unitOfMeasure = $(this).find('select[name=UnitMeasure]').val()
+        let amount = $(this).find('input[name=Amount]').val()
+
+        debugger
+        if('' !== remedy && ( !unitOfMeasure || !amount)){
+          flag = 1
+          $(this).css('background-color','#ff4c4c')
+        }
+      })
+      if(1 === flag){
+        swal({
+          title: "",
+          text: 'Favor preencher todas as colunas',
+          type: "error"
+        }).then(
+          function () {
+          }
+        )
+        throw new Error('Favor preencher todas as colunas')
+      }
+    }
+
+  </script>
+{{/section}}

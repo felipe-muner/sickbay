@@ -63,8 +63,7 @@ module.exports = {
       {Name: "Tylenol - Suspens\u00e3o oral infantil 160 mg/5ml"},
       {Name: "Tylenol - Gotas 200 mg/ml"},
       {Name: "Vaselina"},
-      {Name: "Medica\u00e7\u00e3o do Aluno"},
-      {Name: "N\u00e3o houve uso de medica\u00e7\u00e3o"}
+      {Name: "Medica\u00e7\u00e3o do Aluno"}
     ], {})
   },
 
