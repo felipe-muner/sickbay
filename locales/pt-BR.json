@@ -67,7 +67,7 @@
 	"internalIncident": "Incidente interno",
 	"externalIncident": "Incidente externo",
 	"visit": "Visita à enfermaria",
-	"medication": "medication",
-	"unitofmeasure": "unitofmeasure",
-	"amount": "amount"
+	"medication": "Medicamento",
+	"unitofmeasure": "Unidade de medida",
+	"amount": "Quantidade"
 }

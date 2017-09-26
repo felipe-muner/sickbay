@@ -6,19 +6,19 @@ const ssc = require(process.env.PWD + '/controls/SchoolStudentControl')
 const uc = require(process.env.PWD + '/controls/UserControl')
 const satc = require(process.env.PWD + '/controls/SickBayAttendanceTypeControl')
 const sbrc = require(process.env.PWD + '/controls/SickBayRemedyControl')
+const umc = require(process.env.PWD + '/controls/UnitOfMeasureControl')
 
 const router = express.Router()
 
-router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get,  function(req, res, next) {
-  // console.log(req.SchoolStudent)
-  console.log(req.Employer);
+router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, function(req, res, next) {
   res.render('attendence/new', {
     sess: req.session,
     redirectUrl: req.originalUrl,
     SchoolStudent: req.SchoolStudent,
     Employer: req.Employer,
     AttendanceType: req.AttendanceType,
-    Remedy: req.Remedy
+    Remedy: req.Remedy,
+    UnitOfMeasure: req.UnitOfMeasure
   })
 }).get('/', ssc.get, function(req, res, next) {
   res.render('attendence/list', {
