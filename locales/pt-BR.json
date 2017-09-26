@@ -63,9 +63,8 @@
 	"student": "Estudante",
 	"employer": "Funcionário",
 	"other": "Outro",
-	"incidenteInterno": "incidenteInterno",
-	"incidenteExterno": "incidenteExterno",
-	"acidente": "acidente",
-	"visitaEnfermaria": "visitaEnfermaria",
-	"accident": "accident"
+	"accident": "Acidente",
+	"internalIncident": "Incidente interno",
+	"externalIncident": "Incidente externo",
+	"visit": "Visita à enfermaria"
 }

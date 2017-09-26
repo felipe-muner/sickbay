@@ -4,15 +4,14 @@
     <form>
       <div class="row">
         <div class="col-sm-4">
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="student" checked>{{{i18n 'student'}}}</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="employer">{{{i18n 'employer'}}}</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="typePatient" value="other">{{{i18n 'other'}}}</label>
+          <label style="padding-left: 0px;" class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Student" checked>{{{i18n 'student'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Employer">{{{i18n 'employer'}}}</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Other">{{{i18n 'other'}}}</label>
         </div>
         <div class="col-sm-8 text-right">
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="1">{{{i18n 'incidenteInterno'}}}</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="2">{{{i18n 'incidenteExterno'}}}</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="3">{{{i18n 'accident'}}}</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="4">{{{i18n 'visitaEnfermaria'}}}</label>
+          {{#each AttendanceType}}
+            <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="SickBayAttendanceType_ID" value="{{SickBayAttendanceTypeID}}">{{{i18n Name}}}</label>
+          {{/each}}
         </div>
       </div>
       <div class="row" style="margin-top:10px;">
@@ -34,7 +33,7 @@
             </select>
           </div>
           <div class="groupPatient groupOther" style="display:none;">
-            <input type="text" name="Patient" value="" class="form-control">
+            <input type="text" name="Patient" value="" class="form-control" placeholder=" Nome:">
           </div>
         </div>
         <div class="col-sm-4">
@@ -82,13 +81,13 @@
     $("#Employer").select2()
     $("#Remedy").select2()
 
-    $('input[name=typePatient]').change(function(e){
+    $('input[name=PatienteType]').change(function(e){
       $('.groupPatient').css('display','none')
-      if('student' === this.value){
+      if('Student' === this.value){
         $('.groupStudent').css('display','block')
-      }else if('employer' === this.value){
+      }else if('Employer' === this.value){
         $('.groupEmployer').css('display','block')
-      }else if('other' === this.value){
+      }else if('Other' === this.value){
         $('.groupOther').css('display','block')
       }
     })
