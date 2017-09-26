@@ -3,7 +3,9 @@ const SchoolStudent = require(process.env.PWD + '/models/SchoolStudent')
 
 function SchoolStudentControl() {
   this.get = function(req, res, next) {
-    SchoolStudent.findAll().then(SchoolStudent => {
+    SchoolStudent.findAll({
+      order: [['Nome', 'ASC']]
+    }).then(SchoolStudent => {
       req.SchoolStudent = SchoolStudent
       next()
     }).catch(err => {
