@@ -28,13 +28,7 @@ const SickBayAttendance = sequelize.define('SickBayAttendance', {
       key: 'SickBayAttendanceTypeID'
     }
   },
-  SickBayPatientType_ID: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'SickBayPatientType',
-      key: 'SickBayPatientTypeID'
-    }
-  },
+  PatientType: Sequelize.STRING,
   MatriculaPatient: Sequelize.INTEGER,
   PatientName: Sequelize.STRING,
   YearGroup: Sequelize.STRING,

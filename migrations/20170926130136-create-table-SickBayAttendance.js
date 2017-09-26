@@ -37,13 +37,9 @@ module.exports = {
           key: 'SickBayAttendanceTypeID'
         }
       },
-      SickBayPatientType_ID: {
+      PatientType: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'SickBayPatientType',
-          key: 'SickBayPatientTypeID'
-        }
+        type: Sequelize.STRING
       },
       MatriculaPatient: {
         allowNull: false,
