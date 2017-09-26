@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <input type="datetime-local" name="HourAttendance" value="" class="form-control" required min="{{momentAtual}}">
+          <input type="datetime-local" name="HourAttendance" value="" class="form-control" min="{{momentAtual}}">
         </div>
       </div>
       <div class="row" style="margin-top:10px;">
@@ -80,12 +80,12 @@
                   <select class="standartSelect2 form-control" name="UnitMeasure">
                     <option value="">{{i18n 'unitofmeasure'}}</option>
                     {{#each UnitOfMeasure}}
-                      <option value="{{SickBayRemedyID}}">{{Name}}</option>
+                      <option value="{{UnitOfMeasureID}}">{{Name}}</option>
                     {{/each}}
                   </select>
                 </td>
                 <td>
-                  <input type="number" name="" value="" class="form-control">
+                  <input type="number" name="Amount" value="" class="form-control">
                 </td>
                 <td class="text-center">
                   <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:30px;" onclick="appendNewLine(this);"></i>
@@ -107,13 +107,13 @@
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Reason" class="form-control" placeholder="Reason" required></textarea>
+          <textarea name="Reason" class="form-control" placeholder="Reason"></textarea>
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Procedure" class="form-control" placeholder="Procedure" required></textarea>
+          <textarea name="Procedure" class="form-control" placeholder="Procedure"></textarea>
         </div>
       </div>
 
@@ -160,8 +160,8 @@
     $('#newAttendance').submit(function(e){
       e.preventDefault()
       // console.log($(this).serializeArray())
-      validateType()
-      validatePatient()
+      // validateType()
+      // validatePatient()
       validateMedication()
       alert('validou')
     })
@@ -206,9 +206,31 @@
     }
 
     function validateMedication(){
+      let flag = 0
+      $('.medicationLine').css('background-color', '')
       $('.medicationLine').each(function(e){
-        console.log(this)
+        console.log($(this)[0])
+        let remedy = $(this).find('select[name=Remedy]').val()
+        let unitOfMeasure = $(this).find('select[name=UnitMeasure]').val()
+        let amount = $(this).find('input[name=Amount]').val()
+
+        debugger
+        if('' !== remedy && ( !unitOfMeasure || !amount)){
+          flag = 1
+          $(this).css('background-color','#ff4c4c')
+        }
       })
+      if(1 === flag){
+        swal({
+          title: "",
+          text: 'Favor preencher todas as colunas',
+          type: "error"
+        }).then(
+          function () {
+          }
+        )
+        throw new Error('Favor preencher todas as colunas')
+      }
     }
 
   </script>
