@@ -16,10 +16,10 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'new'}}}</div>
   <div class="panel-body">
-    <form>
+    <form id="newAttendance">
       <div class="row">
         <div class="col-sm-4">
-          <label style="padding-left: 0px;" class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Student" checked>{{{i18n 'student'}}}</label>
+          <label class="checkbox-inline" style="padding-left: 0px;"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Student" checked>{{{i18n 'student'}}}</label>
           <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Employer">{{{i18n 'employer'}}}</label>
           <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="PatienteType" value="Other">{{{i18n 'other'}}}</label>
         </div>
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <input type="datetime-local" name="HourAttendance" value="" class="form-control">
+          <input type="datetime-local" name="HourAttendance" value="" class="form-control" required min="{{momentAtual}}">
         </div>
       </div>
       <div class="row" style="margin-top:10px;">
@@ -60,7 +60,7 @@
           <table class="table styleTableICT">
             <thead>
               <tr>
-                <th>{{i18n 'medication'}}</th>
+                <th style="width:50%;">{{i18n 'medication'}}</th>
                 <th>{{i18n 'unitofmeasure'}}</th>
                 <th>{{i18n 'amount'}}</th>
                 <th></th>
@@ -69,7 +69,7 @@
             <tbody>
               <tr>
                 <td>
-                  <select class="standartSelect2" name="Remedy" style="width:100%;">
+                  <select class="standartSelect2 form-control" name="Remedy">
                     <option value="">{{i18n 'medication'}}</option>
                     {{#each Remedy}}
                       <option value="{{SickBayRemedyID}}">{{Name}}</option>
@@ -77,7 +77,7 @@
                   </select>
                 </td>
                 <td>
-                  <select class="standartSelect2" name="UnitMeasure" style="width:100%">
+                  <select class="standartSelect2 form-control" name="UnitMeasure">
                     <option value="">{{i18n 'unitofmeasure'}}</option>
                     {{#each UnitOfMeasure}}
                       <option value="{{SickBayRemedyID}}">{{Name}}</option>
@@ -85,10 +85,10 @@
                   </select>
                 </td>
                 <td>
-                  <input type="number" name="" value="" class="form-control" style="height: 38px;">
+                  <input type="number" name="" value="" class="form-control">
                 </td>
                 <td class="text-center">
-                  <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:30px;"></i>
+                  <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:30px;" onclick="appendNewLine(this);"></i>
                 </td>
               </tr>
             </tbody>
@@ -107,13 +107,13 @@
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Reason" class="form-control" placeholder="Reason"></textarea>
+          <textarea name="Reason" class="form-control" placeholder="Reason" required></textarea>
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Procedure" class="form-control" placeholder="Procedure"></textarea>
+          <textarea name="Procedure" class="form-control" placeholder="Procedure" required></textarea>
         </div>
       </div>
 
@@ -134,7 +134,6 @@
   <script type="text/javascript">
     $("#Student").select2()
     $("#Employer").select2()
-    $('.standartSelect2').select2()
 
     $('input[name=PatienteType]').change(function(e){
       $('.groupPatient').css('display','none')
@@ -148,6 +147,68 @@
     })
 
 
+    function appendNewLine(el){
+      let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
+       $(newLine).find('td:last').html('<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>')
+       $(newLine).find('input').val('')
+       $(newLine).find('select').val('')
+       $(newLine).addClass('linhaAdicional')
+       $(newLine).css('background-color', '#FFF')
+       $(el).closest('tbody').append(newLine)
+    }
+
+    $('#newAttendance').submit(function(e){
+      e.preventDefault()
+      console.log($(this).serializeArray())
+      validateType()
+      validatePatient()
+      validateMedication()
+      alert('validou')
+    })
+
+    function validateType(){
+      debugger
+      if( 0 === $('input[name=SickBayAttendanceType_ID]:checked').size() ){
+        swal({
+          title: "",
+          text: 'Favor selecionar o tipo de atendimento',
+          type: "error"
+        }).then(
+          function () {
+            $('input[name=SickBayAttendanceType_ID]').parent().css('background-color','#EBCCD1')
+          }
+        )
+        throw new Error('Marcar o tipo de atendimento')
+      }
+    }
+
+    function validatePatient(){
+      let TypePatient = $('input[name=PatienteType]:checked').val()
+      let flag = 0
+      if('Student' === TypePatient && '' === $('#Student').val()){
+        flag = 1
+      }else if('Employer' === TypePatient && '' === $('#Employer').val()){
+        flag = 1
+      }else if('Other' === TypePatient && '' === $('#Other').val()){
+        flag = 1
+      }
+
+      if(1 === flag){
+        swal({
+          title: "",
+          text: 'Favor selecionar o nome do paciente',
+          type: "error"
+        }).then(
+          function () {
+          }
+        )
+        throw new Error('Favor selecionar o nome do paciente')
+      }
+    }
+
+    function validateMedication(){
+      
+    }
 
   </script>
 {{/section}}
