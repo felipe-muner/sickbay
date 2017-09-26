@@ -6,13 +6,7 @@ const SickBayAttendance = sequelize.define('SickBayAttendance', {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  MatriculaStudent: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'SchoolStudent',
-      key: 'Matricula'
-    }
-  },
+  MatriculaStudent: Sequelize.INTEGER,
   StartMedication: Sequelize.DATEONLY,
   EndMedication: Sequelize.DATEONLY,
   Schedule1: Sequelize.STRING,
