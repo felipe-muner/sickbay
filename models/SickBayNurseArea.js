@@ -17,7 +17,7 @@ const SickBayNurseArea = sequelize.define('SickBayNurseArea', {
       key: 'matricula'
     }
   },
-  SickBayAreaID: {
+  SickBayArea_ID: {
     allowNull: false,
     type: Sequelize.INTEGER,
     references: {

@@ -12,7 +12,7 @@ const SickBayArea = sequelize.define('SickBayArea', {
     allowNull: false,
     type: Sequelize.STRING
   },
-  UnitID: {
+  Unit_ID: {
     allowNull: false,
     type: Sequelize.INTEGER,
     references: {

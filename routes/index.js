@@ -112,7 +112,7 @@ router.post('/login', function(req, res, next) {
               where: {MatriculaNurse: user[0].matricula}
             }).then(result => {
               if(result) {
-                req.session.sickBayAreaID = result.SickBayAreaID
+                req.session.sickBayAreaID = result.SickBayArea_ID
                 req.session.sickBayAreaName = result.SickBayArea.Name
               } else {
                 req.session.sickBayAreaID = null

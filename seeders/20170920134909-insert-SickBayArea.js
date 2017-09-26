@@ -3,12 +3,12 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('SickBayArea', [
-      {Name: 'Cashman Botafogo', UnitID: 1},
-      {Name: 'Nursery Botafogo', UnitID: 1},
-      {Name: 'Pré-Nursery Botafogo', UnitID: 1},
-      {Name: 'Urca', UnitID: 2},
-      {Name: 'Principal Barra', UnitID: 3},
-      {Name: 'Piscina Barra', UnitID: 3}
+      {Name: 'Cashman Botafogo', Unit_ID: 1},
+      {Name: 'Nursery Botafogo', Unit_ID: 1},
+      {Name: 'Pré-Nursery Botafogo', Unit_ID: 1},
+      {Name: 'Urca', Unit_ID: 2},
+      {Name: 'Principal Barra', Unit_ID: 3},
+      {Name: 'Piscina Barra', Unit_ID: 3}
     ], {})
   },
 
