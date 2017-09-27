@@ -14,30 +14,122 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'list'}}}</div>
   <div class="panel-body">
+    <div class="row" style="margin-bottom:10px;">
+      <div class="col-sm-1">
+        <button style="margin:0px;" type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Filtrar</button>
+      </div>
+      <div class="col-sm-10"></div>
+      <div class="col-sm-1 text-right">
+        <a href="/attendance/new">
+          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">Novo</button>
+        </a>
+      </div>
+    </div>
     <table class="table table-hover table-striped styleTableICT">
       <thead>
         <tr>
-          <th>Horário Atendimento</th>
+          <th>Nº</th>
+          <th>Horário</th>
           <th>Tipo</th>
-          <th>Paciente</th> <!--  coloar todos os dados juntos nessa unica coluna -->
+          <th>Paciente</th>
           <th>Enfermeira</th>
-          <th>Responsável pela medicaçāo</th>
           <th>Motivo</th>
+          <th>Prodecimento</th>
           <th>Detalhamento</th>
         </tr>
       </thead>
       <tbody>
-        {{#each attendanceCtrl}}
-          <tr>
-            <td>Data Início</td>
-            <td>Data Fim</td>
-            <td>Aluno</td>
-            <td>Medicamento/Obs</td>
-            <td>Responsável pela medicaçāo</td>
-            <td>Hora 1</td>
+        {{#each attendances}}
+          <tr data-sick-bay-attendance-id="{{SickBayAttendanceID}}">
+            <td class="text-center">{{SickBayAttendanceID}}</td>
+            <td class="text-center">{{Schedule}}</td>
+            <td>{{SickBayAttendanceType_ID}}</td>
+            <td>{{PatientName}}</td>
+            <td class="text-center">{{Nurse_Matricula}}</td>
+            <td>{{Reason}}</td>
+            <td>{{Procedure}}</td>
+            <td class="text-center">
+              <i class="fa fa-plus" aria-hidden="true" onclick="moreInfo(this);"></i>
+            </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Filtrar Medicamento Controlado</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/attendance/find" method="post">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">Matricula</label>
+              <input type="number" name="" value="" class="form-control">
+            </div>
+            <div class="col-sm-9">
+              <label for="">Nome</label>
+              <input type="text" name="" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-6">
+              <label for="">Data Inicial</label>
+              <input type="date" name="Start" value="" class="form-control">
+            </div>
+            <div class="col-sm-6">
+              <label for="">Data Final</label>
+              <input type="date" name="End" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+              <label for="">Medicaçāo</label>
+              <input type="text" name="Medication" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+              <label for="">Responsável</label>
+              <input type="text" name="Responsavel" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+
+            </div>
+          </div>
+          <div class="row text-right" style="margin-top:10px;">
+            <div class="col-sm-12">
+              <input type="submit" name="" value="Pesquisar" class="btn btn-success btn-xs">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+
+    function moreInfo(el){
+      let form = document.createElement("form")
+      form.method = "POST"
+      form.action = "/attendance/more-info"
+      var campo1 = document.createElement("input")
+      campo1.name= 'SickBayAttendanceID'
+      campo1.value= $(el).closest('tr').data('sick-bay-attendance-id')
+      form.appendChild(campo1)
+      document.body.appendChild(form)
+      form.submit()
+    }
+
+  </script>
+{{/section}}

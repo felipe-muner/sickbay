@@ -38,6 +38,20 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     styleMsg: 'alert-success'
   }
   res.json({ redirect: '/attendance' })
+}).post('/more-info', function(req, res, next) {
+  console.log(req.body)
+  res.render('attendance/more-info', {
+    sess: req.session,
+    redirectUrl: req.originalUrl
+  })
+}).post('/find', sbac.get, function(req, res, next) {
+// }).post('/find', sbac.findByFilter, function(req, res, next) {
+  console.log(req.body)
+  res.render('attendance/list', {
+    sess: req.session,
+    redirectUrl: req.originalUrl,
+    attendances: req.attendances  //atendimentofiltrado
+  })
 })
 
 module.exports = router

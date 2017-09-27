@@ -1,4 +1,5 @@
 const async = require('async')
+const moment = require('moment')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayAttendance = require(process.env.PWD + '/models/SickBayAttendance')
 const SickBayAttendanceMedication = require(process.env.PWD + '/models/SickBayAttendanceMedication')
@@ -59,6 +60,11 @@ function SickBayAttendanceControl() {
           model: User
       }]
     }).then(attendances => {
+      attendances
+        .map((e) => {
+          e.dataValues.Schedule = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+        })
+
       req.attendances = attendances
       next()
     }).catch(err => { next(err) })
