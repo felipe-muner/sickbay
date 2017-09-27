@@ -14,37 +14,124 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'list'}}}</div>
   <div class="panel-body">
+    <div class="row" style="margin-bottom:10px;">
+      <div class="col-sm-12">
+        <button style="margin:0px;" type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Filtrar</button>
+      </div>
+    </div>
     <table class="table table-hover table-striped styleTableICT">
       <thead>
         <tr>
+          <th>Atendimento Nº</th>
+          <th>Aluno</th>
           <th>Data Início</th>
           <th>Data Fim</th>
-          <th>Aluno</th>
-          <th>Medicamento/Obs</th>
-          <th>Responsável pela medicaçāo</th>
           <th>Hora 1</th>
           <th>Hora 2</th>
           <th>Hora 3</th>
           <th>Hora 4</th>
+          <th>Responsável pela medicaçāo</th>
+          <th>Medicamento/Obs</th>
+          <th>Type</th>
           <th>Detalhamento</th>
         </tr>
       </thead>
       <tbody>
         {{#each medCtrl}}
-          <tr>
-            <td>Data Início</td>
-            <td>Data Fim</td>
-            <td>Aluno</td>
-            <td>Medicamento/Obs</td>
-            <td>Responsável pela medicaçāo</td>
-            <td>Hora 1</td>
-            <td>Hora 2</td>
-            <td>Hora 3</td>
-            <td>Hora 4</td>
-            <td>Detalhamento</td>
+          <tr data-medication-controlled-id="{{SickBayMedicationControlledID}}">
+            <td class="text-center">{{SickBayMedicationControlledID}}</td>
+            <td>{{SchoolStudent.Nome}} - {{SchoolStudent.Matricula}}</td>
+            <td>{{Start}}</td>
+            <td>{{End}}</td>
+            <td>{{Hr1}}</td>
+            <td>{{Hr2}}</td>
+            <td>{{Hr3}}</td>
+            <td>{{Hr4}}</td>
+            <td>{{Responsible}}</td>
+            <td>{{Note}}</td>
+            <td>{{Type}}</td>
+            <td class="text-center">
+              <i class="fa fa-medkit" aria-hidden="true" onclick="moreInfo(this);"></i>
+            </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Filtrar Medicamento Controlado</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/medication-controlled/find" method="post">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">Matricula</label>
+              <input type="number" name="" value="" class="form-control">
+            </div>
+            <div class="col-sm-9">
+              <label for="">Nome</label>
+              <input type="text" name="" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-6">
+              <label for="">Data Inicial</label>
+              <input type="date" name="Start" value="" class="form-control">
+            </div>
+            <div class="col-sm-6">
+              <label for="">Data Final</label>
+              <input type="date" name="End" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+              <label for="">Medicaçāo</label>
+              <input type="text" name="Medication" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+              <label for="">Responsável</label>
+              <input type="text" name="Responsavel" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12">
+
+            </div>
+          </div>
+          <div class="row text-right" style="margin-top:10px;">
+            <div class="col-sm-12">
+              <input type="submit" name="" value="Pesquisar" class="btn btn-success btn-xs">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+
+    function moreInfo(el){
+      let form = document.createElement("form")
+      form.method = "POST"
+      form.action = "/medication-controlled/more-info"
+      var campo1 = document.createElement("input")
+      campo1.name= 'MedicationControlledID'
+      campo1.value= $(el).closest('tr').data('medication-controlled-id')
+      form.appendChild(campo1)
+      document.body.appendChild(form)
+      form.submit()
+    }
+
+  </script>
+{{/section}}

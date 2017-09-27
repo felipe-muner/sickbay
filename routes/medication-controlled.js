@@ -18,6 +18,8 @@ router.get('/new', ssc.get, function(req, res, next) {
 }).get('/', sbmcc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
+
+  console.log(req.medCtrl)
   res.render('medication-controlled/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
@@ -31,6 +33,20 @@ router.get('/new', ssc.get, function(req, res, next) {
     styleMsg: 'alert-success'
   }
   res.json({ redirect: '/medication-controlled' })
+}).post('/more-info', function(req, res, next) {
+  console.log(req.body)
+  res.render('medication-controlled/more-info', {
+    sess: req.session,
+    redirectUrl: req.originalUrl
+  })
+}).post('/find', sbmcc.get, function(req, res, next) {
+// }).post('/find', sbmcc.findByFilter, function(req, res, next) {
+  console.log(req.body)
+  res.render('medication-controlled/list', {
+    sess: req.session,
+    redirectUrl: req.originalUrl,
+    medCtrl: req.medCtrl
+  })
 })
 
 module.exports = router

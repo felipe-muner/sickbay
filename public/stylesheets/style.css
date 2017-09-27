@@ -221,3 +221,12 @@ div.meuMenu .label{
 label{
   margin-bottom: 0px;
 }
+
+.panel-body{
+  padding: 7px;
+}
+
+.form-control{
+  height: 26px;
+  font-size: 12px;
+}
