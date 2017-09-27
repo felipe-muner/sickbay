@@ -4,7 +4,8 @@ const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayMedicationSchedule = sequelize.define('SickBayMedicationSchedule', {
   SickBayMedicationScheduleID: {
     type: Sequelize.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   SickBayMedicationControlled_ID: {
     type: Sequelize.INTEGER,
