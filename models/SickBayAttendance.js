@@ -7,7 +7,7 @@ const SickBayAttendance = sequelize.define('SickBayAttendance', {
     primaryKey: true
   },
   Schedule: Sequelize.DATE,
-  MatriculaNurse: {
+  Nurse_Matricula: {
     type: Sequelize.INTEGER,
     references: {
       model: 'usuarios',
@@ -29,8 +29,9 @@ const SickBayAttendance = sequelize.define('SickBayAttendance', {
     }
   },
   PatientType: Sequelize.STRING,
-  MatriculaPatient: Sequelize.INTEGER,
+  Patient_Matricula: Sequelize.INTEGER,
   PatientName: Sequelize.STRING,
+  Allergy: Sequelize.STRING,
   YearGroup: Sequelize.STRING,
   Class: Sequelize.STRING,
   UnitSchool: Sequelize.STRING,

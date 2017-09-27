@@ -20,7 +20,7 @@ const SickBayAttendanceMedication = sequelize.define('SickBayAttendanceMedicatio
       key: 'SickBayRemedyID'
     }
   },
-  Amount: Sequelize.STRING,
+  Amount: Sequelize.DECIMAL,
   UnitOfMeasure_ID: {
     type: Sequelize.INTEGER,
     references: {

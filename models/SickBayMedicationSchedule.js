@@ -13,32 +13,41 @@ const SickBayMedicationSchedule = sequelize.define('SickBayMedicationSchedule', 
       key: 'SickBayMedicationControlledID'
     }
   },
-  CheckSchedule1: Sequelize.BOOLEAN,
-  MatriculaNurseCheckSchedule1: {
+  MedicationDate: Sequelize.DATEONLY,
+  Hr1: Sequelize.TIME,
+  Ch1: Sequelize.BOOLEAN,
+  ChdHr1: Sequelize.TIME,
+  Matricula1: {
     type: Sequelize.INTEGER,
     references: {
       model: 'usuarios',
       key: 'matricula'
     }
   },
-  CheckSchedule2: Sequelize.BOOLEAN,
-  MatriculaNurseCheckSchedule2: {
+  Hr2: Sequelize.TIME,
+  Ch2: Sequelize.BOOLEAN,
+  ChdHr2: Sequelize.TIME,
+  Matricula2: {
     type: Sequelize.INTEGER,
     references: {
       model: 'usuarios',
       key: 'matricula'
     }
   },
-  CheckSchedule3: Sequelize.BOOLEAN,
-  MatriculaNurseCheckSchedule3: {
+  Hr3: Sequelize.TIME,
+  Ch3: Sequelize.BOOLEAN,
+  ChdHr3: Sequelize.TIME,
+  Matricula3: {
     type: Sequelize.INTEGER,
     references: {
       model: 'usuarios',
       key: 'matricula'
     }
   },
-  CheckSchedule4: Sequelize.BOOLEAN,
-  MatriculaNurseCheckSchedule4: {
+  Hr4: Sequelize.TIME,
+  Ch4: Sequelize.BOOLEAN,
+  ChdHr4: Sequelize.TIME,
+  Matricula4: {
     type: Sequelize.INTEGER,
     references: {
       model: 'usuarios',

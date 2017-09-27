@@ -17,48 +17,88 @@ module.exports = {
           key: 'SickBayMedicationControlledID'
         }
       },
-      CheckSchedule1: {
+      MedicationDate: {
         allowNull: false,
+        type: Sequelize.DATEONLY
+      },
+      Hr1: {
+        allowNull: false,
+        type: Sequelize.TIME
+      },
+      Ch1: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      MatriculaNurseCheckSchedule1: {
-        allowNull: false,
+      ChdHr1: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Matricula1: {
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'usuarios',
           key: 'matricula'
         }
       },
-      CheckSchedule2: {
+      Hr2: {
         allowNull: false,
+        type: Sequelize.TIME
+      },
+      Ch2: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      MatriculaNurseCheckSchedule2: {
-        allowNull: false,
+      ChdHr2: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Matricula2: {
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'usuarios',
           key: 'matricula'
         }
       },
-      CheckSchedule3: {
+      Hr3: {
         allowNull: false,
+        type: Sequelize.TIME
+      },
+      Ch3: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      MatriculaNurseCheckSchedule3: {
-        allowNull: false,
+      ChdHr3: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Matricula3: {
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'usuarios',
           key: 'matricula'
         }
       },
-      CheckSchedule4: {
+      Hr4: {
         allowNull: false,
+        type: Sequelize.TIME
+      },
+      Ch4: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      MatriculaNurseCheckSchedule4: {
-        allowNull: false,
+      ChdHr4: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Matricula4: {
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'usuarios',

@@ -100,27 +100,19 @@ router.post('/login', function(req, res, next) {
             return f
           })
 
-          if(user[0].nomeperfilacesso === 'Administrador') {
-            req.session.isNurse = false
-            req.session.sickBayAreaID = null
-            req.session.sickBayAreaName = null
+          SickBayNurseArea.findOne({
+            include: {model: SickBayArea, required: true},
+            where: {MatriculaNurse: user[0].matricula}
+          }).then(result => {
+            if(result) {
+              req.session.sickBayAreaID = result.SickBayArea_ID
+              req.session.sickBayAreaName = result.SickBayArea.Name
+            } else {
+              req.session.sickBayAreaID = null
+              req.session.sickBayAreaName = null
+            }
             res.redirect('/')
-          } else {
-            req.session.isNurse = true
-            SickBayNurseArea.findOne({
-              include: {model: SickBayArea, required: false},
-              where: {MatriculaNurse: user[0].matricula}
-            }).then(result => {
-              if(result) {
-                req.session.sickBayAreaID = result.SickBayArea_ID
-                req.session.sickBayAreaName = result.SickBayArea.Name
-              } else {
-                req.session.sickBayAreaID = null
-                req.session.sickBayAreaName = null
-              }
-              res.redirect('/')
-            }).catch(function(err) { next(err) })
-          }
+          }).catch(function(err) { next(err) })
 
         }).catch(function(err) { next(err) })
       }

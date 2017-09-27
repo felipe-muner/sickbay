@@ -13,6 +13,8 @@ const SickBayRemedy = require(process.env.PWD + '/models/SickBayRemedy')
 const UnitOfMeasure = require(process.env.PWD + '/models/UnitOfMeasure')
 const SickBayAttendance = require(process.env.PWD + '/models/SickBayAttendance')
 const SickBayAttendanceMedication = require(process.env.PWD + '/models/SickBayAttendanceMedication')
+const SickBayMedicationControlled = require(process.env.PWD + '/models/SickBayMedicationControlled')
+const SickBayMedicationSchedule = require(process.env.PWD + '/models/SickBayMedicationSchedule')
 
 function Association() {
   this.init = function() {
@@ -27,7 +29,12 @@ function Association() {
     Unit.hasMany(User, {foreignKey: 'id_site', sourceKey: 'idunidade'})
     Unit.hasMany(SickBayArea, {foreignKey: 'Unit_ID', sourceKey: 'idunidade'})
     User.hasMany(UserControlAccess, {foreignKey: 'id_perfil_sistema', sourceKey: 'idusuario'})
-    User.hasMany(SickBayAttendance, {foreignKey: 'MatriculaNurse', sourceKey: 'matricula'})
+    User.hasMany(SickBayAttendance, {foreignKey: 'Nurse_Matricula', sourceKey: 'matricula'})
+    User.hasMany(SickBayMedicationControlled, {foreignKey: 'Nurse_Matricula', sourceKey: 'matricula'})
+    User.hasMany(SickBayMedicationSchedule, {foreignKey: 'Matricula1', sourceKey: 'matricula'})
+    User.hasMany(SickBayMedicationSchedule, {foreignKey: 'Matricula2', sourceKey: 'matricula'})
+    User.hasMany(SickBayMedicationSchedule, {foreignKey: 'Matricula3', sourceKey: 'matricula'})
+    User.hasMany(SickBayMedicationSchedule, {foreignKey: 'Matricula4', sourceKey: 'matricula'})
     SickBayArea.hasMany(SickBayNurseArea, {foreignKey: 'SickBayArea_ID', sourceKey: 'SickBayAreaID'})
     SickBayArea.hasMany(SickBayAttendance, {foreignKey: 'SickBayArea_ID', sourceKey: 'SickBayAreaID'})
     SickBayNurseArea.hasMany(User, {foreignKey: 'matricula', sourceKey: 'MatriculaNurse'})
@@ -35,6 +42,7 @@ function Association() {
     SickBayAttendance.hasMany(SickBayAttendanceMedication, {foreignKey: 'SickBayAttendance_ID', sourceKey: 'SickBayAttendanceID'})
     SickBayRemedy.hasMany(SickBayAttendanceMedication, {foreignKey: 'SickBayRemedy_ID', sourceKey: 'SickBayRemedyID'})
     UnitOfMeasure.hasMany(SickBayAttendanceMedication, {foreignKey: 'UnitOfMeasure_ID', sourceKey: 'UnitOfMeasureID'})
+    SickBayMedicationControlled.hasMany(SickBayMedicationSchedule, {foreignKey: 'SickBayMedicationControlled_ID', sourceKey: 'SickBayMedicationControlledID'})
 
     Functionality.belongsTo(Functionality, {foreignKey: 'FunctionalityFather_ID', targetKey: 'FunctionalityID'})
     Functionality.belongsTo(System, {foreignKey: 'System_ID', targetKey: 'idsistema'})
@@ -49,12 +57,18 @@ function Association() {
     UserControlAccess.belongsTo(User, {foreignKey: 'id_perfil_sistema', targetKey: 'idusuario'})
     SickBayArea.belongsTo(Unit, {foreignKey: 'Unit_ID', targetKey: 'idunidade'})
     SickBayNurseArea.belongsTo(SickBayArea, {foreignKey: 'SickBayArea_ID', targetKey: 'SickBayAreaID'})
-    SickBayAttendance.belongsTo(User, {foreignKey: 'MatriculaNurse', targetKey: 'matricula'})
+    SickBayAttendance.belongsTo(User, {foreignKey: 'Nurse_Matricula', targetKey: 'matricula'})
     SickBayAttendance.belongsTo(SickBayArea, {foreignKey: 'SickBayArea_ID', targetKey: 'SickBayAreaID'})
     SickBayAttendance.belongsTo(SickBayAttendanceType, {foreignKey: 'SickBayAttendanceType_ID', targetKey: 'SickBayAttendanceTypeID'})
     SickBayAttendanceMedication.belongsTo(SickBayAttendance, {foreignKey: 'SickBayAttendance_ID', targetKey: 'SickBayAttendanceID'})
     SickBayAttendanceMedication.belongsTo(SickBayRemedy, {foreignKey: 'SickBayRemedy_ID', targetKey: 'SickBayRemedyID'})
     SickBayAttendanceMedication.belongsTo(UnitOfMeasure, {foreignKey: 'UnitOfMeasure_ID', targetKey: 'UnitOfMeasureID'})
+    SickBayMedicationControlled.belongsTo(User, {foreignKey: 'Nurse_Matricula', targetKey: 'matricula'})
+    SickBayMedicationSchedule.belongsTo(SickBayMedicationControlled, {foreignKey: 'SickBayMedicationControlled_ID', targetKey: 'SickBayMedicationControlledID'})
+    SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula1', targetKey: 'matricula'})
+    SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula2', targetKey: 'matricula'})
+    SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula3', targetKey: 'matricula'})
+    SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula4', targetKey: 'matricula'})
   }
 }
 

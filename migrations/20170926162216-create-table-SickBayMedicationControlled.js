@@ -9,43 +9,43 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      MatriculaStudent: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      StartMedication: {
-        allowNull: false,
-        type: Sequelize.DATEONLY
-      },
-      EndMedication: {
-        allowNull: false,
-        type: Sequelize.DATEONLY
-      },
-      Schedule1: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      Schedule2: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      Schedule3: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      Schedule4: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      SickBayMedicationType_ID: {
+      Nurse_Matricula: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'SickBayMedicationType',
-          key: 'SickBayMedicationTypeID'
+          model: 'usuarios',
+          key: 'matricula'
         }
       },
-      Medication: {
+      Student_Matricula: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      Start: {
+        allowNull: false,
+        type: Sequelize.DATEONLY
+      },
+      End: {
+        allowNull: false,
+        type: Sequelize.DATEONLY
+      },
+      Hr1: {
+        allowNull: false,
+        type: Sequelize.TIME
+      },
+      Hr2: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Hr3: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Hr4: {
+        allowNull: true,
+        type: Sequelize.TIME
+      },
+      Type: {
         allowNull: false,
         type: Sequelize.STRING
       },
