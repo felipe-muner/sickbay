@@ -23,12 +23,13 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     UnitOfMeasure: req.UnitOfMeasure,
     momentAtual: moment().format('YYYY-MM-DDT00:00')
   })
-}).get('/', ssc.get, function(req, res, next) {
+}).get('/', sbac.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
+    attendances: req.attendances,
     flashMsg
   })
 }).post('/new', sbac.new, function(req, res, next) {
