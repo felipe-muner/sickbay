@@ -163,7 +163,7 @@
         data: dataSend,
         dataType:'json',
         success: function(data) {
-          console.log(data)
+          window.location.replace(data.redirect)
         }
       })
 
