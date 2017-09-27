@@ -23,7 +23,7 @@
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-8">
           <div class="groupPatient groupStudent">
-            <select class="form-control" name="Patient" id="Student" style="width:100%;" required>
+            <select class="form-control" name="Student_Matricula" id="Student" style="width:100%;" required>
               <option value="">{{{i18n 'student'}}}:</option>
               {{#each SchoolStudent}}
                 <option value="{{Matricula}}" data-matricula="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
@@ -32,56 +32,56 @@
           </div>
         </div>
         <div class="col-sm-4 text-right" style="padding-top:4px;">
-          <label class="checkbox-inline" style="padding-left: 0px;"><input style="margin-right:5px;" type="radio" name="TypeMedication" value="Uso contínuo" required>Uso Contínuo</label>
-          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="TypeMedication" value="Uso temporário">Uso temporário</label>
+          <label class="checkbox-inline" style="padding-left: 0px;"><input style="margin-right:5px;" type="radio" name="Type" value="Uso contínuo" required>Uso Contínuo</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="Type" value="Uso temporário">Uso temporário</label>
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-2">
           <label for="dateInitial">Data Início</label>
-          <input type="date" name="dateInitial" id="dateInitial" class="form-control" min="{{momentAtual}}" onkeyup="updateMinToDateField(this);" required>
+          <input type="date" name="Start" id="dateInitial" class="form-control" min="{{momentAtual}}" onkeyup="updateMinToDateField(this);" required>
         </div>
         <div class="col-sm-2">
           <label for="dateFinal">Data Fim</label>
-          <input type="date" name="dateFinal" id="dateFinal" class="form-control" min="{{momentAtual}}" required>
+          <input type="date" name="End" id="dateFinal" class="form-control" min="{{momentAtual}}" required>
         </div>
         <div class="col-sm-2">
           <label for="hr1">Horário 1</label>
-          <input type="time" name="hr1" class="form-control" required>
+          <input type="time" name="Hr1" class="form-control" required>
         </div>
         <div class="col-sm-2">
           <label for="hr2">Horário 2</label>
-          <input type="time" name="hr2" class="form-control">
+          <input type="time" name="Hr2" class="form-control">
         </div>
         <div class="col-sm-2">
           <label for="">Horário 3</label>
-          <input type="time" name="" class="form-control">
+          <input type="time" name="Hr3" class="form-control">
         </div>
         <div class="col-sm-2">
           <label for="">Horário 4</label>
-          <input type="time" name="" class="form-control">
+          <input type="time" name="Hr4" class="form-control">
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-4">
           <label for="">Nome Medico</label>
-          <input type="text" name="NomeMedico" value="" class="form-control">
+          <input type="text" name="DoctorName" value="" class="form-control">
         </div>
         <div class="col-sm-4">
           <label for="">Contato Medico</label>
-          <input type="text" name="ContatoMedico" value="" class="form-control">
+          <input type="text" name="DoctorContact" value="" class="form-control">
         </div>
         <div class="col-sm-4">
           <label for="">Responsavel que entregou remédio</label>
-          <input type="text" name="Responsavel" value="" class="form-control" required>
+          <input type="text" name="Responsible" value="" class="form-control" required>
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Note" class="form-control" placeholder=" Observaçāo"></textarea>
+          <textarea name="Note" class="form-control" placeholder="Medicação e Observaçāo" required></textarea>
         </div>
       </div>
 
@@ -109,7 +109,7 @@
         data: dataSend,
         dataType:'json',
         success: function(data) {
-          console.log(data)
+          window.location.replace(data.redirect)
         }
       })
 

@@ -1,10 +1,12 @@
 {{#if flashMsg}}
   <div class="row">
-    <div class="alert {{flashMsg.styleMsg}} alert-dismissible" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong>{{i18n 'nurse'}}</strong> {{flashMsg.txtMsg}}
+    <div class="col-xs-12">
+      <div class="alert {{flashMsg.styleMsg}} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{i18n 'nurse'}}</strong> {{flashMsg.txtMsg}}
+      </div>
     </div>
   </div>
 {{/if}}
