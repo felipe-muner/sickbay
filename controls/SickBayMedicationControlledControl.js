@@ -14,7 +14,7 @@ function SickBayMedicationControlledControl() {
     req.body.DoctorContact = req.body.DoctorContact !== '' ? req.body.DoctorContact : null
 
     let arrayDatesDesired = []
-    for (let m = moment(req.body.Start); m.isSameOrBefore(moment(req.body.End)); m.add(1, 'days')) {
+    for (let m = moment(req.body.Start); m.isSameOrBefore(req.body.End,'day'); m.add(1, 'days')) {
       arrayDatesDesired.push(m.format('YYYY-MM-DD'))
     }
 
