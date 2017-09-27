@@ -2,6 +2,11 @@ const async = require('async')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayAttendance = require(process.env.PWD + '/models/SickBayAttendance')
 const SickBayAttendanceMedication = require(process.env.PWD + '/models/SickBayAttendanceMedication')
+const SickBayRemedy = require(process.env.PWD + '/models/SickBayRemedy')
+const UnitOfMeasure = require(process.env.PWD + '/models/UnitOfMeasure')
+const SickBayAttendanceType = require(process.env.PWD + '/models/SickBayAttendanceType')
+const SickBayArea = require(process.env.PWD + '/models/SickBayArea')
+const User = require(process.env.PWD + '/models/User')
 
 function SickBayAttendanceControl() {
   this.new = function(req, res, next) {
@@ -34,6 +39,28 @@ function SickBayAttendanceControl() {
       }, function(err) {
         next()
       })
+    }).catch(err => { next(err) })
+  }
+
+  this.get = function(req, res, next) {
+    SickBayAttendance.findAll({
+      include: [{
+          model: SickBayAttendanceMedication,
+          include: [{
+            model: SickBayRemedy
+          }, {
+            model: UnitOfMeasure
+          }]
+        }, {
+          model: SickBayAttendanceType
+        }, {
+          model: SickBayArea
+        }, {
+          model: User
+      }]
+    }).then(attendances => {
+      req.attendances = attendances
+      next()
     }).catch(err => { next(err) })
   }
 }
