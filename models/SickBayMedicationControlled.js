@@ -1,26 +1,26 @@
 const Sequelize = require('sequelize')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 
-const SickBayAttendance = sequelize.define('SickBayAttendance', {
+const SickBayMedicationControlled = sequelize.define('SickBayMedicationControlled', {
   SickBayMedicationControlledID: {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  MatriculaStudent: Sequelize.INTEGER,
-  StartMedication: Sequelize.DATEONLY,
-  EndMedication: Sequelize.DATEONLY,
-  Schedule1: Sequelize.STRING,
-  Schedule2: Sequelize.STRING,
-  Schedule3: Sequelize.STRING,
-  Schedule4: Sequelize.STRING,
-  SickBayMedicationType_ID: {
+  Nurse_Matricula: {
     type: Sequelize.INTEGER,
     references: {
-      model: 'SickBayMedicationType',
-      key: 'SickBayMedicationTypeID'
+      model: 'usuarios',
+      key: 'matricula'
     }
   },
-  Medication: Sequelize.STRING,
+  Student_Matricula: Sequelize.INTEGER,
+  Start: Sequelize.DATEONLY,
+  End: Sequelize.DATEONLY,
+  Hr1: Sequelize.TIME,
+  Hr2: Sequelize.TIME,
+  Hr3: Sequelize.TIME,
+  Hr4: Sequelize.TIME,
+  Type: Sequelize.STRING,
   Note: Sequelize.TEXT,
   Responsible: Sequelize.STRING,
   DoctorName: Sequelize.STRING,
@@ -30,4 +30,4 @@ const SickBayAttendance = sequelize.define('SickBayAttendance', {
   freezeTableName: true
 })
 
-module.exports = SickBayAttendance
+module.exports = SickBayMedicationControlled

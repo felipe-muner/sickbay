@@ -9,10 +9,8 @@
   </div>
 {{/if}}
 
-{{#if sess.isNurse}}
-  {{#if sess.sickBayAreaName}}
-    <h3>{{i18n 'messages.allottedSickBay'}} <strong>{{sess.sickBayAreaName}}</strong></h3>
-  {{else}}
-    <h3>{{i18n 'messages.notAllottedSickBay'}}</h3>
-  {{/if}}
+{{#if sess.sickBayAreaName}}
+  <h3>{{i18n 'messages.allottedSickBay'}} <strong>{{sess.sickBayAreaName}}</strong></h3>
+{{else}}
+  <h3>{{i18n 'messages.notAllottedSickBay'}}</h3>
 {{/if}}

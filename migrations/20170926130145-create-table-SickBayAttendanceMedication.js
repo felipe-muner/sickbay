@@ -27,7 +27,7 @@ module.exports = {
       },
       Amount: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.DECIMAL
       },
       UnitOfMeasure_ID: {
         allowNull: false,

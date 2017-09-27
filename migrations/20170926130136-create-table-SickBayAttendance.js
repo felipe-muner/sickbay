@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      MatriculaNurse: {
+      Nurse_Matricula: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -41,24 +41,28 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      MatriculaPatient: {
-        allowNull: false,
+      Patient_Matricula: {
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       PatientName: {
         allowNull: false,
         type: Sequelize.STRING
       },
+      Allergy: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       YearGroup: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       Class: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       UnitSchool: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       Reason: {
