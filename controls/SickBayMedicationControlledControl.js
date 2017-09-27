@@ -35,6 +35,20 @@ function SickBayMedicationControlledControl() {
       })
     }).catch(err => { next(err) })
   }
+
+  this.get = function(req,res,next){
+    SickBayMedicationControlled.findAll({
+      include:{
+        model: SickBayMedicationSchedule
+      }
+    }).then( medCtrl => {
+      console.log('___');
+      console.log(medCtrl);
+      console.log('___');
+      req.medCtrl = medCtrl
+      next()
+    }).catch(err => {next(err)})
+  }
 }
 
 module.exports = new SickBayMedicationControlledControl()

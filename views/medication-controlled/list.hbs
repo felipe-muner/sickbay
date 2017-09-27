@@ -10,3 +10,41 @@
     </div>
   </div>
 {{/if}}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">{{{i18n 'list'}}}</div>
+  <div class="panel-body">
+    <table class="table table-hover table-striped styleTableICT">
+      <thead>
+        <tr>
+          <th>Data Início</th>
+          <th>Data Fim</th>
+          <th>Aluno</th>
+          <th>Medicamento/Obs</th>
+          <th>Responsável pela medicaçāo</th>
+          <th>Hora 1</th>
+          <th>Hora 2</th>
+          <th>Hora 3</th>
+          <th>Hora 4</th>
+          <th>Detalhamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each medCtrl}}
+          <tr>
+            <td>Data Início</td>
+            <td>Data Fim</td>
+            <td>Aluno</td>
+            <td>Medicamento/Obs</td>
+            <td>Responsável pela medicaçāo</td>
+            <td>Hora 1</td>
+            <td>Hora 2</td>
+            <td>Hora 3</td>
+            <td>Hora 4</td>
+            <td>Detalhamento</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

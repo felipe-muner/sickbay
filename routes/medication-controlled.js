@@ -15,12 +15,13 @@ router.get('/new', ssc.get, function(req, res, next) {
     SchoolStudent: req.SchoolStudent,
     momentAtual: moment().format('YYYY-MM-DD')
   })
-}).get('/', ssc.get, function(req, res, next) {
+}).get('/', sbmcc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   res.render('medication-controlled/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
+    medCtrl: req.medCtrl,
     flashMsg
   })
 }).post('/new', sbmcc.new, function(req, res, next) {
