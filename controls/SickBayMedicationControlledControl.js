@@ -3,6 +3,7 @@ const async = require('async')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayMedicationControlled = require(process.env.PWD + '/models/SickBayMedicationControlled')
 const SickBayMedicationSchedule = require(process.env.PWD + '/models/SickBayMedicationSchedule')
+const SchoolStudent = require(process.env.PWD + '/models/SchoolStudent')
 
 function SickBayMedicationControlledControl() {
   this.new = function(req, res, next) {
@@ -34,6 +35,26 @@ function SickBayMedicationControlledControl() {
         next()
       })
     }).catch(err => { next(err) })
+  }
+
+  this.get = function(req,res,next){
+    SickBayMedicationControlled.findAll({
+      include:[{
+        model: SickBayMedicationSchedule
+      },{
+        model: SchoolStudent
+      }]
+    }).then( medCtrl => {
+      medCtrl
+        .map((e) => {
+          e.dataValues.Start = moment(e.dataValues.Start).format('DD/MM/YYYY')
+          e.dataValues.End = moment(e.dataValues.End).format('DD/MM/YYYY')
+        })
+
+
+      req.medCtrl = medCtrl
+      next()
+    }).catch(err => {next(err)})
   }
 }
 

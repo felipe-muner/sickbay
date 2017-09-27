@@ -207,3 +207,26 @@ div.meuMenu .label{
     background-color: #2A3F54;
     border-color: #2A3F54;
 }
+
+.styleTableICT th{
+  background-color: #2A3F54;
+  color: white;
+  border: 1px solid white;
+  text-align: center;
+}
+.styleTableICT{
+  margin-bottom: 0px;
+}
+
+label{
+  margin-bottom: 0px;
+}
+
+.panel-body{
+  padding: 7px;
+}
+
+.form-control{
+  height: 26px;
+  font-size: 12px;
+}
