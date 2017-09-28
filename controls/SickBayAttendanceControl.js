@@ -65,6 +65,10 @@ function SickBayAttendanceControl() {
           e.dataValues.Schedule = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
         })
 
+      if(!req.session.allUnits) {
+        attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      }
+
       req.attendances = attendances
       next()
     }).catch(err => { next(err) })

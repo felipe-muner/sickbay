@@ -38,6 +38,7 @@ function Association() {
     User.hasMany(SickBayMedicationSchedule, {foreignKey: 'Matricula4', sourceKey: 'matricula'})
     SickBayArea.hasMany(SickBayNurseArea, {foreignKey: 'SickBayArea_ID', sourceKey: 'SickBayAreaID'})
     SickBayArea.hasMany(SickBayAttendance, {foreignKey: 'SickBayArea_ID', sourceKey: 'SickBayAreaID'})
+    SickBayArea.hasMany(SickBayMedicationControlled, {foreignKey: 'SickBayArea_ID', sourceKey: 'SickBayAreaID'})
     SickBayNurseArea.hasMany(User, {foreignKey: 'matricula', sourceKey: 'MatriculaNurse'})
     SickBayAttendanceType.hasMany(SickBayAttendance, {foreignKey: 'SickBayAttendanceType_ID', sourceKey: 'SickBayAttendanceTypeID'})
     SickBayAttendance.hasMany(SickBayAttendanceMedication, {foreignKey: 'SickBayAttendance_ID', sourceKey: 'SickBayAttendanceID'})
@@ -72,6 +73,7 @@ function Association() {
     SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula3', targetKey: 'matricula'})
     SickBayMedicationSchedule.belongsTo(User, {foreignKey: 'Matricula4', targetKey: 'matricula'})
     SickBayMedicationControlled.belongsTo(SchoolStudent, {foreignKey: 'Student_Matricula', targetKey: 'Matricula'})
+    SickBayMedicationControlled.belongsTo(SickBayArea, {foreignKey: 'SickBayArea_ID', targetKey: 'SickBayAreaID'})
   }
 }
 
