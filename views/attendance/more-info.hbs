@@ -76,10 +76,10 @@
         </tr>
       </thead>
       <tbody>
-        {{#each retorno}}
+        {{#each attendance.SickBayReturnAttendances}}
           <tr>
             <td>{{Schedule}}</td>
-            <td>{{Nurse}}</td>
+            <td>{{toTitleCase usuario.nomeusuario}}</td>
             <td>{{ReturnReason}}</td>
           </tr>
         {{/each}}

@@ -8,6 +8,7 @@ const satc = require(process.env.PWD + '/controls/SickBayAttendanceTypeControl')
 const sbrc = require(process.env.PWD + '/controls/SickBayRemedyControl')
 const umc = require(process.env.PWD + '/controls/UnitOfMeasureControl')
 const sbac = require(process.env.PWD + '/controls/SickBayAttendanceControl')
+const sbrac = require(process.env.PWD + '/controls/SickBayReturnAttendanceControl')
 const moment = require('moment')
 
 const router = express.Router()
@@ -39,7 +40,6 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
   }
   res.json({ redirect: '/attendance' })
 }).post('/more-info', sbac.getById, function(req, res, next) {
-  console.log(req.body)
   res.render('attendance/more-info', {
     sess: req.session,
     redirectUrl: req.originalUrl,
@@ -47,14 +47,13 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
   })
 }).post('/find', sbac.get, function(req, res, next) {
 // }).post('/find', sbac.findByFilter, function(req, res, next) {
-  console.log(req.body)
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
     attendances: req.attendances  //atendimentofiltrado
   })
-}).post('/save-return', function(req, res, next) {
-  res.json(req.body)
+}).post('/save-return', sbrac.new, function(req, res, next) {
+  res.json(req.returnAttendance)
 })
 
 module.exports = router

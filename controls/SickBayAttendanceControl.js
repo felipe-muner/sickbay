@@ -8,6 +8,7 @@ const UnitOfMeasure = require(process.env.PWD + '/models/UnitOfMeasure')
 const SickBayAttendanceType = require(process.env.PWD + '/models/SickBayAttendanceType')
 const SickBayArea = require(process.env.PWD + '/models/SickBayArea')
 const User = require(process.env.PWD + '/models/User')
+const SickBayReturnAttendance = require(process.env.PWD + '/models/SickBayReturnAttendance')
 
 function SickBayAttendanceControl() {
   this.new = function(req, res, next) {
@@ -89,11 +90,18 @@ function SickBayAttendanceControl() {
           model: SickBayArea
         }, {
           model: User
+        }, {
+          model: SickBayReturnAttendance,
+          include: { model: User }
       }],
       where: {SickBayAttendanceID:req.body.SickBayAttendanceID}
     }).then(attendance => {
-
       attendance.dataValues.Schedule = moment(attendance.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+
+      attendance.dataValues.SickBayReturnAttendances
+        .map((e) => {
+          e.dataValues.Schedule = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+        })
 
       req.attendance = attendance
       next()
