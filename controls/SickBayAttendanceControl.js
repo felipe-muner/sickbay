@@ -73,6 +73,32 @@ function SickBayAttendanceControl() {
       next()
     }).catch(err => { next(err) })
   }
+
+  this.getById = function (req, res, next){
+    SickBayAttendance.findOne({
+      include: [{
+          model: SickBayAttendanceMedication,
+          include: [{
+            model: SickBayRemedy
+          }, {
+            model: UnitOfMeasure
+          }]
+        }, {
+          model: SickBayAttendanceType
+        }, {
+          model: SickBayArea
+        }, {
+          model: User
+      }],
+      where: {SickBayAttendanceID:req.body.SickBayAttendanceID}
+    }).then(attendance => {
+
+      attendance.dataValues.Schedule = moment(attendance.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+
+      req.attendance = attendance
+      next()
+    }).catch(err => { next(err) })
+  }
 }
 
 module.exports = new SickBayAttendanceControl()
