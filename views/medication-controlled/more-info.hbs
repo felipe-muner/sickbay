@@ -1,6 +1,13 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'list'}}}</div>
   <div class="panel-body">
+    <div class="row" style="margin-bottom:10px;">
+      <div class="col-sm-1">
+        <a href="/medication-controlled">
+          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">Voltar</button>
+        </a>
+      </div>
+    </div>
     <table class="table">
       <tr>
         <td style="width:15%;">student</td>
@@ -30,9 +37,12 @@
         <td style="width:15%;">allergy</td>
         <td style="width:85%;" colspan="3">{{medCtrl.SchoolStudent.Alergia}}</td>
       </tr>
+      <tr>
+        <td style="width:100%;" colspan="4"></td>
+      </tr>
     </table>
 
-    <table class="table table-hover table-striped table-bordered styleTableICT" style="margin-top:10px;">
+    <table class="table table-hover table-striped table-bordered styleTableICT" style="margin-top:10px;" data-medication-controlled-id="{{medCtrl.SickBayMedicationControlledID}}">
       <thead>
         <tr>
           <th>Data</th>
@@ -45,7 +55,7 @@
       <tbody>
         {{#each medCtrl.SickBayMedicationSchedules}}
         <tr data-sick-bay-medication-schedule-id="{{SickBayMedicationScheduleID}}">
-          <td class="text-center">{{MedicationDate}}</td>
+          <td class="text-center">{{MedicationDateFormated}}</td>
           {{#if Ch1}}
             <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
           {{else}}
@@ -87,10 +97,9 @@
     $('[data-toggle="tooltip"]').tooltip()
 
     $('.marcarMedicacao').click(function(e){
-      console.log($(this).data('hr'))
-      console.log($(this).closest('tr').data('sick-bay-medication-schedule-id'))
-
+      debugger
       let dataSend = {
+        SickBayMedicationControlledID: $(this).closest('table').data('medication-controlled-id'),
         SickBayMedicationScheduleID: $(this).closest('tr').data('sick-bay-medication-schedule-id'),
         Hr: $(this).data('hr')
       }
@@ -101,7 +110,15 @@
         data: dataSend,
         dataType:'json',
         success: function(data) {
-          console.log(data)
+          let form = document.createElement("form")
+          form.method = "POST"
+          form.action = "/medication-controlled/more-info"
+          var campo1 = document.createElement("input")
+          campo1.name= 'MedicationControlledID'
+          campo1.value= data.SickBayMedicationControlledID
+          form.appendChild(campo1)
+          document.body.appendChild(form)
+          form.submit()
         }
       })
 

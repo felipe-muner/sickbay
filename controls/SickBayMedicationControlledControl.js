@@ -71,12 +71,9 @@ function SickBayMedicationControlledControl() {
       where: {SickBayMedicationControlledID: req.body.MedicationControlledID}
     }).then( medCtrl => {
 
-      medCtrl.SickBayMedicationSchedules.map((e) => {
-        e.dataValues.MedicationDate = moment(e.dataValues.MedicationDate).format('DD/MM/YYYY')
+      medCtrl.SickBayMedicationSchedules.map(obj => {
+        obj.MedicationDateFormated = moment(obj.MedicationDate).format('DD/MM/YYYY')
       })
-
-
-      debugger
 
       req.medCtrl = medCtrl
       next()
