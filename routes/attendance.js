@@ -38,11 +38,12 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     styleMsg: 'alert-success'
   }
   res.json({ redirect: '/attendance' })
-}).post('/more-info', function(req, res, next) {
+}).post('/more-info', sbac.getById, function(req, res, next) {
   console.log(req.body)
   res.render('attendance/more-info', {
     sess: req.session,
-    redirectUrl: req.originalUrl
+    redirectUrl: req.originalUrl,
+    attendance: req.attendance
   })
 }).post('/find', sbac.get, function(req, res, next) {
 // }).post('/find', sbac.findByFilter, function(req, res, next) {
@@ -52,6 +53,8 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     redirectUrl: req.originalUrl,
     attendances: req.attendances  //atendimentofiltrado
   })
+}).post('/save-return', function(req, res, next) {
+  res.json(req.body)
 })
 
 module.exports = router
