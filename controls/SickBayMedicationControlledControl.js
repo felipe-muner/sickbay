@@ -60,6 +60,29 @@ function SickBayMedicationControlledControl() {
       next()
     }).catch(err => {next(err)})
   }
+
+  this.getById = function(req, res, next){
+    SickBayMedicationControlled.findOne({
+      include:[{
+        model: SickBayMedicationSchedule
+      },{
+        model: SchoolStudent
+      }],
+      where: {SickBayMedicationControlledID: req.body.MedicationControlledID}
+    }).then( medCtrl => {
+
+      medCtrl.SickBayMedicationSchedules.map((e) => {
+        e.dataValues.MedicationDate = moment(e.dataValues.MedicationDate).format('DD/MM/YYYY')
+      })
+
+
+      debugger
+
+      req.medCtrl = medCtrl
+      next()
+    }).catch(err => {next(err)})
+  }
+
 }
 
 module.exports = new SickBayMedicationControlledControl()

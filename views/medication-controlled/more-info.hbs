@@ -1,11 +1,36 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'list'}}}</div>
   <div class="panel-body">
-    <table class="table table-hover table-striped styleTableICT">
+    <table class="table">
+      <tr>
+        <td style="width:15%;">student</td>
+        <td style="width:35%;">{{medCtrl.SchoolStudent.Nome}}</td>
+        <td style="width:15%;">matricula</td>
+        <td style="width:35%;">{{medCtrl.SchoolStudent.Matricula}}</td>
+      </tr>
+      <tr>
+        <td style="width:15%;">turma</td>
+        <td style="width:35%;">{{medCtrl.SchoolStudent.Turma}}</td>
+        <td style="width:15%;">serie</td>
+        <td style="width:35%;">{{medCtrl.SchoolStudent.Serie}}</td>
+      </tr>
+      <tr>
+        <td style="width:15%;">doctorName</td>
+        <td style="width:35%;">{{medCtrl.DoctorName}}</td>
+        <td style="width:15%;">doctorContact</td>
+        <td style="width:35%;">{{medCtrl.DoctorContact}}</td>
+      </tr>
+      <tr>
+        <td style="width:15%;">responsible</td>
+        <td style="width:35%;">{{toTitleCase medCtrl.Responsible}}</td>
+        <td style="width:15%;">note</td>
+        <td style="width:35%;">{{medCtrl.Note}}</td>
+      </tr>
+    </table>
+
+    <table class="table table-hover table-striped styleTableICT" style="margin-top:10px;">
       <thead>
         <tr>
-          <th>Atendimento Nº</th>
-          <th>Aluno</th>
           <th>Data</th>
           <th>Hora 1</th>
           <th>Hora 2</th>
@@ -14,18 +39,47 @@
         </tr>
       </thead>
       <tbody>
-        {{#each scheduleControlled}}
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        {{#each medCtrl.SickBayMedicationSchedules}}
+        <tr data-sick-bay-medication-schedule-id="{{SickBayMedicationScheduleID}}">
+          <td class="text-center">{{MedicationDate}}</td>
+          {{#if Ch1}}
+            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
+          {{else}}
+            {{#if Hr1}}
+              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr1}}</td>
+            {{/if}}
+          {{/if}}
+          {{#if Ch2}}
+            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr2}} - {{Matricula2}}">{{Hr2}}</td>
+          {{else}}
+            {{#if Hr2}}
+              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr2}}</td>
+            {{/if}}
+          {{/if}}
+          {{#if Ch3}}
+            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr3}} - {{Matricula3}}">{{Hr3}}</td>
+          {{else}}
+            {{#if Hr3}}
+              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr3}}</td>
+            {{/if}}
+          {{/if}}
+          {{#if Ch4}}
+            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr4}} - {{Matricula4}}">{{Hr4}}</td>
+          {{else}}
+            {{#if Hr4}}
+              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr4}}</td>
+            {{/if}}
+          {{/if}}
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
 </div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip()
+  </script>
+{{/section}}
