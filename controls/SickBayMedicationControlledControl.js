@@ -8,6 +8,7 @@ const SchoolStudent = require(process.env.PWD + '/models/SchoolStudent')
 function SickBayMedicationControlledControl() {
   this.new = function(req, res, next) {
     req.body.Nurse_Matricula = req.session.enrollment
+    req.body.SickBayArea_ID = req.session.sickBayAreaID
     req.body.Hr2 = req.body.Hr2 !== '' ? req.body.Hr2 : null
     req.body.Hr3 = req.body.Hr3 !== '' ? req.body.Hr3 : null
     req.body.Hr4 = req.body.Hr4 !== '' ? req.body.Hr4 : null
@@ -51,6 +52,9 @@ function SickBayMedicationControlledControl() {
           e.dataValues.End = moment(e.dataValues.End).format('DD/MM/YYYY')
         })
 
+      if(!req.session.allUnits) {
+        medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      }
 
       req.medCtrl = medCtrl
       next()

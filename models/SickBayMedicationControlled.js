@@ -25,7 +25,14 @@ const SickBayMedicationControlled = sequelize.define('SickBayMedicationControlle
   Note: Sequelize.TEXT,
   Responsible: Sequelize.STRING,
   DoctorName: Sequelize.STRING,
-  DoctorContact: Sequelize.STRING
+  DoctorContact: Sequelize.STRING,
+  SickBayArea_ID: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'SickBayArea',
+      key: 'SickBayAreaID'
+    }
+  }
 }, {
   timestamps: false,
   freezeTableName: true
