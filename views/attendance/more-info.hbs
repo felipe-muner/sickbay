@@ -1,42 +1,42 @@
 <div class="panel panel-primary">
-  <div class="panel-heading"> Informações Completas</div>
+  <div class="panel-heading">{{i18n 'generalInformation'}} - {{i18n 'attendance'}} {{attendance.SickBayAttendanceID}}</div>
   <div class="panel-body">
     <div class="row" style="margin-bottom:10px;">
       <div class="col-sm-1">
         <a href="/attendance">
-          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">Voltar</button>
+          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">{{i18n 'back'}}</button>
         </a>
       </div>
     </div>
     <table class="table">
       <tr>
-        <td style="width:15%;">typePatient</td>
+        <td style="width:15%;">{{i18n 'typePatient'}}</td>
         <td style="width:35%;">{{i18n attendance.PatientType}}</td>
-        <td style="width:15%;">namePatient</td>
+        <td style="width:15%;">{{i18n 'patient'}}</td>
         <td style="width:35%;">{{attendance.PatientName}} - {{attendance.Patient_Matricula}}</td>
       </tr>
       <tr>
-        <td style="width:15%;">class</td>
+        <td style="width:15%;">{{i18n 'class'}}</td>
         <td style="width:35%;">{{attendance.Class}}</td>
-        <td style="width:15%;">yearGroup</td>
+        <td style="width:15%;">{{i18n 'yearGroup'}}</td>
         <td style="width:35%;">{{attendance.YearGroup}}</td>
       </tr>
       <tr>
-        <td style="width:15%;">typeAttendance</td>
+        <td style="width:15%;">{{i18n 'typeAttendance'}}</td>
         <td style="width:35%;">{{i18n attendance.SickBayAttendanceType.Name}}</td>
-        <td style="width:15%;">schedule</td>
+        <td style="width:15%;">{{i18n 'schedule'}}</td>
         <td style="width:35%;">{{attendance.Schedule}}</td>
       </tr>
       <tr>
-        <td style="width:15%;">matriculaNursery</td>
+        <td style="width:15%;">{{i18n 'nurse'}}</td>
         <td style="width:35%;">{{toTitleCase attendance.usuario.nomeusuario}}</td>
-        <td style="width:15%;">sickbay</td>
+        <td style="width:15%;">{{i18n 'sickBay'}}</td>
         <td style="width:35%;">{{attendance.SickBayArea.Name}}</td> <!-- nome da enfermaria -->
       </tr>
       <tr>
-        <td style="width:15%;">reason</td>
+        <td style="width:15%;">{{i18n 'reason'}}</td>
         <td style="width:35%;">{{attendance.Reason}}</td>
-        <td style="width:15%;">procedure</td>
+        <td style="width:15%;">{{i18n 'procedure'}}</td>
         <td style="width:35%;">{{attendance.Procedure}}</td>
       </tr>
       <tr>
@@ -47,12 +47,12 @@
     <table class="table styleTableICT">
       <thead>
         <tr>
-          <th colspan="3">medication</th>
+          <th colspan="3">{{i18n 'medication'}}</th>
         </tr>
         <tr>
-          <th>name</th>
-          <th>UnitOfMeasure </th>
-          <th>amount</th>
+          <th>{{i18n 'name'}}</th>
+          <th>{{i18n 'unitofmeasure'}}</th>
+          <th>{{i18n 'amount'}}</th>
         </tr>
       </thead>
       <tbody>
@@ -69,7 +69,12 @@
     <table class="table styleTableICT" style="margin-top:10px;" data-sick-bay-attendance-id="{{attendance.SickBayAttendanceID}}" id="attendanceReturn">
       <thead>
         <tr>
-          <th colspan="3">Retorno</th>
+          <th colspan="3">{{i18n 'return'}}</th>
+        </tr>
+        <tr>
+          <th>{{i18n 'schedule'}}</th>
+          <th>{{i18n 'nurse'}}</th>
+          <th>{{i18n 'reason'}}</th>
         </tr>
       </thead>
       <tbody>
@@ -84,9 +89,9 @@
       <tfoot>
         <tr>
           <td colspan="2">
-            <textarea name="ReturnReason" class="form-control"></textarea>
+            <textarea name="ReturnReason" class="form-control" placeholder=" {{i18n 'reason'}}"></textarea>
           <td>
-            <button onclick="addRetorno(this)" style="margin-top:7px;" class="btn btn-success btn-xs" type="button" name="button">Adicionar Retorno</button>
+            <button onclick="addRetorno(this)" style="margin-top:7px;" class="btn btn-success btn-xs" type="button" name="button">{{i18n 'addReturn'}}</button>
           </td>
         </tr>
       </tfoot>

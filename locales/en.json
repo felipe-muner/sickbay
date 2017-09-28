@@ -72,5 +72,22 @@
 	"amount": "Amount",
 	"Student": "Student",
 	"Employer": "Employer",
-	"Other": "Other"
+	"Other": "Other",
+	"name": "Name",
+	"reason": "Reason",
+	"procedure": "Procedure",
+	"schedule": "Schedule",
+	"type": "Type",
+	"patient": "Patient",
+	"detailing": "Detailing",
+	"filter": "Filter",
+	"search": "Search",
+	"typePatient": "Patient Type",
+	"class": "Class",
+	"yearGroup": "Year Group",
+	"typeAttendance": "Attendance Type",
+	"return": "Return",
+	"addReturn": "Add Return",
+	"generalInformation": "General Information",
+	"back": "Back"
 }

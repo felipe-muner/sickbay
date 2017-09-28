@@ -72,5 +72,22 @@
 	"amount": "Quantidade",
 	"Student": "Estudante",
 	"Employer": "Funcionário",
-	"Other": "Outro"
+	"Other": "Outro",
+	"name": "Nome",
+	"reason": "Motivo",
+	"procedure": "Procedimento",
+	"schedule": "Horário",
+	"type": "Tipo",
+	"patient": "Paciente",
+	"detailing": "Detalhamento",
+	"filter": "Filtrar",
+	"search": "Pesquisar",
+	"typePatient": "Tipo de Paciente",
+	"class": "Classe",
+	"yearGroup": "Série",
+	"typeAttendance": "Tipo de Atendimento",
+	"return": "Retorno",
+	"addReturn": "Adicionar Retorno",
+	"generalInformation": "Informações Gerais",
+	"back": "Voltar"
 }
