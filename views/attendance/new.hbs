@@ -1,5 +1,5 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">{{{i18n 'new'}}}</div>
+  <div class="panel-heading">{{i18n 'new'}} {{i18n 'attendance'}}</div>
   <div class="panel-body">
     <form id="newAttendance">
       <div class="row">
@@ -33,7 +33,7 @@
             </select>
           </div>
           <div class="groupPatient groupOther" style="display:none;">
-            <input type="text" name="Patient" value="" class="form-control" placeholder=" Nome:">
+            <input type="text" name="Patient" value="" class="form-control" placeholder=" {{i18n 'name'}}:">
           </div>
         </div>
         <div class="col-sm-4">
@@ -83,18 +83,18 @@
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Note" class="form-control" placeholder=" Motivo" required></textarea>
+          <textarea name="Note" class="form-control" placeholder=" {{i18n 'reason'}}" required></textarea>
         </div>
       </div>
 
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <textarea name="Procedure" class="form-control" placeholder=" Procedimento" required></textarea>
+          <textarea name="Procedure" class="form-control" placeholder=" {{i18n 'procedure'}}" required></textarea>
         </div>
       </div>
 
       <div class="text-right row" style="margin-top:10px;">
-        <input type="submit" name="" value="Save" class="btn btn-success">
+        <input type="submit" name="" value="{{i18n 'save'}}" class="btn btn-success">
       </div>
     </form>
   </div>
