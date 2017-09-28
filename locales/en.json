@@ -69,5 +69,8 @@
 	"visit": "Visit to sick bay",
 	"medication": "Medication",
 	"unitofmeasure": "Unit of Measure",
-	"amount": "Amount"
+	"amount": "Amount",
+	"Student": "Student",
+	"Employer": "Employer",
+	"Other": "Other"
 }

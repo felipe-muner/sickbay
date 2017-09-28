@@ -70,5 +70,7 @@
 	"medication": "Medicamento",
 	"unitofmeasure": "Unidade de medida",
 	"amount": "Quantidade",
-	"Student": "Student"
+	"Student": "Estudante",
+	"Employer": "Funcionário",
+	"Other": "Outro"
 }
