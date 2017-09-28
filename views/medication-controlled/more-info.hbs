@@ -46,28 +46,28 @@
             <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
           {{else}}
             {{#if Hr1}}
-              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr1}}</td>
+              <td data-hr="Hr1" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr1}}</td>
             {{/if}}
           {{/if}}
           {{#if Ch2}}
             <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr2}} - {{Matricula2}}">{{Hr2}}</td>
           {{else}}
             {{#if Hr2}}
-              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr2}}</td>
+              <td data-hr="Hr2" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr2}}</td>
             {{/if}}
           {{/if}}
           {{#if Ch3}}
             <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr3}} - {{Matricula3}}">{{Hr3}}</td>
           {{else}}
             {{#if Hr3}}
-              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr3}}</td>
+              <td data-hr="Hr3" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr3}}</td>
             {{/if}}
           {{/if}}
           {{#if Ch4}}
             <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr4}} - {{Matricula4}}">{{Hr4}}</td>
           {{else}}
             {{#if Hr4}}
-              <td class="text-center" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr4}}</td>
+              <td data-hr="Hr4" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="Clique para efetivar medicaçāo">{{Hr4}}</td>
             {{/if}}
           {{/if}}
         </tr>
@@ -81,5 +81,26 @@
 {{#section 'script'}}
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
+
+    $('.marcarMedicacao').click(function(e){
+      console.log($(this).data('hr'))
+      console.log($(this).closest('tr').data('sick-bay-medication-schedule-id'))
+
+      let dataSend = {
+        SickBayMedicationScheduleID: $(this).closest('tr').data('sick-bay-medication-schedule-id'),
+        Hr: $(this).data('hr')
+      }
+
+      $.ajax({
+        url: '/medication-controlled/update-medication',
+        type: 'POST',
+        data: dataSend,
+        dataType:'json',
+        success: function(data) {
+          console.log(data)
+        }
+      })
+
+    })
   </script>
 {{/section}}

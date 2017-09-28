@@ -51,6 +51,12 @@ router.get('/new', ssc.get, function(req, res, next) {
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl
   })
+}).post('/update-medication', sbmcc.get, function(req, res, next) {
+// }).post('/find', sbmcc.findByFilter, function(req, res, next) {
+  console.log('vou atualizar')
+  console.log(req.body)
+  console.log('vou atualizar')
+  res.json(req.body)
 })
 
 module.exports = router
