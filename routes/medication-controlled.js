@@ -27,7 +27,7 @@ router.get('/new', ssc.get, function(req, res, next) {
   })
 }).post('/new', sbmcc.new, function(req, res, next) {
   req.session.flashMsg = {
-    strongMsg: 'Medicamento Controlado',
+    strongMsg: __('medicationControlled'),
     txtMsg: __('messages.sucessCreate'),
     styleMsg: 'alert-success'
   }
@@ -38,7 +38,7 @@ router.get('/new', ssc.get, function(req, res, next) {
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl
   })
-}).post('/find', sbmcc.get, function(req, res, next) {
+}).post('/', sbmcc.get, function(req, res, next) {
 // }).post('/find', sbmcc.findByFilter, function(req, res, next) {
   res.render('medication-controlled/list', {
     sess: req.session,
