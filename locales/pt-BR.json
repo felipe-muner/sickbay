@@ -89,7 +89,12 @@
 	"return": "Retorno",
 	"addReturn": "Adicionar Retorno",
 	"generalInformation": "Informações Gerais",
-	"back": "Voltar",
 	"initialDate": "Data inicial",
-	"finalDate": "Data final"
+	"finalDate": "Data final",
+	"Cashman Botafogo": "Cashman Botafogo",
+	"Nursery Botafogo": "Nursery Botafogo",
+	"Pré-Nursery Botafogo": "Pré-Nursery Botafogo",
+	"Urca": "Urca",
+	"Principal Barra": "Principal Barra",
+	"Piscina Barra": "Piscina Barra"
 }
