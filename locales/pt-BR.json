@@ -89,5 +89,7 @@
 	"return": "Retorno",
 	"addReturn": "Adicionar Retorno",
 	"generalInformation": "Informações Gerais",
-	"back": "Voltar"
+	"back": "Voltar",
+	"initialDate": "Data inicial",
+	"finalDate": "Data final"
 }

@@ -24,13 +24,14 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     UnitOfMeasure: req.UnitOfMeasure,
     momentAtual: moment().format('YYYY-MM-DDT00:00')
   })
-}).get('/', sbac.get, function(req, res, next) {
+}).get('/', sbac.get, satc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
     attendances: req.attendances,
+    attendanceType: req.AttendanceType,
     flashMsg
   })
 }).post('/new', sbac.new, function(req, res, next) {
@@ -45,12 +46,12 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     redirectUrl: req.originalUrl,
     attendance: req.attendance
   })
-}).post('/find', sbac.get, function(req, res, next) {
-// }).post('/find', sbac.findByFilter, function(req, res, next) {
+}).post('/', sbac.findByFilter, satc.get, function(req, res, next) {
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
-    attendances: req.attendances  //atendimentofiltrado
+    attendances: req.attendances,
+    attendanceType: req.AttendanceType
   })
 }).post('/save-return', sbrac.new, function(req, res, next) {
   res.json(req.returnAttendance)

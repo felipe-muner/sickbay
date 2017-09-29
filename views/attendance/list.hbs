@@ -42,10 +42,14 @@
         {{#each attendances}}
           <tr data-sick-bay-attendance-id="{{SickBayAttendanceID}}">
             <td class="text-center">{{SickBayAttendanceID}}</td>
-            <td class="text-center">{{Schedule}}</td>
+            <td class="text-center">{{ScheduleFormated}}</td>
             <td>{{i18n SickBayAttendanceType.Name}}</td>
-            <td>{{PatientName}}</td>
-            <td class="text-center">{{Nurse_Matricula}}</td>
+            {{#if Patient_Matricula}}
+              <td>{{Patient_Matricula}} - {{toTitleCase PatientName}}</td>
+            {{else}}
+              <td>{{toTitleCase PatientName}}</td>
+            {{/if}}
+            <td class="text-center">{{usuario.matricula}} - {{toTitleCase usuario.nomeusuario}}</td>
             <td>{{Reason}}</td>
             <td>{{Procedure}}</td>
             <td class="text-center">
@@ -66,25 +70,44 @@
         <h4 class="modal-title" id="myModalLabel">{{i18n 'filter'}} {{i18n 'attendance'}}</h4>
       </div>
       <div class="modal-body">
-        <form action="/attendance/find" method="post">
+        <form action="/attendance" method="post">
           <div class="row">
-            <div class="col-sm-3">
-              <label for="">{{i18n 'enrollment'}}</label>
-              <input type="number" name="matricula" class="form-control">
+            <div class="col-sm-4">
+              <label for="">{{i18n 'patient'}} - {{i18n 'enrollment'}}</label>
+              <input type="number" name="patientMatricula" class="form-control">
             </div>
-            <div class="col-sm-9">
-              <label for="">{{i18n 'name'}}</label>
-              <input type="text" name="name" class="form-control">
+            <div class="col-sm-8">
+              <label for="">{{i18n 'patient'}} - {{i18n 'name'}}</label>
+              <input type="text" name="patientName" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label for="">{{i18n 'nurse'}} - {{i18n 'enrollment'}}</label>
+              <input type="number" name="nurseMatricula" class="form-control">
+            </div>
+            <div class="col-sm-8">
+              <label for="">{{i18n 'nurse'}} - {{i18n 'name'}}</label>
+              <input type="text" name="nurseName" class="form-control">
             </div>
           </div>
           <div class="row" style="margin-top:5px;">
             <div class="col-sm-4">
-              <label for="">{{i18n 'schedule'}}</label>
-              <input type="datetime-local" name="schedule" class="form-control">
+              <label for="">{{i18n 'initialDate'}}</label>
+              <input type="date" name="initialDate" class="form-control" required>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-4">
+              <label for="">{{i18n 'finalDate'}}</label>
+              <input type="date" name="finalDate" class="form-control" required>
+            </div>
+            <div class="col-sm-4">
               <label for="">{{i18n 'type'}}</label>
-              <input type="text" name="type" class="form-control">
+              <select class="form-control" name="type">
+                <option value="">{{i18n 'typeAttendance'}}</option>
+                {{#each attendanceType}}
+                  <option value="{{SickBayAttendanceTypeID}}">{{i18n Name}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
           <div class="row text-right" style="margin-top:10px;">

@@ -101,21 +101,31 @@
 
 {{#section 'script'}}
   <script type="text/javascript">
-    function addRetorno(el){
+    let listValidations = {}
+    loadListValidations()
 
-      let dataSend = {
-        SickBayAttendance_ID: $(el).closest('table').data('sick-bay-attendance-id'),
-        ReturnReason: $(el).closest('table').find('[name=ReturnReason]').val()
-      }
-      $.ajax({
-        url: '/attendance/save-return',
-        type: 'POST',
-        data: dataSend,
-        dataType:'json',
-        success: function(data){
-          $('#attendanceReturn tbody').append('<tr><td>'+data.Schedule+'</td><td>'+data.Nurse+'</td><td>'+data.ReturnReason+'</td></tr>')
+    function addRetorno(el){
+      if($(el).closest('table').find('[name=ReturnReason]').val().trim() !== '') {
+        let dataSend = {
+          SickBayAttendance_ID: $(el).closest('table').data('sick-bay-attendance-id'),
+          ReturnReason: $(el).closest('table').find('[name=ReturnReason]').val()
         }
-      })
+        $.ajax({
+          url: '/attendance/save-return',
+          type: 'POST',
+          data: dataSend,
+          dataType:'json',
+          success: function(data){
+            $('#attendanceReturn tbody').append('<tr><td>'+data.Schedule+'</td><td>'+data.Nurse+'</td><td>'+data.ReturnReason+'</td></tr>')
+          }
+        })
+      } else {
+        swal({
+          title: "",
+          text: listValidations.emptyReturnReason,
+          type: "error"
+        })
+      }
     }
   </script>
 {{/section}}

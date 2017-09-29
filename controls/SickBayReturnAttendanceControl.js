@@ -11,6 +11,7 @@ toTitleCase = function(str) {
 function SickBayReturnAttendanceControl() {
   this.new = function(req, res, next) {
     req.body.Nurse_Matricula = req.session.enrollment
+    req.body.ReturnReason = req.body.ReturnReason.trim() !== '' ? req.body.ReturnReason : null
     SickBayReturnAttendance.create(req.body).then(returnAttendance => {
       SickBayReturnAttendance.findOne({
         include: { model: User },
