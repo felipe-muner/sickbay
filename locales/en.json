@@ -32,7 +32,8 @@
 		"unauthorized": "Your profile does not have permission for this functionality.",
 		"sucessAllocate": "successfully allocated!",
 		"allottedSickBay": "You are allotted to the sick bay:",
-		"notAllottedSickBay": "You are not allocated in an sick bay. Get in touch with ICT."
+		"notAllottedSickBay": "You are not allocated in an sick bay. Get in touch with ICT.",
+		"effectMedication": "Click to effect medication"
 	},
 	"configuration": "Settings",
 	"newProfile": "New Profile",
@@ -89,7 +90,14 @@
 	"return": "Return",
 	"addReturn": "Add Return",
 	"generalInformation": "General Information",
-	"back": "Back",
 	"initialDate": "Initial date",
-	"finalDate": "Final date"
+	"finalDate": "Final date",
+	"contUse": "Continuous Use",
+	"tempUse": "Temporary Use",
+	"doctorName": "Doctor Name",
+	"doctorContact": "Doctor Contact",
+	"responsibleMedication": "Responsible for the medication",
+	"medAndObs": "Medication and Observation",
+	"allergy": "Allergy",
+	"date": "Date"
 }
