@@ -64,6 +64,7 @@ function SickBayAttendanceControl() {
       attendances
         .map((e) => {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+          e.allUnits = req.session.allUnits
         })
 
       if(!req.session.allUnits) {
@@ -71,6 +72,7 @@ function SickBayAttendanceControl() {
       }
 
       req.attendances = attendances
+      req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
   }
@@ -128,6 +130,7 @@ function SickBayAttendanceControl() {
       attendances
         .map((e) => {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+          e.allUnits = req.session.allUnits
         })
 
       attendances = attendances.filter(e => (moment(e.dataValues.Schedule).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Schedule).isSameOrBefore(req.body.finalDate,'day')))
@@ -138,8 +141,10 @@ function SickBayAttendanceControl() {
       if(req.body.nurseMatricula !== '') attendances = attendances.filter(e => e.dataValues.usuario.matricula === parseInt(req.body.nurseMatricula))
       if(req.body.nurseName !== '') attendances = attendances.filter(e => e.dataValues.usuario.nomeusuario.toLowerCase() === req.body.nurseName.toLowerCase())
       if(req.body.type !== '') attendances = attendances.filter(e => e.dataValues.SickBayAttendanceType_ID === parseInt(req.body.type))
+      if(req.body.sickBay !== '') attendances = attendances.filter(e => e.dataValues.SickBayArea_ID === parseInt(req.body.sickBay))
 
       req.attendances = attendances
+      req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
   }

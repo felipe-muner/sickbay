@@ -30,6 +30,9 @@
         <tr>
           <th>Nº</th>
           <th>{{i18n 'schedule'}}</th>
+          {{#if allUnits}}
+            <th>{{i18n 'sickBay'}}</th>
+          {{/if}}
           <th>{{i18n 'type'}}</th>
           <th>{{i18n 'patient'}}</th>
           <th>{{i18n 'nurse'}}</th>
@@ -43,6 +46,9 @@
           <tr data-sick-bay-attendance-id="{{SickBayAttendanceID}}">
             <td class="text-center">{{SickBayAttendanceID}}</td>
             <td class="text-center">{{ScheduleFormated}}</td>
+            {{#if allUnits}}
+              <td>{{SickBayArea.Name}}</td>
+            {{/if}}
             <td>{{i18n SickBayAttendanceType.Name}}</td>
             {{#if Patient_Matricula}}
               <td>{{Patient_Matricula}} - {{toTitleCase PatientName}}</td>
@@ -110,6 +116,19 @@
               </select>
             </div>
           </div>
+          {{#if allUnits}}
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="">{{i18n 'sickBay'}}</label>
+              <select class="form-control" name="sickBay">
+                <option value="">{{i18n 'sickBay'}}</option>
+                {{#each sickBayAreas}}
+                  <option value="{{SickBayAreaID}}">{{Name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          {{/if}}
           <div class="row text-right" style="margin-top:10px;">
             <div class="col-sm-12">
               <input type="submit" value="{{i18n 'search'}}" class="btn btn-success btn-xs">
