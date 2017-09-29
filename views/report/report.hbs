@@ -1,0 +1,63 @@
+{{#if flashMsg}}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert {{flashMsg.styleMsg}} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{flashMsg.strongMsg}}</strong> {{flashMsg.txtMsg}}
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">{{{i18n 'report'}}}</div>
+  <div class="panel-body">
+    <form id="formReport" action="/report/generate" method="post" target="_blank">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="">enfermaria</label>
+          <select id="SickbayArea" name="SickbayArea" class="form-control">
+            <option value="">Todas</option>
+            {{#each SickArea}}
+              <option data-name="{{Name}}" value="{{SickBayAreaID}}">{{Name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <label for="">dataInicial</label>
+          <input type="date" name="StartDate" id="StartDate" value="{{firstDayMonth}}" class="form-control" onkeyup="updateMinToDateField(this);" required>
+        </div>
+        <div class="col-sm-4">
+          <label for="">dataFinal</label>
+          <input type="date" name="EndDate" id="EndDate" value="{{lastDayMonth}}" min="{{firstDayMonth}}" class="form-control" required>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-8">
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="checkbox" name="SickBayAttendanceType_ID" value="1" checked>Incidente interno</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="checkbox" name="SickBayAttendanceType_ID" value="2" checked>Incidente externo</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="checkbox" name="SickBayAttendanceType_ID" value="3" checked>Acidente</label>
+          <label class="checkbox-inline"><input style="margin-right:5px;" type="checkbox" name="SickBayAttendanceType_ID" value="4" checked>Visita à enfermaria</label>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12">
+          <input type="submit" name="" value="Generate Report" class="btn btn-warning">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+
+  function updateMinToDateField(el){
+    $('#EndDate').attr('min', moment($(el).val()).format('YYYY-MM-DD'))
+  }
+
+  </script>
+{{/section}}
