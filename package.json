@@ -26,6 +26,7 @@
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
     "nodemailer": "^4.1.0",
+    "phantomjs-prebuilt": "^2.1.13",
     "sequelize": "^4.8.4",
     "sequelize-cli": "^3.0.0-3",
     "serve-favicon": "~2.4.2"
