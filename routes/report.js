@@ -15,7 +15,7 @@ const moment = require('moment')
 
 const router = express.Router()
 
-router.get('/', sickbayArea.get, function(req, res, next) {
+router.get('/', sickbayArea.get, satc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   console.log('entrei')
@@ -23,12 +23,12 @@ router.get('/', sickbayArea.get, function(req, res, next) {
     sess: req.session,
     redirectUrl: req.originalUrl,
     SickArea: req.sickBayAreas,
+    AttendanceType: req.AttendanceType,
     firstDayMonth: moment().startOf('month').format('YYYY-MM-DD'),
     lastDayMonth: moment().endOf('month').format('YYYY-MM-DD')
   })
-}).post('/generate', rc.generate, function(req, res, next) {
-  console.log('vou gerar')
-  res.download(req.REPsickbay, new Date() + 'report.pdf')
+}).post('/generate', sbac.getBetweenDates, rc.generate, function(req, res, next) {
+  res.download(req.REPsickbay, 'report-sickbay.pdf')
 })
 
 module.exports = router

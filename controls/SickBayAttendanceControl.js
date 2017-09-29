@@ -148,6 +148,31 @@ function SickBayAttendanceControl() {
       next()
     }).catch(err => { next(err) })
   }
+
+  this.getBetweenDates = function(req, res, next) {
+    let query = 'SELECT '+
+                      'UnitSchool, '+
+                      'YearGroup, '+
+                      'Name, '+
+                      'COUNT(Class) as Total '+
+                    'FROM '+
+                      'SickbayAttendance '+
+                    'INNER JOIN SickbayAttendanceType ON SickbayAttendance.SickBayAttendanceType_ID = SickbayAttendanceType.SickBayAttendanceTypeID '+
+                    'WHERE '+
+                      'PatientType = "Student" AND '+
+                      'DATE(Schedule) between $StartDate AND $EndDate '
+    if(req.body.SickbayArea) query = query + 'AND SickBayArea_ID = ' + req.body.SickbayArea
+    query = query + ' GROUP BY Name, UnitSchool, YearGroup;'
+
+    sequelize.query(query,{
+      bind:{StartDate: req.body.StartDate, EndDate: req.body.EndDate},
+      type: sequelize.QueryTypes.SELECT
+    }).then(result => {
+      req.QueryTotal = result
+      next()
+    }).catch(err => { next(err) })
+
+  }
 }
 
 module.exports = new SickBayAttendanceControl()
