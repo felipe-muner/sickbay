@@ -32,7 +32,8 @@
 		"unauthorized": "Seu perfil não tem permissão para esta funcionalidade.",
 		"sucessAllocate": "alocada com sucesso!",
 		"allottedSickBay": "Você está alocado(a) na enfermaria:",
-		"notAllottedSickBay": "Você não está alocado(a) em uma enfermaria. Entrar em contato com o ICT."
+		"notAllottedSickBay": "Você não está alocado(a) em uma enfermaria. Entrar em contato com o ICT.",
+		"effectMedication": "Clique para efetivar medicaçāo"
 	},
 	"configuration": "Configurações",
 	"newProfile": "Novo Perfil",
@@ -89,7 +90,14 @@
 	"return": "Retorno",
 	"addReturn": "Adicionar Retorno",
 	"generalInformation": "Informações Gerais",
-	"back": "Voltar",
 	"initialDate": "Data inicial",
-	"finalDate": "Data final"
+	"finalDate": "Data final",
+	"contUse": "Uso Contínuo",
+	"tempUse": "Uso Temporário",
+	"doctorName": "Nome do Médico",
+	"doctorContact": "Contato do Médico",
+	"responsibleMedication": "Responsável pela medicaçāo",
+	"medAndObs": "Medicação e Observação",
+	"allergy": "Alergia",
+	"date": "Data"
 }

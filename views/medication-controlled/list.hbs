@@ -12,36 +12,36 @@
 {{/if}}
 
 <div class="panel panel-primary">
-  <div class="panel-heading">{{{i18n 'list'}}}</div>
+  <div class="panel-heading">{{i18n 'list'}} {{i18n 'medicationControlled'}}</div>
   <div class="panel-body">
     <div class="row" style="margin-bottom:10px;">
       <div class="col-sm-1">
-        <button style="margin:0px;" type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Filtrar</button>
+        <button style="margin:0px;" type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">{{i18n 'filter'}}</button>
       </div>
       <div class="col-sm-10">
 
       </div>
       <div class="col-sm-1 text-right">
         <a href="/medication-controlled/new">
-          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">Novo</button>
+          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">{{i18n 'new'}}</button>
         </a>
       </div>
     </div>
     <table class="table table-hover table-striped styleTableICT">
       <thead>
         <tr>
-          <th>Atendimento Nº</th>
-          <th>Aluno</th>
-          <th>Data Início</th>
-          <th>Data Fim</th>
-          <th>Hora 1</th>
-          <th>Hora 2</th>
-          <th>Hora 3</th>
-          <th>Hora 4</th>
-          <th>Responsável pela medicaçāo</th>
-          <th>Medicamento/Obs</th>
-          <th>Type</th>
-          <th>Detalhamento</th>
+          <th>Nº</th>
+          <th>{{i18n 'student'}}</th>
+          <th>{{i18n 'initialDate'}}</th>
+          <th>{{i18n 'finalDate'}}</th>
+          <th>{{i18n 'schedule'}} 1</th>
+          <th>{{i18n 'schedule'}} 2</th>
+          <th>{{i18n 'schedule'}} 3</th>
+          <th>{{i18n 'schedule'}} 4</th>
+          <th>{{i18n 'responsibleMedication'}}</th>
+          <th>{{i18n 'medAndObs'}}</th>
+          <th>{{i18n 'type'}}</th>
+          <th>{{i18n 'detailing'}}</th>
         </tr>
       </thead>
       <tbody>
@@ -49,13 +49,13 @@
           <tr data-medication-controlled-id="{{SickBayMedicationControlledID}}">
             <td class="text-center">{{SickBayMedicationControlledID}}</td>
             <td>{{SchoolStudent.Nome}} - {{SchoolStudent.Matricula}}</td>
-            <td>{{Start}}</td>
-            <td>{{End}}</td>
+            <td>{{StartFormated}}</td>
+            <td>{{EndFormated}}</td>
             <td>{{Hr1}}</td>
             <td>{{Hr2}}</td>
             <td>{{Hr3}}</td>
             <td>{{Hr4}}</td>
-            <td>{{Responsible}}</td>
+            <td>{{toTitleCase Responsible}}</td>
             <td>{{Note}}</td>
             <td>{{Type}}</td>
             <td class="text-center">
@@ -73,50 +73,33 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Filtrar Medicamento Controlado</h4>
+        <h4 class="modal-title" id="myModalLabel">{{i18n 'filter'}} {{i18n 'medicationControlled'}}</h4>
       </div>
       <div class="modal-body">
-        <form action="/medication-controlled/find" method="post">
+        <form action="/medication-controlled" method="post">
           <div class="row">
-            <div class="col-sm-3">
-              <label for="">Matricula</label>
-              <input type="number" name="" value="" class="form-control">
+            <div class="col-sm-4">
+              <label for="">{{i18n 'student'}} - {{i18n 'enrollment'}}</label>
+              <input type="number" name="studentMatricula" class="form-control">
             </div>
-            <div class="col-sm-9">
-              <label for="">Nome</label>
-              <input type="text" name="" value="" class="form-control">
+            <div class="col-sm-8">
+              <label for="">{{i18n 'student'}} - {{i18n 'name'}}</label>
+              <input type="text" name="studentName" class="form-control">
             </div>
           </div>
           <div class="row" style="margin-top:5px;">
             <div class="col-sm-6">
-              <label for="">Data Inicial</label>
-              <input type="date" name="Start" value="" class="form-control">
+              <label for="">{{i18n 'initialDate'}}</label>
+              <input type="date" name="initialDate" class="form-control" required>
             </div>
             <div class="col-sm-6">
-              <label for="">Data Final</label>
-              <input type="date" name="End" value="" class="form-control">
-            </div>
-          </div>
-          <div class="row" style="margin-top:5px;">
-            <div class="col-sm-12">
-              <label for="">Medicaçāo</label>
-              <input type="text" name="Medication" value="" class="form-control">
-            </div>
-          </div>
-          <div class="row" style="margin-top:5px;">
-            <div class="col-sm-12">
-              <label for="">Responsável</label>
-              <input type="text" name="Responsavel" value="" class="form-control">
-            </div>
-          </div>
-          <div class="row" style="margin-top:5px;">
-            <div class="col-sm-12">
-
+              <label for="">{{i18n 'finalDate'}}</label>
+              <input type="date" name="finalDate" class="form-control" required>
             </div>
           </div>
           <div class="row text-right" style="margin-top:10px;">
             <div class="col-sm-12">
-              <input type="submit" name="" value="Pesquisar" class="btn btn-success btn-xs">
+              <input type="submit" value="{{i18n 'search'}}" class="btn btn-success btn-xs">
             </div>
           </div>
         </form>
@@ -128,7 +111,6 @@
 
 {{#section 'script'}}
   <script type="text/javascript">
-
     function moreInfo(el){
       let form = document.createElement("form")
       form.method = "POST"
@@ -140,6 +122,5 @@
       document.body.appendChild(form)
       form.submit()
     }
-
   </script>
 {{/section}}

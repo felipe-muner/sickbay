@@ -48,8 +48,8 @@ function SickBayMedicationControlledControl() {
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
-          e.dataValues.Start = moment(e.dataValues.Start).format('DD/MM/YYYY')
-          e.dataValues.End = moment(e.dataValues.End).format('DD/MM/YYYY')
+          e.StartFormated = moment(e.dataValues.Start).format('DD/MM/YYYY')
+          e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
         })
 
       if(!req.session.allUnits) {
@@ -80,6 +80,34 @@ function SickBayMedicationControlledControl() {
     }).catch(err => {next(err)})
   }
 
+  this.findByFilter = function(req,res,next) {
+    SickBayMedicationControlled.findAll({
+      include:[{
+        model: SickBayMedicationSchedule
+      },{
+        model: SchoolStudent
+      }]
+    }).then( medCtrl => {
+      medCtrl
+        .map((e) => {
+          e.StartFormated = moment(e.dataValues.Start).format('DD/MM/YYYY')
+          e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
+        })
+
+      medCtrl = medCtrl.filter(e => {
+        let rangeStart = (moment(e.dataValues.Start).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Start).isSameOrBefore(req.body.finalDate,'day'));
+        let rangeEnd = (moment(e.dataValues.End).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.End).isSameOrBefore(req.body.finalDate,'day'));
+        return (rangeStart || rangeEnd)
+      })
+
+      if(!req.session.allUnits) medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      if(req.body.studentMatricula !== '') medCtrl = medCtrl.filter(e => e.dataValues.SchoolStudent.Matricula === parseInt(req.body.studentMatricula))
+      if(req.body.studentName !== '') medCtrl = medCtrl.filter(e => e.dataValues.SchoolStudent.Nome.replace('  ', ' ').toLowerCase() === req.body.studentName.toLowerCase())
+
+      req.medCtrl = medCtrl
+      next()
+    }).catch(err => {next(err)})
+  }
 }
 
 module.exports = new SickBayMedicationControlledControl()

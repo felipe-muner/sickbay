@@ -137,9 +137,9 @@ function SickBayAttendanceControl() {
 
       if(!req.session.allUnits) attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       if(req.body.patientMatricula !== '') attendances = attendances.filter(e => e.dataValues.Patient_Matricula === parseInt(req.body.patientMatricula))
-      if(req.body.patientName !== '') attendances = attendances.filter(e => e.dataValues.PatientName.toLowerCase() === req.body.patientName.toLowerCase())
+      if(req.body.patientName !== '') attendances = attendances.filter(e => e.dataValues.PatientName.replace('  ', ' ').toLowerCase() === req.body.patientName.toLowerCase())
       if(req.body.nurseMatricula !== '') attendances = attendances.filter(e => e.dataValues.usuario.matricula === parseInt(req.body.nurseMatricula))
-      if(req.body.nurseName !== '') attendances = attendances.filter(e => e.dataValues.usuario.nomeusuario.toLowerCase() === req.body.nurseName.toLowerCase())
+      if(req.body.nurseName !== '') attendances = attendances.filter(e => e.dataValues.usuario.nomeusuario.replace('  ', ' ').toLowerCase() === req.body.nurseName.toLowerCase())
       if(req.body.type !== '') attendances = attendances.filter(e => e.dataValues.SickBayAttendanceType_ID === parseInt(req.body.type))
       if(req.body.sickBay !== '') attendances = attendances.filter(e => e.dataValues.SickBayArea_ID === parseInt(req.body.sickBay))
 
