@@ -20,6 +20,7 @@ const allocateNurse = require(process.env.PWD + '/routes/configuration/allocate-
 const profile = require(process.env.PWD + '/routes/configuration/profile')
 const attendance = require(process.env.PWD + '/routes/attendance')
 const medicationControlled = require(process.env.PWD + '/routes/medication-controlled')
+const report = require(process.env.PWD + '/routes/report')
 
 const app = express()
 
@@ -57,6 +58,7 @@ app.use('/configuration/allocate-nurse', allocateNurse)
 app.use('/configuration/profile', profile)
 app.use('/medication-controlled', medicationControlled)
 app.use('/attendance', attendance)
+app.use('/report', report)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
