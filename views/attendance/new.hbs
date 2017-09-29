@@ -40,6 +40,14 @@
           <input type="datetime-local" name="HourAttendance" value="" class="form-control" min="{{momentAtual}}" required>
         </div>
       </div>
+
+      <div class="row groupPatient groupStudent" style="margin-top:10px;">
+        <div class="col-sm-12">
+          <label for="">{{i18n 'allergy'}}</label>
+          <input type="text" name="Allergy" value="" readonly class="form-control">
+        </div>
+      </div>
+
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
           <table class="table styleTableICT">
@@ -117,6 +125,10 @@
       }else if('Other' === this.value){
         $('.groupOther').css('display','block')
       }
+    })
+
+    $('#Student').change(function(e){
+      $('input[name=Allergy]').val($('#Student option:selected').data('alergia'))
     })
 
 
