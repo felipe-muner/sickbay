@@ -63,7 +63,7 @@ function SickBayAttendanceControl() {
     }).then(attendances => {
       attendances
         .map((e) => {
-          e.dataValues.Schedule = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+          e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
         })
 
       if(!req.session.allUnits) {
@@ -104,6 +104,42 @@ function SickBayAttendanceControl() {
         })
 
       req.attendance = attendance
+      next()
+    }).catch(err => { next(err) })
+  }
+
+  this.findByFilter = function(req, res, next) {
+    SickBayAttendance.findAll({
+      include: [{
+          model: SickBayAttendanceMedication,
+          include: [{
+            model: SickBayRemedy
+          }, {
+            model: UnitOfMeasure
+          }]
+        }, {
+          model: SickBayAttendanceType
+        }, {
+          model: SickBayArea
+        }, {
+          model: User
+      }]
+    }).then(attendances => {
+      attendances
+        .map((e) => {
+          e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
+        })
+
+      attendances = attendances.filter(e => (moment(e.dataValues.Schedule).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Schedule).isSameOrBefore(req.body.finalDate,'day')))
+
+      if(!req.session.allUnits) attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      if(req.body.patientMatricula !== '') attendances = attendances.filter(e => e.dataValues.Patient_Matricula === parseInt(req.body.patientMatricula))
+      if(req.body.patientName !== '') attendances = attendances.filter(e => e.dataValues.PatientName.toLowerCase() === req.body.patientName.toLowerCase())
+      if(req.body.nurseMatricula !== '') attendances = attendances.filter(e => e.dataValues.usuario.matricula === parseInt(req.body.nurseMatricula))
+      if(req.body.nurseName !== '') attendances = attendances.filter(e => e.dataValues.usuario.nomeusuario.toLowerCase() === req.body.nurseName.toLowerCase())
+      if(req.body.type !== '') attendances = attendances.filter(e => e.dataValues.SickBayAttendanceType_ID === parseInt(req.body.type))
+
+      req.attendances = attendances
       next()
     }).catch(err => { next(err) })
   }
