@@ -38,8 +38,7 @@ router.get('/new', ssc.get, function(req, res, next) {
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl
   })
-}).post('/', sbmcc.get, function(req, res, next) {
-// }).post('/find', sbmcc.findByFilter, function(req, res, next) {
+}).post('/', sbmcc.findByFilter, function(req, res, next) {
   res.render('medication-controlled/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
