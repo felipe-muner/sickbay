@@ -35,7 +35,7 @@ router.get('/new', ssc.get, function(req, res, next) {
 }).post('/more-info', sbmcc.getById, function(req, res, next) {
   res.render('medication-controlled/more-info', {
     sess: req.session,
-    redirectUrl: req.originalUrl,
+    redirectUrl: '/medication-controlled',
     medCtrl: req.medCtrl
   })
 }).post('/', sbmcc.findByFilter, function(req, res, next) {
