@@ -50,102 +50,36 @@ function ReportControl() {
     }
 
     req.QueryReport.map(e => {
-      if('internalIncident' === e.Name) {
-        if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotafogoLP += e.Total
-          } else {
-            matrizReport[e.Name].BotafogoUP += e.Total
-          }
-        } else if('Urca' === e.UnitSchool) {
-          matrizReport[e.Name].Urca += e.Total
-        } else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraLP += e.Total
-          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraUP += e.Total
-          } else {
-            matrizReport[e.Name].BarraSeniors += e.Total
-          }
+      if('Botafogo' === e.UnitSchool.trim()) {
+        if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup.trim())) {
+          matrizReport[e.Name].BotaPreNurseryNursery += e.Total
+        } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup.trim())) {
+          matrizReport[e.Name].BotafogoLP += e.Total
+        } else {
+          matrizReport[e.Name].BotafogoUP += e.Total
         }
-      } else if('externalIncident' === e.Name) {
-        if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotafogoLP += e.Total
-          } else {
-            matrizReport[e.Name].BotafogoUP += e.Total
-          }
-        } else if('Urca' === e.UnitSchool) {
-          matrizReport[e.Name].Urca += e.Total
-        } else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraLP += e.Total
-          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraUP += e.Total
-          } else {
-            matrizReport[e.Name].BarraSeniors += e.Total
-          }
-        }
-      } else if('accident' === e.Name) {
-        if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotafogoLP += e.Total
-          } else {
-            matrizReport['accident'].BotafogoUP += e.Total
-          }
-        } else if('Urca' === e.UnitSchool) {
-          matrizReport[e.Name].Urca += e.Total
-        } else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraLP += e.Total
-          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraUP += e.Total
-          } else {
-            matrizReport[e.Name].BarraSeniors += e.Total
-          }
-        }
-      } else if('visit' === e.Name) {
-        if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BotafogoLP += e.Total
-          } else {
-            matrizReport[e.Name].BotafogoUP += e.Total
-          }
-        } else if('Urca' === e.UnitSchool) {
-          matrizReport[e.Name].Urca += e.Total
-        } else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraLP += e.Total
-          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
-            matrizReport[e.Name].BarraUP += e.Total
-          } else {
-            matrizReport[e.Name].BarraSeniors += e.Total
-          }
+      } else if('Urca' === e.UnitSchool.trim()) {
+        matrizReport[e.Name].Urca += e.Total
+      } else if('Barra' === e.UnitSchool.trim()) {
+        if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup.trim())) {
+          matrizReport[e.Name].BarraPreNurseryNursery += e.Total
+        } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup.trim())) {
+          matrizReport[e.Name].BarraLP += e.Total
+        } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup.trim())) {
+          matrizReport[e.Name].BarraUP += e.Total
+        } else {
+          matrizReport[e.Name].BarraSeniors += e.Total
         }
       }
     })
+
     req.matrizReport = matrizReport
     next()
   }
 
   this.generate = function(req, res, next) {
     let report = req.matrizReport
+    let enfermaria = ('' === req.body.SickbayArea) ? 'All' : req.body.SickbayArea
     let types = [
       { id: 1, name: 'internalIncident'},
       { id: 2, name: 'externalIncident'},
@@ -158,8 +92,8 @@ function ReportControl() {
       } else {
         const $ = cheerio.load(html)
 
-        let enfermaria = ('' === req.body.SickbayArea) ? 'All' : req.body.SickbayArea
         $('#enfermaria').text(enfermaria)
+        $('#periodoReport').text(moment(req.body.StartDate).format('DD/MM/YYYY') + ' to ' + moment(req.body.EndDate).format('DD/MM/YYYY'))
 
         types.forEach(e => {
           let total = report[e.name].BotaPreNurseryNursery + report[e.name].BotafogoLP +
@@ -177,8 +111,6 @@ function ReportControl() {
           $('#BarraSeniors-' + e.id).text(report[e.name].BarraSeniors)
           $('#total-' + e.id).text(total)
         })
-
-        $('#periodoReport').text(moment(req.body.StartDate).format('DD/MM/YYYY') + ' to ' + moment(req.body.EndDate).format('DD/MM/YYYY'))
 
         pdf.create($.html(), A4option).toFile(function(err, pdfFile) {
           console.log(pdfFile)
