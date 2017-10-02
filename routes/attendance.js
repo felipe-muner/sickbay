@@ -46,7 +46,7 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
 }).post('/more-info', sbac.getById, function(req, res, next) {
   res.render('attendance/more-info', {
     sess: req.session,
-    redirectUrl: req.originalUrl,
+    redirectUrl: '/attendance',
     attendance: req.attendance
   })
 }).post('/', sbac.findByFilter, satc.get, sac.get, function(req, res, next) {
