@@ -168,7 +168,7 @@ function SickBayAttendanceControl() {
       bind:{StartDate: req.body.StartDate, EndDate: req.body.EndDate},
       type: sequelize.QueryTypes.SELECT
     }).then(result => {
-      req.QueryTotal = result
+      req.QueryReport = result
       next()
     }).catch(err => { next(err) })
 
