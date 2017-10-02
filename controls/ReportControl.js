@@ -1,14 +1,11 @@
-const sequelize = require(process.env.PWD + '/config/sequelize-connection')
-const A4option = require(process.env.PWD + '/views/report/A4config')
-const pdf = require('html-pdf')
 const cheerio = require('cheerio')
-const moment = require('moment')
 const fs = require('fs')
+const pdf = require('html-pdf')
+const A4option = require(process.env.PWD + '/views/report/A4config')
+const moment = require('moment')
 
 function ReportControl() {
   this.adjustReport = function(req, res, next) {
-
-
     let matrizReport = {
       'internalIncident':{
         "BotaPreNurseryNursery":0,
@@ -52,92 +49,92 @@ function ReportControl() {
       },
     }
 
-    req.QueryReport.map((e) =>{
-      if('internalIncident' === e.Name){
+    req.QueryReport.map(e => {
+      if('internalIncident' === e.Name) {
         if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotafogoLP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BotafogoUP += e.Total
           }
-        }else if('Urca' === e.UnitSchool) {
+        } else if('Urca' === e.UnitSchool) {
           matrizReport[e.Name].Urca += e.Total
-        }else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+        } else if('Barra' === e.UnitSchool) {
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraLP += e.Total
-          }else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)){
+          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraUP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BarraSeniors += e.Total
           }
         }
-      }else if('externalIncident' === e.Name){
+      } else if('externalIncident' === e.Name) {
         if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotafogoLP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BotafogoUP += e.Total
           }
-        }else if('Urca' === e.UnitSchool) {
+        } else if('Urca' === e.UnitSchool) {
           matrizReport[e.Name].Urca += e.Total
-        }else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+        } else if('Barra' === e.UnitSchool) {
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraLP += e.Total
-          }else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)){
+          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraUP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BarraSeniors += e.Total
           }
         }
-      }else if('accident' === e.Name){
+      } else if('accident' === e.Name) {
         if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotafogoLP += e.Total
-          }else{
+          } else {
             matrizReport['accident'].BotafogoUP += e.Total
           }
-        }else if('Urca' === e.UnitSchool) {
+        } else if('Urca' === e.UnitSchool) {
           matrizReport[e.Name].Urca += e.Total
-        }else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+        } else if('Barra' === e.UnitSchool) {
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraLP += e.Total
-          }else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)){
+          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraUP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BarraSeniors += e.Total
           }
         }
-      }else if('visit' === e.Name){
+      } else if('visit' === e.Name) {
         if('Botafogo' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotaPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BotafogoLP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BotafogoUP += e.Total
           }
-        }else if('Urca' === e.UnitSchool) {
+        } else if('Urca' === e.UnitSchool) {
           matrizReport[e.Name].Urca += e.Total
-        }else if('Barra' === e.UnitSchool) {
-          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)){
+        } else if('Barra' === e.UnitSchool) {
+          if(['Pre-Nursery', 'Nursery'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraPreNurseryNursery += e.Total
-          }else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)){
+          } else if(['Reception', 'Infant I', 'Infant II'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraLP += e.Total
-          }else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)){
+          } else if(['Class 1', 'Class 2','Class 3','Class 4', 'Class 5'].includes(e.YearGroup)) {
             matrizReport[e.Name].BarraUP += e.Total
-          }else{
+          } else {
             matrizReport[e.Name].BarraSeniors += e.Total
           }
         }
@@ -148,29 +145,58 @@ function ReportControl() {
   }
 
   this.generate = function(req, res, next) {
+    let report = req.matrizReport
+    let types = [
+      { id: 1, name: 'internalIncident'},
+      { id: 2, name: 'externalIncident'},
+      { id: 3, name: 'accident'},
+      { id: 4, name: 'visit'}
+    ]
     fs.readFile(process.env.PWD + '/views/report/template.html', {encoding: 'utf-8'}, function (err, html) {
-      if(err){
+      if(err) {
         next(err)
-      }else{
+      } else {
         const $ = cheerio.load(html)
 
-        let enfermaria = ('' === req.body.SickbayArea) ? 'Todas' : req.body.SickbayArea
+        let enfermaria = ('' === req.body.SickbayArea) ? 'All' : req.body.SickbayArea
         $('#enfermaria').text(enfermaria)
-          //colocar id nas colunas de numeros e adicionar pelo obj req.matrizReport
 
-        $('#periodoReport').text(moment(req.body.StartDate).format('DD/MM/YYYY') + ' até ' + moment(req.body.EndDate).format('DD/MM/YYYY'))
+        types.forEach(e => {
+          let total = report[e.name].BotaPreNurseryNursery + report[e.name].BotafogoLP +
+                      report[e.name].BotafogoUP + report[e.name].Urca +
+                      report[e.name].BarraPreNurseryNursery + report[e.name].BarraLP +
+                      report[e.name].BarraUP + report[e.name].BarraSeniors
+
+          $('#BotaPreNurseryNursery-' + e.id).text(report[e.name].BotaPreNurseryNursery)
+          $('#BotafogoLP-' + e.id).text(report[e.name].BotafogoLP)
+          $('#BotafogoUP-' + e.id).text(report[e.name].BotafogoUP)
+          $('#Urca-' + e.id).text(report[e.name].Urca)
+          $('#BarraPreNurseryNursery-' + e.id).text(report[e.name].BarraPreNurseryNursery)
+          $('#BarraLP-' + e.id).text(report[e.name].BarraLP)
+          $('#BarraUP-' + e.id).text(report[e.name].BarraUP)
+          $('#BarraSeniors-' + e.id).text(report[e.name].BarraSeniors)
+          $('#total-' + e.id).text(total)
+        })
+
+        $('#periodoReport').text(moment(req.body.StartDate).format('DD/MM/YYYY') + ' to ' + moment(req.body.EndDate).format('DD/MM/YYYY'))
 
         pdf.create($.html(), A4option).toFile(function(err, pdfFile) {
-          if (err) return console.log(err);
-          console.log(pdfFile);
-          // res.download(pdfFile.filename, new Date() + 'report.pdf')
-          req.REPsickbay = pdfFile.filename
-          next()
+          console.log(pdfFile)
+          if (err) return console.log(err)
+          fs.readFile(pdfFile.filename, function(err, data) {
+            if(err) {
+              console.log("Error: " + err)
+              res.render('error', {error: err, redirectUrl: req.originalUrl})
+            } else {
+              console.log("Success")
+              res.contentType("application/pdf")
+              res.send(data)
+            }
+          })
         })
       }
     })
   }
-
 }
 
 module.exports = new ReportControl()

@@ -1,5 +1,5 @@
 {
-	"systemName": "Sick Bay",
+	"systemName": "Sickbay",
 	"enrollment": "Matrícula",
 	"password": "Senha",
 	"changePass": "Trocar Senha",
@@ -99,5 +99,7 @@
 	"responsibleMedication": "Responsável pela medicaçāo",
 	"medAndObs": "Medicação e Observação",
 	"allergy": "Alergia",
-	"date": "Data"
+	"date": "Data",
+	"all": "Todas",
+	"generateReport": "Gerar Relatório"
 }

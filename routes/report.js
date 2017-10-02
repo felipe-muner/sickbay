@@ -27,8 +27,6 @@ router.get('/', sickbayArea.get, satc.get, function(req, res, next) {
     firstDayMonth: moment().startOf('month').format('YYYY-MM-DD'),
     lastDayMonth: moment().endOf('month').format('YYYY-MM-DD')
   })
-}).post('/generate', sbac.getBetweenDates, rc.adjustReport, rc.generate, function(req, res, next) {
-  res.download(req.REPsickbay, 'report-sickbay.pdf')
-})
+}).post('/generate', sbac.getBetweenDates, rc.adjustReport, rc.generate)
 
 module.exports = router

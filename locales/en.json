@@ -1,5 +1,5 @@
 {
-	"systemName": "Sick Bay",
+	"systemName": "Sickbay",
 	"enrollment": "Enrollment Number",
 	"password": "Password",
 	"changePass": "Change Password",
@@ -31,8 +31,8 @@
 		"notAlter": "can not be changed!",
 		"unauthorized": "Your profile does not have permission for this functionality.",
 		"sucessAllocate": "successfully allocated!",
-		"allottedSickBay": "You are allotted to the sick bay:",
-		"notAllottedSickBay": "You are not allocated in an sick bay. Get in touch with ICT.",
+		"allottedSickBay": "You are allotted to the sickbay:",
+		"notAllottedSickBay": "You are not allocated in an sickbay. Get in touch with ICT.",
 		"effectMedication": "Click to effect medication"
 	},
 	"configuration": "Settings",
@@ -49,14 +49,14 @@
 	"select": "Select",
 	"createdAt": "Created at",
 	"delete": "Delete",
-	"report": "Report",
+	"report": "Report - Board",
 	"closedAt": "Closed at",
 	"back": "Back",
 	"yes": "Yes",
 	"no": "No",
 	"allUnits": "All Units",
 	"nurse": "Nurse",
-	"sickBay": "Sick Bay",
+	"sickBay": "Sickbay",
 	"attendance": "Attendance",
 	"new": "New",
 	"list": "Find",
@@ -67,7 +67,7 @@
 	"internalIncident": "Internal incident",
 	"externalIncident": "External incident",
 	"accident": "Accident",
-	"visit": "Visit to sick bay",
+	"visit": "Visit to sickbay",
 	"medication": "Medication",
 	"unitofmeasure": "Unit of Measure",
 	"amount": "Amount",
@@ -99,5 +99,7 @@
 	"responsibleMedication": "Responsible for the medication",
 	"medAndObs": "Medication and Observation",
 	"allergy": "Allergy",
-	"date": "Date"
+	"date": "Date",
+	"all": "All",
+	"generateReport": "Generate Report"
 }

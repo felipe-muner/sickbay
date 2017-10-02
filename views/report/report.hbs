@@ -17,33 +17,26 @@
     <form id="formReport" action="/report/generate" method="post" target="_blank">
       <div class="row">
         <div class="col-sm-4">
-          <label for="">{{i18n 'sickBay'}}</label>
+          <label>{{i18n 'sickBay'}}</label>
           <select id="SickbayArea" name="SickbayArea" class="form-control">
-            <option value="">Todas</option>
+            <option value="">{{i18n 'all'}}</option>
             {{#each SickArea}}
               <option data-name="{{Name}}" value="{{SickBayAreaID}}">{{Name}}</option>
             {{/each}}
           </select>
         </div>
         <div class="col-sm-4">
-          <label for="">{{i18n 'initialDate'}}</label>
+          <label>{{i18n 'initialDate'}}</label>
           <input type="date" name="StartDate" id="StartDate" value="{{firstDayMonth}}" class="form-control" onkeyup="updateMinToDateField(this);" required>
         </div>
         <div class="col-sm-4">
-          <label for="">{{i18n 'finalDate'}}</label>
+          <label>{{i18n 'finalDate'}}</label>
           <input type="date" name="EndDate" id="EndDate" value="{{lastDayMonth}}" min="{{firstDayMonth}}" class="form-control" required>
         </div>
       </div>
-      <!-- <div class="row" style="margin-top:10px;">
-        <div class="col-sm-8">
-          {{#each AttendanceType}}
-            <label class="checkbox-inline"><input style="margin-right:5px;" type="checkbox" name="SickBayAttendanceType_ID" value="{{SickBayAttendanceTypeID}}" checked>{{{i18n Name}}}</label>
-          {{/each}}
-        </div>
-      </div> -->
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12">
-          <input type="submit" name="" value="Generate Report" class="btn btn-warning">
+          <input type="submit" value="{{i18n 'generateReport'}}" class="btn btn-warning">
         </div>
       </div>
     </form>
@@ -53,10 +46,8 @@
 
 {{#section 'script'}}
   <script type="text/javascript">
-
-  function updateMinToDateField(el){
-    $('#EndDate').attr('min', moment($(el).val()).format('YYYY-MM-DD'))
-  }
-
+    function updateMinToDateField(el){
+      $('#EndDate').attr('min', moment($(el).val()).format('YYYY-MM-DD'))
+    }
   </script>
 {{/section}}
