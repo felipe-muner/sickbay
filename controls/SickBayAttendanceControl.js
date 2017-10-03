@@ -1,5 +1,9 @@
 const async = require('async')
 const moment = require('moment')
+const cheerio = require('cheerio')
+const fs = require('fs')
+const pdf = require('html-pdf')
+const A4option = require(process.env.PWD + '/views/attendance/A4config')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayAttendance = require(process.env.PWD + '/models/SickBayAttendance')
 const SickBayAttendanceMedication = require(process.env.PWD + '/models/SickBayAttendanceMedication')
@@ -9,6 +13,7 @@ const SickBayAttendanceType = require(process.env.PWD + '/models/SickBayAttendan
 const SickBayArea = require(process.env.PWD + '/models/SickBayArea')
 const User = require(process.env.PWD + '/models/User')
 const SickBayReturnAttendance = require(process.env.PWD + '/models/SickBayReturnAttendance')
+const Util = require(process.env.PWD + '/util/Util')
 
 function SickBayAttendanceControl() {
   this.new = function(req, res, next) {
@@ -72,6 +77,7 @@ function SickBayAttendanceControl() {
       }
 
       req.attendances = attendances
+      req.session.attendancesForExport = attendances
       req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
@@ -144,6 +150,7 @@ function SickBayAttendanceControl() {
       if(req.body.sickBay !== '') attendances = attendances.filter(e => e.dataValues.SickBayArea_ID === parseInt(req.body.sickBay))
 
       req.attendances = attendances
+      req.session.attendancesForExport = attendances
       req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
@@ -171,7 +178,52 @@ function SickBayAttendanceControl() {
       req.QueryReport = result
       next()
     }).catch(err => { next(err) })
+  }
 
+  this.exportPDF = function(req, res, next) {
+    let attendances = req.session.attendancesForExport
+    let tbody = ''
+    fs.readFile(process.env.PWD + '/views/attendance/template.html', {encoding: 'utf-8'}, function (err, html) {
+      if(err) {
+        next(err)
+      } else {
+        const $ = cheerio.load(html)
+
+        attendances.forEach((e, i) => {
+          let ScheduleFormated = moment(e.Schedule).format('DD/MM/YYYY HH:mm')
+          let PatientName = e.Patient_Matricula ? e.Patient_Matricula+' - '+Util.toTitleCase(e.PatientName) : Util.toTitleCase(e.PatientName)
+
+          tbody = i%2 ? tbody + '<tr>' : tbody + '<tr style="background-color:#ddd;">'
+          tbody = tbody +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SickBayAttendanceID+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+ScheduleFormated+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SickBayArea.Name+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+__(e.SickBayAttendanceType.Name)+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+PatientName+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.usuario.matricula+' - '+Util.toTitleCase(e.usuario.nomeusuario)+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Reason+'</td>' +
+            '<td style="border:1px solid black;border-top:0px;">'+e.Procedure+'</td>' +
+          '</tr>'
+        })
+
+        $('#tbody').html(tbody)
+
+        pdf.create($.html(), A4option).toFile(function(err, pdfFile) {
+          console.log(pdfFile)
+          if (err) return console.log(err)
+          fs.readFile(pdfFile.filename, function(err, data) {
+            if(err) {
+              console.log("Error: " + err)
+              res.render('error', {error: err, redirectUrl: req.originalUrl})
+            } else {
+              console.log("Success")
+              res.contentType("application/pdf")
+              res.send(data)
+            }
+          })
+        })
+      }
+    })
   }
 }
 

@@ -15,13 +15,13 @@
   <div class="panel-heading">{{i18n 'list'}} {{i18n 'attendance'}}</div>
   <div class="panel-body">
     <div class="row" style="margin-bottom:10px;">
-      <div class="col-sm-1">
-        <button style="margin:0px;" type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">{{i18n 'filter'}}</button>
-      </div>
-      <div class="col-sm-10"></div>
-      <div class="col-sm-1 text-right">
+      <div class="col-sm-12 toolbar">
         <a href="/attendance/new">
-          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">{{i18n 'new'}}</button>
+          <button type="button" name="button" class="btn btn-primary">{{i18n 'new'}}</button>
+        </a>
+        <button type="button" name="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">{{i18n 'filter'}}</button>
+        <a class="not-load" href="/attendance/export-pdf" target="_blank">
+          <button type="button" name="button" class="btn btn-danger">Export PDF</button>
         </a>
       </div>
     </div>

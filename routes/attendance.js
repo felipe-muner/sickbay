@@ -60,6 +60,6 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
   })
 }).post('/save-return', sbrac.new, function(req, res, next) {
   res.json(req.returnAttendance)
-})
+}).get('/export-pdf', sbac.exportPDF)
 
 module.exports = router
