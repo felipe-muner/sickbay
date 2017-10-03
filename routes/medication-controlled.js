@@ -46,6 +46,6 @@ router.get('/new', ssc.get, function(req, res, next) {
   })
 }).post('/update-medication', sbmsc.update, function(req, res, next) {
   res.json(req.body)
-})
+}).get('/export-pdf', sbmcc.exportPDF)
 
 module.exports = router

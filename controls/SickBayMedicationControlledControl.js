@@ -1,9 +1,14 @@
 const moment = require('moment')
 const async = require('async')
+const cheerio = require('cheerio')
+const fs = require('fs')
+const pdf = require('html-pdf')
+const A4option = require(process.env.PWD + '/views/medication-controlled/A4config')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayMedicationControlled = require(process.env.PWD + '/models/SickBayMedicationControlled')
 const SickBayMedicationSchedule = require(process.env.PWD + '/models/SickBayMedicationSchedule')
 const SchoolStudent = require(process.env.PWD + '/models/SchoolStudent')
+const Util = require(process.env.PWD + '/util/Util')
 
 function SickBayMedicationControlledControl() {
   this.new = function(req, res, next) {
@@ -57,6 +62,7 @@ function SickBayMedicationControlledControl() {
       }
 
       req.medCtrl = medCtrl
+      req.session.medCtrlForExport = medCtrl
       next()
     }).catch(err => {next(err)})
   }
@@ -105,8 +111,61 @@ function SickBayMedicationControlledControl() {
       if(req.body.studentName !== '') medCtrl = medCtrl.filter(e => e.dataValues.SchoolStudent.Nome.replace('  ', ' ').toLowerCase() === req.body.studentName.toLowerCase())
 
       req.medCtrl = medCtrl
+      req.session.medCtrlForExport = medCtrl
       next()
     }).catch(err => {next(err)})
+  }
+
+  this.exportPDF = function(req, res, next) {
+    let medCtrl = req.session.medCtrlForExport
+    let tbody = ''
+    fs.readFile(process.env.PWD + '/views/medication-controlled/template.html', {encoding: 'utf-8'}, function (err, html) {
+      if(err) {
+        next(err)
+      } else {
+        const $ = cheerio.load(html)
+
+        medCtrl.forEach((e, i) => {
+          let StartFormated = moment(e.Start).format('DD/MM/YYYY')
+          let EndFormated = moment(e.End).format('DD/MM/YYYY')
+          let Hr2 = e.Hr2 ? e.Hr2 : ''
+          let Hr3 = e.Hr3 ? e.Hr3 : ''
+          let Hr4 = e.Hr4 ? e.Hr4 : ''
+
+          tbody = i%2 ? tbody + '<tr>' : tbody + '<tr style="background-color:#ddd;">'
+          tbody = tbody +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SickBayMedicationControlledID+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SchoolStudent.Matricula+' - '+Util.toTitleCase(e.SchoolStudent.Nome)+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+StartFormated+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+EndFormated+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Hr1+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Hr2+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Hr3+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Hr4+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Util.toTitleCase(e.Responsible)+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Note+'</td>' +
+            '<td style="border:1px solid black;border-top:0px;">'+e.Type+'</td>' +
+          '</tr>'
+        })
+
+        $('#tbody').html(tbody)
+
+        pdf.create($.html(), A4option).toFile(function(err, pdfFile) {
+          console.log(pdfFile)
+          if (err) return console.log(err)
+          fs.readFile(pdfFile.filename, function(err, data) {
+            if(err) {
+              console.log("Error: " + err)
+              res.render('error', {error: err, redirectUrl: req.originalUrl})
+            } else {
+              console.log("Success")
+              res.contentType("application/pdf")
+              res.send(data)
+            }
+          })
+        })
+      }
+    })
   }
 }
 

@@ -230,3 +230,8 @@ label{
   height: 26px;
   font-size: 12px;
 }
+
+.toolbar button {
+  margin-right: 10px;
+  margin-bottom: 0px;
+}
