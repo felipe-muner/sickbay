@@ -7,7 +7,6 @@ const A4option = require(process.env.PWD + '/views/medication-controlled/A4confi
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
 const SickBayMedicationControlled = require(process.env.PWD + '/models/SickBayMedicationControlled')
 const SickBayMedicationSchedule = require(process.env.PWD + '/models/SickBayMedicationSchedule')
-const SchoolStudent = require(process.env.PWD + '/models/SchoolStudent')
 const Util = require(process.env.PWD + '/util/Util')
 
 function SickBayMedicationControlledControl() {
@@ -44,17 +43,17 @@ function SickBayMedicationControlledControl() {
   }
 
   this.get = function(req,res,next){
+    const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findAll({
-      include:[{
+      include:{
         model: SickBayMedicationSchedule
-      },{
-        model: SchoolStudent
-      }]
+      }
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
           e.StartFormated = moment(e.dataValues.Start).format('DD/MM/YYYY')
           e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
+          e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
 
       if(!req.session.allUnits) {
@@ -68,14 +67,15 @@ function SickBayMedicationControlledControl() {
   }
 
   this.getById = function(req, res, next){
+    const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findOne({
-      include:[{
+      include:{
         model: SickBayMedicationSchedule
-      },{
-        model: SchoolStudent
-      }],
+      },
       where: {SickBayMedicationControlledID: req.body.MedicationControlledID}
     }).then( medCtrl => {
+
+      medCtrl.SchoolStudent = SchoolStudent.filter(e => parseInt(e.MATRICULA) === parseInt(medCtrl.Student_Matricula))[0]
 
       medCtrl.SickBayMedicationSchedules.map(obj => {
         obj.MedicationDateFormated = moment(obj.MedicationDate).format('DD/MM/YYYY')
@@ -87,17 +87,17 @@ function SickBayMedicationControlledControl() {
   }
 
   this.findByFilter = function(req,res,next) {
+    const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findAll({
-      include:[{
+      include:{
         model: SickBayMedicationSchedule
-      },{
-        model: SchoolStudent
-      }]
+      }
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
           e.StartFormated = moment(e.dataValues.Start).format('DD/MM/YYYY')
           e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
+          e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
 
       medCtrl = medCtrl.filter(e => {
@@ -107,8 +107,8 @@ function SickBayMedicationControlledControl() {
       })
 
       if(!req.session.allUnits) medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
-      if(req.body.studentMatricula !== '') medCtrl = medCtrl.filter(e => e.dataValues.SchoolStudent.Matricula === parseInt(req.body.studentMatricula))
-      if(req.body.studentName !== '') medCtrl = medCtrl.filter(e => e.dataValues.SchoolStudent.Nome.replace('  ', ' ').toLowerCase() === req.body.studentName.toLowerCase())
+      if(req.body.studentMatricula !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.studentMatricula))
+      if(req.body.studentName !== '') medCtrl = medCtrl.filter(e => e.SchoolStudent.NOME.replace('  ', ' ').toLowerCase() === req.body.studentName.toLowerCase())
 
       req.medCtrl = medCtrl
       req.session.medCtrlForExport = medCtrl
@@ -117,7 +117,8 @@ function SickBayMedicationControlledControl() {
   }
 
   this.exportPDF = function(req, res, next) {
-    let medCtrl = req.session.medCtrlForExport
+    const SchoolStudent = req.SchoolStudent
+    const medCtrl = req.session.medCtrlForExport
     let tbody = ''
     fs.readFile(process.env.PWD + '/views/medication-controlled/template.html', {encoding: 'utf-8'}, function (err, html) {
       if(err) {
@@ -126,6 +127,7 @@ function SickBayMedicationControlledControl() {
         const $ = cheerio.load(html)
 
         medCtrl.forEach((e, i) => {
+          e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.Student_Matricula))[0]
           let StartFormated = moment(e.Start).format('DD/MM/YYYY')
           let EndFormated = moment(e.End).format('DD/MM/YYYY')
           let Hr2 = e.Hr2 ? e.Hr2 : ''
@@ -135,7 +137,7 @@ function SickBayMedicationControlledControl() {
           tbody = i%2 ? tbody + '<tr>' : tbody + '<tr style="background-color:#ddd;">'
           tbody = tbody +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SickBayMedicationControlledID+'</td>' +
-            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SchoolStudent.Matricula+' - '+Util.toTitleCase(e.SchoolStudent.Nome)+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.SchoolStudent.MATRICULA+' - '+Util.toTitleCase(e.SchoolStudent.NOME)+'</td>' +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+StartFormated+'</td>' +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+EndFormated+'</td>' +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Hr1+'</td>' +

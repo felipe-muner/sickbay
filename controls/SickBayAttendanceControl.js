@@ -64,7 +64,8 @@ function SickBayAttendanceControl() {
           model: SickBayArea
         }, {
           model: User
-      }]
+      }],
+      order: [['Schedule', 'DESC']]
     }).then(attendances => {
       attendances
         .map((e) => {
@@ -131,7 +132,8 @@ function SickBayAttendanceControl() {
           model: SickBayArea
         }, {
           model: User
-      }]
+      }],
+      order: [['Schedule', 'DESC']]
     }).then(attendances => {
       attendances
         .map((e) => {
@@ -181,7 +183,7 @@ function SickBayAttendanceControl() {
   }
 
   this.exportPDF = function(req, res, next) {
-    let attendances = req.session.attendancesForExport
+    const attendances = req.session.attendancesForExport
     let tbody = ''
     fs.readFile(process.env.PWD + '/views/attendance/template.html', {encoding: 'utf-8'}, function (err, html) {
       if(err) {

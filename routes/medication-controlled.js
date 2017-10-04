@@ -16,7 +16,7 @@ router.get('/new', ssc.get, function(req, res, next) {
     SchoolStudent: req.SchoolStudent,
     momentAtual: moment().format('YYYY-MM-DD')
   })
-}).get('/', sbmcc.get, function(req, res, next) {
+}).get('/', ssc.get, sbmcc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   res.render('medication-controlled/list', {
@@ -32,13 +32,13 @@ router.get('/new', ssc.get, function(req, res, next) {
     styleMsg: 'alert-success'
   }
   res.json({ redirect: '/medication-controlled' })
-}).post('/more-info', sbmcc.getById, function(req, res, next) {
+}).post('/more-info', ssc.get, sbmcc.getById, function(req, res, next) {
   res.render('medication-controlled/more-info', {
     sess: req.session,
     redirectUrl: '/medication-controlled',
     medCtrl: req.medCtrl
   })
-}).post('/', sbmcc.findByFilter, function(req, res, next) {
+}).post('/', ssc.get, sbmcc.findByFilter, function(req, res, next) {
   res.render('medication-controlled/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
@@ -46,6 +46,6 @@ router.get('/new', ssc.get, function(req, res, next) {
   })
 }).post('/update-medication', sbmsc.update, function(req, res, next) {
   res.json(req.body)
-}).get('/export-pdf', sbmcc.exportPDF)
+}).get('/export-pdf', ssc.get, sbmcc.exportPDF)
 
 module.exports = router
