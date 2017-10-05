@@ -23,6 +23,7 @@ router.get('/new', ssc.get, function(req, res, next) {
     sess: req.session,
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl,
+    SchoolStudent: req.SchoolStudent,
     flashMsg
   })
 }).post('/new', sbmcc.new, function(req, res, next) {
@@ -42,7 +43,8 @@ router.get('/new', ssc.get, function(req, res, next) {
   res.render('medication-controlled/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
-    medCtrl: req.medCtrl
+    medCtrl: req.medCtrl,
+    SchoolStudent: req.SchoolStudent
   })
 }).post('/update-medication', sbmsc.update, function(req, res, next) {
   res.json(req.body)

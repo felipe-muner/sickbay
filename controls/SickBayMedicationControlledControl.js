@@ -107,8 +107,7 @@ function SickBayMedicationControlledControl() {
       })
 
       if(!req.session.allUnits) medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
-      if(req.body.studentMatricula !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.studentMatricula))
-      if(req.body.studentName !== '') medCtrl = medCtrl.filter(e => e.SchoolStudent.NOME.replace('  ', ' ').toLowerCase() === req.body.studentName.toLowerCase())
+      if(req.body.student !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.student))
 
       req.medCtrl = medCtrl
       req.session.medCtrlForExport = medCtrl
