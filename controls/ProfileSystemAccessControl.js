@@ -7,7 +7,7 @@ const ProfileFunctionality = require(process.env.PWD + '/models/ProfileFunctiona
 function ProfileSystemAccessControl() {
 
   this.get = function(req, res, next) {
-    ProfileSystemAccess.findAll({where: {id_sistema: 4}}).then(profiles => {
+    ProfileSystemAccess.findAll({where: {id_sistema: process.env.SYSTEM_ID}}).then(profiles => {
       req.profiles = profiles
       next()
     }).catch(err => {
@@ -18,10 +18,10 @@ function ProfileSystemAccessControl() {
   this.create = function(req, res, next) {
     ProfileSystemAccess.create({
       nomeperfilacesso: req.body.nameProfile,
-      id_sistema: 4,
+      id_sistema: process.env.SYSTEM_ID,
       all_units: req.body.allUnits
     }).then(function(profile) {
-      ProfileSystemAccess.findOne({where: {nomeperfilacesso: req.body.nameProfile, id_sistema: 4}}).then(function(p) {
+      ProfileSystemAccess.findOne({where: {nomeperfilacesso: req.body.nameProfile, id_sistema: process.env.SYSTEM_ID}}).then(function(p) {
         if(req.body.functionalityID) {
           if(typeof req.body.functionalityID === "object") {
             let bulkQuery = []
