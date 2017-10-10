@@ -100,9 +100,11 @@ function SickBayMedicationControlledControl() {
   this.findByFilter = function(req,res,next) {
     const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findAll({
-      include:{
+      include: [{
         model: SickBayMedicationSchedule
-      }
+      }, {
+        model: SickBayArea
+      }]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
