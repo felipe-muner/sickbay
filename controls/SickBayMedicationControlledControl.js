@@ -5,6 +5,7 @@ const fs = require('fs')
 const pdf = require('html-pdf')
 const A4option = require(process.env.PWD + '/views/medication-controlled/A4config')
 const sequelize = require(process.env.PWD + '/config/sequelize-connection')
+const SickBayArea = require(process.env.PWD + '/models/SickBayArea')
 const SickBayMedicationControlled = require(process.env.PWD + '/models/SickBayMedicationControlled')
 const SickBayMedicationSchedule = require(process.env.PWD + '/models/SickBayMedicationSchedule')
 const Util = require(process.env.PWD + '/util/Util')
@@ -45,9 +46,11 @@ function SickBayMedicationControlledControl() {
   this.get = function(req,res,next){
     const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findAll({
-      include:{
+      include: [{
         model: SickBayMedicationSchedule
-      }
+      }, {
+        model: SickBayArea
+      }]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -56,8 +59,16 @@ function SickBayMedicationControlledControl() {
           e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
 
-      if(!req.session.allUnits) {
+      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
         medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      } else {
+        medCtrlArray = []
+        medCtrl.forEach(e => {
+          if(req.session.accessBotafogo && (e.SickBayArea.Unit_ID === 1)) medCtrlArray.push(e)
+          if(req.session.accessUrca && (e.SickBayArea.Unit_ID === 2)) medCtrlArray.push(e)
+          if(req.session.accessBarra && (e.SickBayArea.Unit_ID === 3)) medCtrlArray.push(e)
+        })
+        medCtrl = medCtrlArray
       }
 
       req.medCtrl = medCtrl
@@ -89,9 +100,11 @@ function SickBayMedicationControlledControl() {
   this.findByFilter = function(req,res,next) {
     const SchoolStudent = req.SchoolStudent
     SickBayMedicationControlled.findAll({
-      include:{
+      include: [{
         model: SickBayMedicationSchedule
-      }
+      }, {
+        model: SickBayArea
+      }]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -106,8 +119,19 @@ function SickBayMedicationControlledControl() {
         return (rangeStart || rangeEnd)
       })
 
-      if(!req.session.allUnits) medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       if(req.body.student !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.student))
+
+      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+        medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      } else {
+        medCtrlArray = []
+        medCtrl.forEach(e => {
+          if(req.session.accessBotafogo && (e.SickBayArea.Unit_ID === 1)) medCtrlArray.push(e)
+          if(req.session.accessUrca && (e.SickBayArea.Unit_ID === 2)) medCtrlArray.push(e)
+          if(req.session.accessBarra && (e.SickBayArea.Unit_ID === 3)) medCtrlArray.push(e)
+        })
+        medCtrl = medCtrlArray
+      }
 
       req.medCtrl = medCtrl
       req.session.medCtrlForExport = medCtrl
