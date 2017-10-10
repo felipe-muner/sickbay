@@ -64,7 +64,9 @@ module.exports = {
       {Name: "Tylenol (Comprimido, 750mg)"},
       {Name: "Tylenol (Infantil, suspensão oral, 160mg/5ml)"},
       {Name: "Tylenol (Gotas, 200mg/ml)"},
-      {Name: "Vaselina (Líquida)"}
+      {Name: "Vaselina (Líquida)"},
+      {Name: "Medicamento Manipulado"},
+      {Name: "Medicamento Homeopático"}
     ], {})
   },
 

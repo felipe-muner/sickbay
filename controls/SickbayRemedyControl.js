@@ -3,7 +3,9 @@ const SickBayRemedy = require(process.env.PWD + '/models/SickBayRemedy')
 
 function SickBayRemedyControl() {
   this.get = function(req, res, next) {
-    SickBayRemedy.findAll().then(Remedy => {
+    SickBayRemedy.findAll({
+      order: [['Name', 'ASC']]
+    }).then(Remedy => {
       req.Remedy = Remedy
       next()
     }).catch(err => {
