@@ -1,19 +1,11 @@
 const express = require('express')
-const i18n = require('i18n')
-
-const sequelize = require(process.env.PWD + '/config/sequelize-connection')
-const ssc = require(process.env.PWD + '/controls/SchoolStudentControl')
-const uc = require(process.env.PWD + '/controls/UserControl')
-const satc = require(process.env.PWD + '/controls/SickBayAttendanceTypeControl')
-const sbrc = require(process.env.PWD + '/controls/SickBayRemedyControl')
-const umc = require(process.env.PWD + '/controls/UnitOfMeasureControl')
-const sbac = require(process.env.PWD + '/controls/SickBayAttendanceControl')
-const sbrac = require(process.env.PWD + '/controls/SickBayReturnAttendanceControl')
-const sickbayArea = require(process.env.PWD + '/controls/SickBayAreaControl')
-const rc = require(process.env.PWD + '/controls/ReportControl')
+const router = express.Router()
 const moment = require('moment')
 
-const router = express.Router()
+const satc = require(process.env.PWD + '/controls/SickBayAttendanceTypeControl')
+const sbac = require(process.env.PWD + '/controls/SickBayAttendanceControl')
+const sickbayArea = require(process.env.PWD + '/controls/SickBayAreaControl')
+const rc = require(process.env.PWD + '/controls/ReportControl')
 
 router.get('/', sickbayArea.get, satc.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
@@ -27,6 +19,6 @@ router.get('/', sickbayArea.get, satc.get, function(req, res, next) {
     firstDayMonth: moment().startOf('month').format('YYYY-MM-DD'),
     lastDayMonth: moment().endOf('month').format('YYYY-MM-DD')
   })
-}).post('/generate', sbac.getBetweenDates, rc.adjustReport, rc.generate)
+}).post('/generate', sbac.getBetweenDates, sickbayArea.get, rc.adjustReport, rc.generate)
 
 module.exports = router

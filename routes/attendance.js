@@ -25,12 +25,14 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     UnitOfMeasure: req.UnitOfMeasure,
     momentAtual: moment().format('YYYY-MM-DDT00:00')
   })
-}).get('/', sbac.get, satc.get, sac.get, function(req, res, next) {
+}).get('/', ssc.get, uc.getEmployer, sbac.get, satc.get, sac.get, function(req, res, next) {
   let flashMsg = req.session.flashMsg
   if(flashMsg) delete req.session.flashMsg
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
+    SchoolStudent: req.SchoolStudent,
+    Employer: req.Employer,
     attendances: req.attendances,
     attendanceType: req.AttendanceType,
     allUnits: req.allUnits,
@@ -49,11 +51,13 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     redirectUrl: '/attendance',
     attendance: req.attendance
   })
-}).post('/', sbac.findByFilter, satc.get, sac.get, function(req, res, next) {
+}).post('/', sbac.findByFilter, ssc.get, uc.getEmployer, satc.get, sac.get, function(req, res, next) {
   res.render('attendance/list', {
     sess: req.session,
     redirectUrl: req.originalUrl,
     attendances: req.attendances,
+    SchoolStudent: req.SchoolStudent,
+    Employer: req.Employer,
     attendanceType: req.AttendanceType,
     allUnits: req.allUnits,
     sickBayAreas: req.sickBayAreas

@@ -46,7 +46,7 @@
         {{#each medCtrl}}
           <tr data-medication-controlled-id="{{SickBayMedicationControlledID}}">
             <td class="text-center">{{SickBayMedicationControlledID}}</td>
-            <td>{{SchoolStudent.Matricula}} - {{SchoolStudent.Nome}}</td>
+            <td>{{SchoolStudent.MATRICULA}} - {{SchoolStudent.NOME}}</td>
             <td>{{StartFormated}}</td>
             <td>{{EndFormated}}</td>
             <td>{{Hr1}}</td>
@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -75,14 +75,15 @@
       </div>
       <div class="modal-body">
         <form action="/medication-controlled" method="post">
-          <div class="row">
-            <div class="col-sm-4">
-              <label for="">{{i18n 'student'}} - {{i18n 'enrollment'}}</label>
-              <input type="number" name="studentMatricula" class="form-control">
-            </div>
-            <div class="col-sm-8">
-              <label for="">{{i18n 'student'}} - {{i18n 'name'}}</label>
-              <input type="text" name="studentName" class="form-control">
+          <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="col-sm-12">
+              <label for="">{{i18n 'student'}}</label>
+              <select class="form-control" name="student" id="Student" style="width:100%;">
+                <option value="">{{{i18n 'student'}}}:</option>
+                {{#each SchoolStudent}}
+                  <option value="{{MATRICULA}}">{{NOME}} - {{MATRICULA}} - {{TURMA}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
           <div class="row" style="margin-top:5px;">
@@ -109,7 +110,9 @@
 
 {{#section 'script'}}
   <script type="text/javascript">
-    function moreInfo(el){
+    $("#Student").select2()
+
+    function moreInfo(el) {
       let form = document.createElement("form")
       form.method = "POST"
       form.action = "/medication-controlled/more-info"

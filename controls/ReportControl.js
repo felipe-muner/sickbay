@@ -78,9 +78,10 @@ function ReportControl() {
   }
 
   this.generate = function(req, res, next) {
-    let report = req.matrizReport
-    let enfermaria = ('' === req.body.SickbayArea) ? 'All' : req.body.SickbayArea
-    let types = [
+    const report = req.matrizReport
+    const sickBayAreas = req.sickBayAreas
+    const enfermaria = ('' === req.body.SickbayArea) ? 'All' : sickBayAreas.filter(e => parseInt(e.SickBayAreaID) === parseInt(req.body.SickbayArea))[0].Name
+    const types = [
       { id: 1, name: 'internalIncident'},
       { id: 2, name: 'externalIncident'},
       { id: 3, name: 'accident'},

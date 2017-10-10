@@ -68,7 +68,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -78,13 +78,33 @@
       <div class="modal-body">
         <form action="/attendance" method="post">
           <div class="row">
-            <div class="col-sm-4">
-              <label for="">{{i18n 'patient'}} - {{i18n 'enrollment'}}</label>
-              <input type="number" name="patientMatricula" class="form-control">
+            <div class="col-sm-12">
+              <label class="checkbox-inline" style="padding-left: 0px;"><input style="margin-right:5px;" type="radio" name="patientType" value="Student" checked>{{{i18n 'student'}}}</label>
+              <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="patientType" value="Employer">{{{i18n 'employer'}}}</label>
+              <label class="checkbox-inline"><input style="margin-right:5px;" type="radio" name="patientType" value="Other">{{{i18n 'other'}}}</label>
             </div>
-            <div class="col-sm-8">
-              <label for="">{{i18n 'patient'}} - {{i18n 'name'}}</label>
-              <input type="text" name="patientName" class="form-control">
+          </div>
+          <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="col-sm-12">
+              <div class="groupPatient groupStudent">
+                <select class="form-control" name="studentPatient" id="Student" style="width:100%;">
+                  <option value="">{{{i18n 'student'}}}:</option>
+                  {{#each SchoolStudent}}
+                    <option value="{{MATRICULA}}">{{NOME}} - {{MATRICULA}} - {{TURMA}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="groupPatient groupEmployer" style="display:none;">
+                <select class="form-control" name="employeePatient" id="Employer" style="width:100%;">
+                  <option value="">{{{i18n 'employer'}}}:</option>
+                  {{#each Employer}}
+                    <option value="{{matricula}}" >{{toTitleCase nomeusuario}} - {{matricula}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="groupPatient groupOther" style="display:none;">
+                <input type="text" name="otherPatient" id="OtherName" class="form-control" placeholder="{{i18n 'name'}}:">
+              </div>
             </div>
           </div>
           <div class="row">
@@ -143,8 +163,21 @@
 
 {{#section 'script'}}
   <script type="text/javascript">
+    $("#Student").select2()
+    $("#Employer").select2()
 
-    function moreInfo(el){
+    $('input[name=patientType]').change(function(e) {
+      $('.groupPatient').css('display','none')
+      if('Student' === this.value) {
+        $('.groupStudent').css('display','block')
+      } else if('Employer' === this.value) {
+        $('.groupEmployer').css('display','block')
+      } else if('Other' === this.value) {
+        $('.groupOther').css('display','block')
+      }
+    })
+
+    function moreInfo(el) {
       let form = document.createElement("form")
       form.method = "POST"
       form.action = "/attendance/more-info"
@@ -155,6 +188,5 @@
       document.body.appendChild(form)
       form.submit()
     }
-
   </script>
 {{/section}}

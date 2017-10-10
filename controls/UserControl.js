@@ -33,7 +33,9 @@ function UserControl() {
   }
 
   this.getEmployer = function(req, res, next) {
-    User.findAll().then(Employer => {
+    User.findAll({
+      order: [['nomeusuario', 'ASC']]
+    }).then(Employer => {
       req.Employer = Employer
       next()
     }).catch(err => {

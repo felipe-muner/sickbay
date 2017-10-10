@@ -20,7 +20,7 @@
             <select class="form-control" name="Patient" id="Student" style="width:100%;">
               <option value="">{{{i18n 'student'}}}:</option>
               {{#each SchoolStudent}}
-                <option value="{{Matricula}}" data-matricula="{{Matricula}}" data-nome="{{Nome}}" data-alergia="{{Alergia}}" data-class="{{Turma}}" data-year-group="{{Serie}}" data-unit="{{Filial}}">{{Nome}} - {{Matricula}} - {{Turma}}</option>
+                <option value="{{MATRICULA}}" data-matricula="{{MATRICULA}}" data-nome="{{NOME}}" data-alergia="{{ALERGIA}}" data-class="{{TURMA}}" data-year-group="{{SERIE}}" data-unit="{{FILIAL}}">{{NOME}} - {{MATRICULA}} - {{TURMA}}</option>
               {{/each}}
             </select>
           </div>
@@ -28,7 +28,7 @@
             <select class="form-control" name="Patient" id="Employer" style="width:100%;">
               <option value="">{{{i18n 'employer'}}}:</option>
               {{#each Employer}}
-                <option value="{{matricula}}" data-matricula="{{matricula}}" data-nome="{{nomeusuario}}">{{nomeusuario}} - {{matricula}}</option>
+                <option value="{{matricula}}" data-matricula="{{matricula}}" data-nome="{{nomeusuario}}">{{toTitleCase nomeusuario}} - {{matricula}}</option>
               {{/each}}
             </select>
           </div>
