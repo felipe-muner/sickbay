@@ -2,5 +2,6 @@
   "notAttendanceType": "Escolher um Tipo de Atendimento",
   "notPatient": "Selecionar um Paciente",
   "emptyMedication": "Preencher todas as colunas do Medicamento",
-  "emptyReturnReason": "Escrever o motivo do retorno"
+  "emptyReturnReason": "Escrever o motivo do retorno",
+  "notSeeUnit": "Escolha pelo menos uma Unidade."
 }

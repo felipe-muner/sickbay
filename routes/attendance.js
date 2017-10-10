@@ -35,7 +35,6 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     Employer: req.Employer,
     attendances: req.attendances,
     attendanceType: req.AttendanceType,
-    allUnits: req.allUnits,
     sickBayAreas: req.sickBayAreas,
     flashMsg
   })
@@ -59,7 +58,6 @@ router.get('/new', ssc.get, uc.getEmployer, satc.get, sbrc.get, umc.get, functio
     SchoolStudent: req.SchoolStudent,
     Employer: req.Employer,
     attendanceType: req.AttendanceType,
-    allUnits: req.allUnits,
     sickBayAreas: req.sickBayAreas
   })
 }).post('/save-return', sbrac.new, function(req, res, next) {

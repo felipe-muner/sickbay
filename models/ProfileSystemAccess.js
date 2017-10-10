@@ -8,7 +8,17 @@ const ProfileSystemAccess = sequelize.define('perfis_acesso_sistemas', {
   },
   nomeperfilacesso: Sequelize.STRING,
   id_sistema: Sequelize.INTEGER,
-  all_units: {
+  AccessBotafogo: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  AccessUrca: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  AccessBarra: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: true

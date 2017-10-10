@@ -38,7 +38,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   sequelize.query('SELECT u.matricula, u.nomeusuario, u.AttemptLogin, u.senha, u.date_last_change_pass, ' +
-                     'u.primeiroacesso, s.idsistema, uca.id_perfil_sistema, pas.nomeperfilacesso, pas.all_units, ' +
+                     'u.primeiroacesso, s.idsistema, uca.id_perfil_sistema, pas.nomeperfilacesso, ' +
+                     'pas.AccessBotafogo, pas.AccessUrca, pas.AccessBarra, ' +
                      'unidades.idunidade, unidades.unidade, departamentos.nomedepartamento, ' +
                      '(SELECT valor FROM constantes WHERE nome = $constante) AS limitDaySamePassword ' +
                 'FROM sistemas s ' +
@@ -90,7 +91,9 @@ router.post('/login', function(req, res, next) {
           req.session.nameUser = user[0].nomeusuario
           req.session.unit = user[0].unidade
           req.session.unitID = user[0].idunidade
-          req.session.allUnits = user[0].all_units
+          req.session.accessBotafogo = user[0].AccessBotafogo
+          req.session.accessUrca = user[0].AccessUrca
+          req.session.accessBarra = user[0].AccessBarra
           req.session.profile = user[0].nomeperfilacesso
           req.session.department = user[0].nomedepartamento
           req.session.profileID = user[0].id_perfil_sistema

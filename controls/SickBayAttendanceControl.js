@@ -70,16 +70,22 @@ function SickBayAttendanceControl() {
       attendances
         .map((e) => {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
-          e.allUnits = req.session.allUnits
         })
 
-      if(!req.session.allUnits) {
+      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
         attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      } else {
+        attendancesArray = []
+        attendances.forEach(e => {
+          if(req.session.accessBotafogo && (e.SickBayArea.Unit_ID === 1)) attendancesArray.push(e)
+          if(req.session.accessUrca && (e.SickBayArea.Unit_ID === 2)) attendancesArray.push(e)
+          if(req.session.accessBarra && (e.SickBayArea.Unit_ID === 3)) attendancesArray.push(e)
+        })
+        attendances = attendancesArray
       }
 
       req.attendances = attendances
       req.session.attendancesForExport = attendances
-      req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
   }
@@ -138,12 +144,10 @@ function SickBayAttendanceControl() {
       attendances
         .map((e) => {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
-          e.allUnits = req.session.allUnits
         })
 
       attendances = attendances.filter(e => (moment(e.dataValues.Schedule).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Schedule).isSameOrBefore(req.body.finalDate,'day')))
 
-      if(!req.session.allUnits) attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       if(req.body.studentPatient !== '') attendances = attendances.filter(e => parseInt(e.dataValues.Patient_Matricula) === parseInt(req.body.studentPatient))
       if(req.body.employeePatient !== '') attendances = attendances.filter(e => parseInt(e.dataValues.Patient_Matricula) === parseInt(req.body.employeePatient))
       if(req.body.otherPatient !== '') attendances = attendances.filter(e => e.dataValues.PatientName.toLowerCase() === req.body.otherPatient.toLowerCase())
@@ -152,9 +156,20 @@ function SickBayAttendanceControl() {
       if(req.body.type !== '') attendances = attendances.filter(e => e.dataValues.SickBayAttendanceType_ID === parseInt(req.body.type))
       if(req.body.sickBay !== '') attendances = attendances.filter(e => e.dataValues.SickBayArea_ID === parseInt(req.body.sickBay))
 
+      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+        attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
+      } else {
+        attendancesArray = []
+        attendances.forEach(e => {
+          if(req.session.accessBotafogo && (e.SickBayArea.Unit_ID === 1)) attendancesArray.push(e)
+          if(req.session.accessUrca && (e.SickBayArea.Unit_ID === 2)) attendancesArray.push(e)
+          if(req.session.accessBarra && (e.SickBayArea.Unit_ID === 3)) attendancesArray.push(e)
+        })
+        attendances = attendancesArray
+      }
+
       req.attendances = attendances
       req.session.attendancesForExport = attendances
-      req.allUnits = req.session.allUnits
       next()
     }).catch(err => { next(err) })
   }

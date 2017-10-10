@@ -14,9 +14,12 @@
           </div>
           <div class="row" style="margin-top:15px">
             <div class="col-xs-12">
-              <span class="font-bold">Todas as Enfermarias:</span>
-              <input type="radio" name="allUnits" id="allUnits" value="1" style="margin-left:5px;" checked> {{{i18n 'yes'}}}
-              <input type="radio" name="allUnits" id="allUnits" value="0" style="margin-left:5px;"> {{{i18n 'no'}}}
+              <span class="font-bold">{{i18n 'seeUnits'}}:</span>
+              <div class="checkbox-group required">
+                <input type="checkbox" id="accessBotafogo" name="accessBotafogo" value="1" style="margin-left: 10px;"> Botafogo</span>
+                <input type="checkbox" id="accessUrca" name="accessUrca" value="1" style="margin-left: 10px;"> Urca</span>
+                <input type="checkbox" id="accessBarra" name="accessBarra" value="1" style="margin-left: 10px;"> Barra</span>
+              </div>
             </div>
           </div>
           <div class="row" style="margin-top:15px">

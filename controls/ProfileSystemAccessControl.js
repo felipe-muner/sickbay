@@ -19,7 +19,9 @@ function ProfileSystemAccessControl() {
     ProfileSystemAccess.create({
       nomeperfilacesso: req.body.nameProfile,
       id_sistema: process.env.SYSTEM_ID,
-      all_units: req.body.allUnits
+      AccessBotafogo: req.body.accessBotafogo ? req.body.accessBotafogo : 0,
+      AccessUrca: req.body.accessUrca ? req.body.accessUrca : 0,
+      AccessBarra: req.body.accessBarra ? req.body.accessBarra: 0
     }).then(function(profile) {
       ProfileSystemAccess.findOne({where: {nomeperfilacesso: req.body.nameProfile, id_sistema: process.env.SYSTEM_ID}}).then(function(p) {
         if(req.body.functionalityID) {
@@ -68,7 +70,9 @@ function ProfileSystemAccessControl() {
     .then(function() {
       ProfileSystemAccess.update({
         nomeperfilacesso: req.body.nameProfile,
-        all_units: req.body.allUnits
+        AccessBotafogo: req.body.accessBotafogo ? req.body.accessBotafogo : 0,
+        AccessUrca: req.body.accessUrca ? req.body.accessUrca : 0,
+        AccessBarra: req.body.accessBarra ? req.body.accessBarra: 0
       },
       {where: {idperfilsistema: req.body.idProfile}})
       .then(function(profile) {

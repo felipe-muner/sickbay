@@ -23,7 +23,9 @@
             <thead>
               <tr style="background-color:#337AB7; color:#FFF;">
                 <th>{{{i18n 'profile'}}}</th>
-                <th>Todas as Enfermarias</th>
+                <th>Botafogo</th>
+                <th>Urca</th>
+                <th>Barra</th>
                 <th class="text-center">{{{i18n 'edit'}}}</th>
               </tr>
             </thead>
@@ -31,7 +33,9 @@
               {{#each profiles}}
                 <tr>
                   <td>{{nomeperfilacesso}}</td>
-                  <td>{{{formatBoolean all_units}}}</td>
+                  <td>{{formatBoolean AccessBotafogo}}</td>
+                  <td>{{formatBoolean AccessUrca}}</td>
+                  <td>{{formatBoolean AccessBarra}}</td>
                   <td class="text-center">
                     <a href="#" onclick="editModal({{idperfilsistema}})"><i class="fa fa-pencil"></i></a>
                   </td>
@@ -66,9 +70,12 @@
           </div>
           <div class="row" style="margin-top:15px">
             <div class="col-xs-12">
-              <span class="font-bold">{{{i18n 'allUnits'}}}:</span>
-              <input type="radio" name="allUnits" id="allUnits" value="1" style="margin-left:5px;"> {{{i18n 'yes'}}}
-              <input type="radio" name="allUnits" id="allUnits" value="0" style="margin-left:5px;"> {{{i18n 'no'}}}
+              <span class="font-bold">{{i18n 'seeUnits'}}:</span>
+              <div class="checkbox-group required">
+                <input type="checkbox" id="accessBotafogo" name="accessBotafogo" value="1" style="margin-left: 10px;"> Botafogo</span>
+                <input type="checkbox" id="accessUrca" name="accessUrca" value="1" style="margin-left: 10px;"> Urca</span>
+                <input type="checkbox" id="accessBarra" name="accessBarra" value="1" style="margin-left: 10px;"> Barra</span>
+              </div>
             </div>
           </div>
           <div class="row" style="margin-top:15px">
