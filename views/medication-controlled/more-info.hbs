@@ -149,9 +149,9 @@
         <h4 class="modal-title" id="closeMedCtrlModalLabel">{{i18n 'close'}} {{i18n 'medicationControlled'}}</h4>
       </div>
       <div class="modal-body">
-        <form action="/medication-controlled/close" method="post">
+        <form id="formCloseMedCtrl" action="/medication-controlled/close" method="post">
           <input type="hidden" id="medCtrlID" name="medCtrlID" value="{{medCtrl.SickBayMedicationControlledID}}">
-          <textarea name="CloseReason" class="form-control" placeholder="{{i18n 'reason'}}" required></textarea>
+          <textarea id="CloseReason" name="CloseReason" class="form-control" placeholder="{{i18n 'reason'}}" required></textarea>
           <button type="submit" name="button" class="btn btn-success" style="margin-top: 10px;">{{i18n 'close'}}</button>
         </form>
       </div>
@@ -162,6 +162,8 @@
 {{#section 'script'}}
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
+    let listValidations = {}
+    loadListValidations()
 
     $('.marcarMedicacao').click(function(e) {
       let dataSend = {
@@ -188,6 +190,13 @@
         }
       })
 
+    })
+
+    $('#formCloseMedCtrl').submit(e => {
+      if($('#CloseReason').val().trim() === '') {
+        e.preventDefault()
+        swal({ title: "", text: listValidations.emptyCloseReason, type: "error" })
+      }
     })
   </script>
 {{/section}}
