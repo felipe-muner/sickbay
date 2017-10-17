@@ -70,7 +70,7 @@
       </thead>
       <tbody>
         {{#each medCtrl.SickBayMedicationSchedules}}
-        {{#if medCtrl.Active}}
+        {{#if ../medCtrl.Active}}
           <tr data-sick-bay-medication-schedule-id="{{SickBayMedicationScheduleID}}">
             <td class="text-center">{{MedicationDateFormated}}</td>
             {{#if Ch1}}
