@@ -72,7 +72,7 @@ function SickBayAttendanceControl() {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
         })
 
-      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+      if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       } else {
         attendancesArray = []
@@ -156,7 +156,7 @@ function SickBayAttendanceControl() {
       if(req.body.type !== '') attendances = attendances.filter(e => e.dataValues.SickBayAttendanceType_ID === parseInt(req.body.type))
       if(req.body.sickBay !== '') attendances = attendances.filter(e => e.dataValues.SickBayArea_ID === parseInt(req.body.sickBay))
 
-      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+      if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         attendances = attendances.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       } else {
         attendancesArray = []

@@ -39,6 +39,7 @@
           <th>{{i18n 'responsibleMedication'}}</th>
           <th>{{i18n 'medAndObs'}}</th>
           <th>{{i18n 'type'}}</th>
+          <th>{{i18n 'active'}}</th>
           <th>{{i18n 'detailing'}}</th>
         </tr>
       </thead>
@@ -56,6 +57,11 @@
             <td>{{toTitleCase Responsible}}</td>
             <td>{{Note}}</td>
             <td>{{Type}}</td>
+            {{#if Active}}
+              <td class="text-center" style="color: green;">{{formatBoolean Active}}</td>
+            {{else}}
+              <td class="text-center" style="color: red;">{{formatBoolean Active}}</td>
+            {{/if}}
             <td class="text-center">
               <i class="fa fa-medkit" aria-hidden="true" onclick="moreInfo(this);"></i>
             </td>
@@ -106,7 +112,6 @@
     </div>
   </div>
 </div>
-
 
 {{#section 'script'}}
   <script type="text/javascript">
