@@ -3,5 +3,6 @@
   "notPatient": "Selecionar um Paciente",
   "emptyMedication": "Preencher todas as colunas do Medicamento",
   "emptyReturnReason": "Escrever o motivo do retorno",
+  "emptyCloseReason": "Escrever o motivo do encerramento",
   "notSeeUnit": "Escolha pelo menos uma Unidade."
 }

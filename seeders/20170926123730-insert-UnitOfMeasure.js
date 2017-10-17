@@ -8,7 +8,8 @@ module.exports = {
       {Name: 'Gota', SickBay: true},
       {Name: 'Mililitro', SickBay: true},
       {Name: 'Copo', SickBay: true},
-      {Name: 'Cápsula', SickBay: true}
+      {Name: 'Cápsula', SickBay: true},
+      {Name: 'Aplicação', SickBay: true}
     ], {})
   },
 
