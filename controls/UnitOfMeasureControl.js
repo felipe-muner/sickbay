@@ -4,9 +4,8 @@ const UnitOfMeasure = require(process.env.PWD + '/models/UnitOfMeasure')
 function UnitOfMeasureControl() {
   this.get = function(req, res, next) {
     UnitOfMeasure.findAll({
-      where:{
-        SickBay:true
-      }
+      where: { SickBay: true },
+      order: [['Name', 'ASC']]
     }).then(unit => {
       req.UnitOfMeasure = unit
       next()
