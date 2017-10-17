@@ -2,10 +2,13 @@
   <div class="panel-heading">{{i18n 'generalInformation'}} - {{i18n 'medicationControlled'}} {{medCtrl.SickBayMedicationControlledID}}</div>
   <div class="panel-body">
     <div class="row" style="margin-bottom:10px;">
-      <div class="col-sm-1">
+      <div class="col-sm-12 toolbar">
         <a href="/medication-controlled">
-          <button style="margin:0px;" type="button" name="button" class="btn btn-primary">Voltar</button>
+          <button type="button" name="button" class="btn btn-primary">{{i18n 'back'}}</button>
         </a>
+        {{#if medCtrl.Active}}
+          <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#closeMedCtrlModal">{{i18n 'close'}}</button>
+        {{/if}}
       </div>
     </div>
     <table class="table">
@@ -37,6 +40,19 @@
         <td style="width:15%;">{{i18n 'allergy'}}</td>
         <td style="width:85%;" colspan="3">{{medCtrl.SchoolStudent.ALERGIA}}</td>
       </tr>
+      {{#if medCtrl.Active}}
+      {{else}}
+        <tr>
+          <td style="width:15%;">{{i18n 'closedAt'}}</td>
+          <td style="width:35%;">{{medCtrl.ClosedAtFormated}}</td>
+          <td style="width:15%;">{{i18n 'closedBy'}}</td>
+          <td style="width:35%;">{{medCtrl.ClosedNurse}}</td>
+        </tr>
+        <tr>
+          <td style="width:15%;">{{i18n 'closeReason'}}</td>
+          <td style="width:85%;" colspan="3">{{medCtrl.CloseReason}}</td>
+        </tr>
+      {{/if}}
       <tr>
         <td style="width:100%;" colspan="4"></td>
       </tr>
@@ -54,50 +70,100 @@
       </thead>
       <tbody>
         {{#each medCtrl.SickBayMedicationSchedules}}
-        <tr data-sick-bay-medication-schedule-id="{{SickBayMedicationScheduleID}}">
-          <td class="text-center">{{MedicationDateFormated}}</td>
-          {{#if Ch1}}
-            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
-          {{else}}
-            {{#if Hr1}}
-              <td data-hr="Hr1" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr1}}</td>
+        {{#if medCtrl.Active}}
+          <tr data-sick-bay-medication-schedule-id="{{SickBayMedicationScheduleID}}">
+            <td class="text-center">{{MedicationDateFormated}}</td>
+            {{#if Ch1}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
+            {{else}}
+              {{#if Hr1}}
+                <td data-hr="Hr1" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr1}}</td>
+              {{/if}}
             {{/if}}
-          {{/if}}
-          {{#if Ch2}}
-            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr2}} - {{Matricula2}}">{{Hr2}}</td>
-          {{else}}
-            {{#if Hr2}}
-              <td data-hr="Hr2" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr2}}</td>
+            {{#if Ch2}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr2}} - {{Matricula2}}">{{Hr2}}</td>
+            {{else}}
+              {{#if Hr2}}
+                <td data-hr="Hr2" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr2}}</td>
+              {{/if}}
             {{/if}}
-          {{/if}}
-          {{#if Ch3}}
-            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr3}} - {{Matricula3}}">{{Hr3}}</td>
-          {{else}}
-            {{#if Hr3}}
-              <td data-hr="Hr3" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr3}}</td>
+            {{#if Ch3}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr3}} - {{Matricula3}}">{{Hr3}}</td>
+            {{else}}
+              {{#if Hr3}}
+                <td data-hr="Hr3" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr3}}</td>
+              {{/if}}
             {{/if}}
-          {{/if}}
-          {{#if Ch4}}
-            <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr4}} - {{Matricula4}}">{{Hr4}}</td>
-          {{else}}
-            {{#if Hr4}}
-              <td data-hr="Hr4" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr4}}</td>
+            {{#if Ch4}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr4}} - {{Matricula4}}">{{Hr4}}</td>
+            {{else}}
+              {{#if Hr4}}
+                <td data-hr="Hr4" class="text-center marcarMedicacao" style="color:red;" data-toggle="tooltip" data-container="body" title="{{i18n 'messages.effectMedication'}}">{{Hr4}}</td>
+              {{/if}}
             {{/if}}
-          {{/if}}
-        </tr>
+          </tr>
+        {{else}}
+          <tr>
+            <td class="text-center">{{MedicationDateFormated}}</td>
+            {{#if Ch1}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{Matricula1}} - {{ChdHr1}}">{{Hr1}}</td>
+            {{else}}
+              {{#if Hr1}}
+                <td data-hr="Hr1" class="text-center" style="color:red;">{{Hr1}}</td>
+              {{/if}}
+            {{/if}}
+            {{#if Ch2}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr2}} - {{Matricula2}}">{{Hr2}}</td>
+            {{else}}
+              {{#if Hr2}}
+                <td data-hr="Hr2" class="text-center" style="color:red;">{{Hr2}}</td>
+              {{/if}}
+            {{/if}}
+            {{#if Ch3}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr3}} - {{Matricula3}}">{{Hr3}}</td>
+            {{else}}
+              {{#if Hr3}}
+                <td data-hr="Hr3" class="text-center" style="color:red;">{{Hr3}}</td>
+              {{/if}}
+            {{/if}}
+            {{#if Ch4}}
+              <td class="text-center" style="color:blue;" data-toggle="tooltip" data-container="body" title="{{ChdHr4}} - {{Matricula4}}">{{Hr4}}</td>
+            {{else}}
+              {{#if Hr4}}
+                <td data-hr="Hr4" class="text-center" style="color:red;">{{Hr4}}</td>
+              {{/if}}
+            {{/if}}
+          </tr>
+        {{/if}}
         {{/each}}
       </tbody>
     </table>
   </div>
 </div>
 
+<div class="modal fade" id="closeMedCtrlModal" role="dialog" aria-labelledby="closeMedCtrlModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="closeMedCtrlModalLabel">{{i18n 'close'}} {{i18n 'medicationControlled'}}</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/medication-controlled/close" method="post">
+          <input type="hidden" id="medCtrlID" name="medCtrlID" value="{{medCtrl.SickBayMedicationControlledID}}">
+          <textarea name="CloseReason" class="form-control" placeholder="{{i18n 'reason'}}" required></textarea>
+          <button type="submit" name="button" class="btn btn-success" style="margin-top: 10px;">{{i18n 'close'}}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {{#section 'script'}}
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
 
-    $('.marcarMedicacao').click(function(e){
-      debugger
+    $('.marcarMedicacao').click(function(e) {
       let dataSend = {
         SickBayMedicationControlledID: $(this).closest('table').data('medication-controlled-id'),
         SickBayMedicationScheduleID: $(this).closest('tr').data('sick-bay-medication-schedule-id'),

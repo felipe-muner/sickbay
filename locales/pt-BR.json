@@ -28,6 +28,7 @@
 		"sucessCreate": "criado(a) com sucesso!",
 		"sucessAlter": "alterado(a) com sucesso!",
 		"sucessDelete": "deletado(a) com sucesso!",
+		"sucessClose": "encerrado(a) com sucesso!",
 		"notAlter": "não pode ser alterado(a)!",
 		"unauthorized": "Seu perfil não tem permissão para esta funcionalidade.",
 		"sucessAllocate": "alocada com sucesso!",
@@ -101,5 +102,10 @@
 	"allergy": "Alergia",
 	"date": "Data",
 	"all": "Todas",
-	"generateReport": "Gerar Relatório"
+	"generateReport": "Gerar Relatório",
+	"close": "Encerrar",
+	"active": "Ativo",
+	"closeReason": "Motivo do Encerramento",
+	"closedAt": "Encerrado em",
+	"closedBy": "Encerrado por"
 }

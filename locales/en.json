@@ -28,6 +28,7 @@
 		"sucessCreate": "create successfully!",
 		"sucessAlter": "changed successfully!",
 		"sucessDelete": "delete successfully!",
+		"sucessClose": "closed successfully!",
 		"notAlter": "can not be changed!",
 		"unauthorized": "Your profile does not have permission for this functionality.",
 		"sucessAllocate": "successfully allocated!",
@@ -101,5 +102,10 @@
 	"allergy": "Allergy",
 	"date": "Date",
 	"all": "All",
-	"generateReport": "Generate Report"
+	"generateReport": "Generate Report",
+	"close": "Close",
+	"active": "Active",
+	"closeReason": "Close Reason",
+	"closedAt": "Closed at",
+	"closedBy": "Closed by"
 }

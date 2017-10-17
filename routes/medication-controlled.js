@@ -48,6 +48,13 @@ router.get('/new', ssc.get, function(req, res, next) {
   })
 }).post('/update-medication', sbmsc.update, function(req, res, next) {
   res.json(req.body)
+}).post('/close', sbmcc.close, function(req, res, next) {
+  req.session.flashMsg = {
+    strongMsg: __('medicationControlled'),
+    txtMsg: __('messages.sucessClose'),
+    styleMsg: 'alert-success'
+  }
+  res.redirect('/medication-controlled')
 }).get('/export-pdf', ssc.get, sbmcc.exportPDF)
 
 module.exports = router

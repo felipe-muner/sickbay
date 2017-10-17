@@ -32,6 +32,16 @@ const SickBayMedicationControlled = sequelize.define('SickBayMedicationControlle
       model: 'SickBayArea',
       key: 'SickBayAreaID'
     }
+  },
+  Active: Sequelize.BOOLEAN,
+  CloseReason: Sequelize.TEXT,
+  ClosedAt: Sequelize.DATE,
+  ClosedNurse: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'usuarios',
+      key: 'matricula'
+    }
   }
 }, {
   timestamps: false,

@@ -50,7 +50,8 @@ function SickBayMedicationControlledControl() {
         model: SickBayMedicationSchedule
       }, {
         model: SickBayArea
-      }]
+      }],
+      order: [['Active', 'DESC'], ['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -59,7 +60,7 @@ function SickBayMedicationControlledControl() {
           e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
 
-      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+      if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       } else {
         medCtrlArray = []
@@ -85,6 +86,8 @@ function SickBayMedicationControlledControl() {
       },
       where: {SickBayMedicationControlledID: req.body.MedicationControlledID}
     }).then( medCtrl => {
+
+      medCtrl.ClosedAtFormated = moment(medCtrl.ClosedAt).format('DD/MM/YYYY HH:mm:ss')
 
       medCtrl.SchoolStudent = SchoolStudent.filter(e => parseInt(e.MATRICULA) === parseInt(medCtrl.Student_Matricula))[0]
 
@@ -121,7 +124,7 @@ function SickBayMedicationControlledControl() {
 
       if(req.body.student !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.student))
 
-      if(req.session.profileID === process.env.NURSE_PROFILE_ID) {
+      if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
       } else {
         medCtrlArray = []
@@ -156,6 +159,7 @@ function SickBayMedicationControlledControl() {
           let Hr2 = e.Hr2 ? e.Hr2 : ''
           let Hr3 = e.Hr3 ? e.Hr3 : ''
           let Hr4 = e.Hr4 ? e.Hr4 : ''
+          let Active = e.Active ? { label: 'Yes', style: 'color: green;' } : { label: 'No', style: 'color: red;' }
 
           tbody = i%2 ? tbody + '<tr>' : tbody + '<tr style="background-color:#ddd;">'
           tbody = tbody +
@@ -169,7 +173,8 @@ function SickBayMedicationControlledControl() {
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Hr4+'</td>' +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+Util.toTitleCase(e.Responsible)+'</td>' +
             '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Note+'</td>' +
-            '<td style="border:1px solid black;border-top:0px;">'+e.Type+'</td>' +
+            '<td style="border:1px solid black;border-right:0px;border-top:0px;">'+e.Type+'</td>' +
+            '<td style="'+Active.style+'text-align: center;border:1px solid black;border-top:0px;">'+Active.label+'</td>' +
           '</tr>'
         })
 
@@ -191,6 +196,19 @@ function SickBayMedicationControlledControl() {
         })
       }
     })
+  }
+
+  this.close = function(req, res, next) {
+    SickBayMedicationControlled.update({
+      Active: false,
+      CloseReason: req.body.CloseReason,
+      ClosedAt: moment().format(),
+      ClosedNurse: req.session.enrollment
+    }, {
+      where: { SickBayMedicationControlledID : req.body.medCtrlID }
+    }).then(() => {
+      next()
+    }).catch(err => { next(err) })
   }
 }
 
