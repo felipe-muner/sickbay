@@ -107,7 +107,8 @@ function SickBayMedicationControlledControl() {
         model: SickBayMedicationSchedule
       }, {
         model: SickBayArea
-      }]
+      }],
+      order: [['Active', 'DESC'], ['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -116,11 +117,28 @@ function SickBayMedicationControlledControl() {
           e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
 
-      medCtrl = medCtrl.filter(e => {
-        let rangeStart = (moment(e.dataValues.Start).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Start).isSameOrBefore(req.body.finalDate,'day'));
-        let rangeEnd = (moment(e.dataValues.End).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.End).isSameOrBefore(req.body.finalDate,'day'));
-        return (rangeStart || rangeEnd)
-      })
+      if(req.body.initialDate !== '') {
+        medCtrl = medCtrl.filter(e => {
+          let rangeStart = moment(e.dataValues.Start).isSameOrAfter(req.body.initialDate,'day');
+          let rangeEnd = moment(e.dataValues.End).isSameOrAfter(req.body.initialDate,'day');
+          return (rangeStart || rangeEnd)
+        })
+      }
+
+      if(req.body.finalDate !== '') {
+        medCtrl = medCtrl.filter(e => {
+          let rangeStart = moment(e.dataValues.Start).isSameOrBefore(req.body.finalDate,'day');
+          let rangeEnd = moment(e.dataValues.End).isSameOrBefore(req.body.finalDate,'day');
+          return (rangeStart || rangeEnd)
+        })
+      }
+
+      if(req.body.active) {
+        medCtrl = medCtrl.filter(e => {
+          let active = parseInt(req.body.active) ? true : false;
+          return e.dataValues.Active === active
+        })
+      }
 
       if(req.body.student !== '') medCtrl = medCtrl.filter(e => parseInt(e.SchoolStudent.MATRICULA) === parseInt(req.body.student))
 
