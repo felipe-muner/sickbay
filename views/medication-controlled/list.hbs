@@ -81,7 +81,18 @@
       </div>
       <div class="modal-body">
         <form action="/medication-controlled" method="post">
-          <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+          <div class="row">
+            <div class="col-sm-12">
+              <span class="font-bold">{{i18n 'active'}}:</span>
+              <label class="checkbox-inline">
+                <input type="radio" name="active" value="1"> {{{i18n 'yes'}}}
+              </label>
+              <label class="checkbox-inline">
+                <input type="radio" name="active" value="0"> {{{i18n 'no'}}}
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
             <div class="col-sm-12">
               <label for="">{{i18n 'student'}}</label>
               <select class="form-control" name="student" id="Student" style="width:100%;">
@@ -92,14 +103,14 @@
               </select>
             </div>
           </div>
-          <div class="row" style="margin-top:5px;">
+          <div class="row" style="margin-top: 10px;">
             <div class="col-sm-6">
               <label for="">{{i18n 'initialDate'}}</label>
-              <input type="date" name="initialDate" class="form-control" required>
+              <input type="date" name="initialDate" class="form-control">
             </div>
             <div class="col-sm-6">
               <label for="">{{i18n 'finalDate'}}</label>
-              <input type="date" name="finalDate" class="form-control" required>
+              <input type="date" name="finalDate" class="form-control">
             </div>
           </div>
           <div class="row text-right" style="margin-top:10px;">

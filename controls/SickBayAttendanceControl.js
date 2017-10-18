@@ -146,8 +146,8 @@ function SickBayAttendanceControl() {
           e.ScheduleFormated = moment(e.dataValues.Schedule).format('DD/MM/YYYY HH:mm')
         })
 
-      attendances = attendances.filter(e => (moment(e.dataValues.Schedule).isSameOrAfter(req.body.initialDate,'day') && moment(e.dataValues.Schedule).isSameOrBefore(req.body.finalDate,'day')))
-
+      if(req.body.initialDate !== '') attendances = attendances.filter(e => moment(e.dataValues.Schedule).isSameOrAfter(req.body.initialDate,'day'))
+      if(req.body.finalDate !== '') attendances = attendances.filter(e => moment(e.dataValues.Schedule).isSameOrBefore(req.body.finalDate,'day'))
       if(req.body.studentPatient !== '') attendances = attendances.filter(e => parseInt(e.dataValues.Patient_Matricula) === parseInt(req.body.studentPatient))
       if(req.body.employeePatient !== '') attendances = attendances.filter(e => parseInt(e.dataValues.Patient_Matricula) === parseInt(req.body.employeePatient))
       if(req.body.otherPatient !== '') attendances = attendances.filter(e => e.dataValues.PatientName.toLowerCase() === req.body.otherPatient.toLowerCase())
