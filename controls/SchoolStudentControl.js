@@ -8,32 +8,9 @@ const dbConfig = {
   connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING
 }
 
-const query = "SELECT es.aluno.matricula, " +
-                  "es.aluno.primnomealuno||' '||COALESCE(es.aluno.segnomealuno, '')||' '|| es.aluno.ultnomealuno AS nome, " +
-                  "es.aluno.alergia, " +
-                  "COALESCE(es.turmaano.descturma, es.turma.descturma) AS turma, " +
-                  "es.serie.descserie AS serie, " +
-                  "es.filial.descfilial AS filial, " +
-                  "es.filial.codfilial " +
-              "FROM es.aluno " +
-                  "INNER JOIN es.alunoano ON (es.alunoano.matricula = es.aluno.matricula AND es.alunoano.anoletivo = '2017 ') " +
-                  "INNER JOIN es.turmaano ON (es.turmaano.codturma = es.alunoano.codturma AND es.turmaano.anoletivo = es.alunoano.anoletivo) " +
-                  "INNER JOIN es.turma ON (es.turmaano.codturma = es.turma.codturma) " +
-                  "INNER JOIN es.serie ON (es.serie.codserie = es.turma.codserie) " +
-                  "INNER JOIN es.filial ON (es.filial.codfilial = es.turma.codfilialturma) " +
-              "WHERE (" +
-                  "es.aluno.statusaluno = '0' " +
-                  "OR EXISTS (" +
-                      "SELECT 1 " +
-                      "FROM es.alunostatus " +
-                      "WHERE es.alunostatus.matricula  = es.aluno.matricula " +
-                          "AND es.alunostatus.datastatus > CURRENT_DATE " +
-                          "AND es.alunostatus.statusaluno = '3'" +
-                  ")" +
-              ") " +
-              "ORDER BY es.aluno.primnomealuno||' '||COALESCE(es.aluno.segnomealuno, '')||' '|| es.aluno.ultnomealuno"
+const setTimestampFormat = "begin execute immediate q'[alter session set nls_timestamp_format='YYYY-MM-DD HH24.MI.SSXFF']'; end;"
 
-const newQuery = "SELECT es.aluno.Matricula AS MATRICULA, " +
+const query = "SELECT es.aluno.Matricula AS MATRICULA, " +
                      "es.aluno.primnomealuno||' '||COALESCE(es.aluno.segnomealuno, '')||' '|| es.aluno.ultnomealuno AS NOME, " +
                      "es.aluno.alergia AS ALERGIA, " +
                      "COALESCE(es.turmaano.descturma, es.turma.descturma) AS TURMA, " +
@@ -78,16 +55,23 @@ function SchoolStudentControl() {
         next(err)
         return
       }
-      connection.execute(query, function(err, result) {
+      connection.execute(setTimestampFormat, function(err) {
         if(err) {
           next(err)
           doRelease(connection)
           return
         }
-        console.log('Executing (oracle): ' + query)
-        req.SchoolStudent = result.rows
-        doRelease(connection)
-        next()
+        connection.execute(query, function(err, result) {
+          if(err) {
+            next(err)
+            doRelease(connection)
+            return
+          }
+          console.log('Executing (oracle): ' + query)
+          req.SchoolStudent = result.rows
+          doRelease(connection)
+          next()
+        })
       })
     })
   }
