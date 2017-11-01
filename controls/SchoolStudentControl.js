@@ -1,3 +1,4 @@
+const moment = require('moment')
 const oracledb = require('oracledb')
 oracledb.maxRows = 5000
 oracledb.outFormat = oracledb.OBJECT
@@ -7,6 +8,8 @@ const dbConfig = {
   password: process.env.NODE_ORACLEDB_PASSWORD,
   connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING
 }
+
+const ano = moment().format('YYYY')
 
 const setTimestampFormat = "begin execute immediate q'[alter session set nls_timestamp_format='YYYY-MM-DD HH24.MI.SSXFF']'; end;"
 
@@ -18,7 +21,7 @@ const query = "SELECT es.aluno.Matricula AS MATRICULA, " +
                      "es.filial.Descfilial AS FILIAL, " +
                      "es.filial.codfilial AS CODFILIAL " +
                 "FROM es.aluno " +
-                  "INNER JOIN es.alunoano ON (es.alunoano.matricula = es.aluno.matricula AND es.alunoano.anoletivo = '2017 ') " +
+                  "INNER JOIN es.alunoano ON (es.alunoano.matricula = es.aluno.matricula AND es.alunoano.anoletivo = '" + ano + " ') " +
                   "INNER JOIN es.turma ON (es.alunoano.codturma = es.turma.codturma) " +
                   "LEFT JOIN es.turmaano ON (es.turmaano.codturma = es.turma.codturma AND es.turmaano.anoletivo = es.alunoano.anoletivo) " +
                   "INNER JOIN es.serie ON (es.serie.codserie = es.turma.codserie) " +
