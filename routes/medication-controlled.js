@@ -23,6 +23,8 @@ router.get('/new', ssc.get, function(req, res, next) {
     sess: req.session,
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl,
+    medCtrlActive: req.medCtrlActive,
+    medCtrlNotActive: req.medCtrlNotActive,
     SchoolStudent: req.SchoolStudent,
     flashMsg
   })
@@ -44,6 +46,8 @@ router.get('/new', ssc.get, function(req, res, next) {
     sess: req.session,
     redirectUrl: req.originalUrl,
     medCtrl: req.medCtrl,
+    medCtrlActive: req.medCtrlActive,
+    medCtrlNotActive: req.medCtrlNotActive,
     SchoolStudent: req.SchoolStudent
   })
 }).post('/update-medication', sbmsc.update, function(req, res, next) {
