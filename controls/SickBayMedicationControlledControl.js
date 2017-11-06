@@ -51,7 +51,7 @@ function SickBayMedicationControlledControl() {
       }, {
         model: SickBayArea
       }],
-      order: [['Active', 'DESC'], ['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
+      order: [['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -59,6 +59,18 @@ function SickBayMedicationControlledControl() {
           e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
           e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
+
+      medCtrl.sort((a, b) => {
+        let nameA = a.SchoolStudent.NOME.toUpperCase()
+        let nameB = b.SchoolStudent.NOME.toUpperCase()
+
+        if (nameA < nameB) return -1
+        if (nameA > nameB) return 1
+
+        return 0
+      })
+
+      medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
 
       if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
@@ -108,7 +120,7 @@ function SickBayMedicationControlledControl() {
       }, {
         model: SickBayArea
       }],
-      order: [['Active', 'DESC'], ['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
+      order: [['Hr1', 'ASC'], ['Hr2', 'ASC'], ['Hr3', 'ASC'], ['Hr4', 'ASC']]
     }).then( medCtrl => {
       medCtrl
         .map((e) => {
@@ -116,6 +128,18 @@ function SickBayMedicationControlledControl() {
           e.EndFormated = moment(e.dataValues.End).format('DD/MM/YYYY')
           e.SchoolStudent = SchoolStudent.filter(obj => parseInt(obj.MATRICULA) === parseInt(e.dataValues.Student_Matricula))[0]
         })
+
+      medCtrl.sort((a, b) => {
+        let nameA = a.SchoolStudent.NOME.toUpperCase()
+        let nameB = b.SchoolStudent.NOME.toUpperCase()
+
+        if (nameA < nameB) return -1
+        if (nameA > nameB) return 1
+
+        return 0
+      })
+
+      medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
 
       if(req.body.initialDate !== '') {
         medCtrl = medCtrl.filter(e => {

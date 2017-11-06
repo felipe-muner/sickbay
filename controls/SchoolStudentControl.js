@@ -40,7 +40,7 @@ const query = "SELECT es.aluno.Matricula AS MATRICULA, " +
                                         "es.alunostatus.DATASTATUS = x.DATASTATUS AND " +
                                         "CAST( es.alunostatus.DATALANCSTATUS||' '||es.alunostatus.HORALANCSTATUS AS TIMESTAMP) = x.DATA_HoraLANCSTATUS)  " +
                                     "WHERE es.alunostatus.matricula = es.aluno.matricula), '0') IN ('0', '4')) " +
-                "ORDER BY es.filial.Descfilial, es.aluno.Matricula"
+                "ORDER BY es.aluno.primnomealuno, es.aluno.segnomealuno, es.aluno.ultnomealuno"
 
 function doRelease(connection) {
   connection.close(function(err) {
