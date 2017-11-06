@@ -44,7 +44,30 @@
         </tr>
       </thead>
       <tbody>
-        {{#each medCtrl}}
+        {{#each medCtrlActive}}
+          <tr data-medication-controlled-id="{{SickBayMedicationControlledID}}">
+            <td class="text-center">{{SickBayMedicationControlledID}}</td>
+            <td>{{SchoolStudent.MATRICULA}} - {{SchoolStudent.NOME}}</td>
+            <td>{{StartFormated}}</td>
+            <td>{{EndFormated}}</td>
+            <td>{{Hr1}}</td>
+            <td>{{Hr2}}</td>
+            <td>{{Hr3}}</td>
+            <td>{{Hr4}}</td>
+            <td>{{toTitleCase Responsible}}</td>
+            <td>{{Note}}</td>
+            <td>{{Type}}</td>
+            {{#if Active}}
+              <td class="text-center" style="color: green;">{{formatBoolean Active}}</td>
+            {{else}}
+              <td class="text-center" style="color: red;">{{formatBoolean Active}}</td>
+            {{/if}}
+            <td class="text-center">
+              <i class="fa fa-medkit" aria-hidden="true" onclick="moreInfo(this);"></i>
+            </td>
+          </tr>
+        {{/each}}
+        {{#each medCtrlNotActive}}
           <tr data-medication-controlled-id="{{SickBayMedicationControlledID}}">
             <td class="text-center">{{SickBayMedicationControlledID}}</td>
             <td>{{SchoolStudent.MATRICULA}} - {{SchoolStudent.NOME}}</td>

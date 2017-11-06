@@ -70,7 +70,7 @@ function SickBayMedicationControlledControl() {
         return 0
       })
 
-      medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
+      // medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
 
       if(req.session.profileID === parseInt(process.env.NURSE_PROFILE_ID)) {
         medCtrl = medCtrl.filter(e => parseInt(e.dataValues.SickBayArea_ID) === req.session.sickBayAreaID)
@@ -84,7 +84,12 @@ function SickBayMedicationControlledControl() {
         medCtrl = medCtrlArray
       }
 
+      let medCtrlActive = medCtrl.filter(obj => obj.Active === true)
+      let medCtrlNotActive = medCtrl.filter(obj => obj.Active === false)
+
       req.medCtrl = medCtrl
+      req.medCtrlActive = medCtrlActive
+      req.medCtrlNotActive = medCtrlNotActive
       req.session.medCtrlForExport = medCtrl
       next()
     }).catch(err => {next(err)})
@@ -139,7 +144,7 @@ function SickBayMedicationControlledControl() {
         return 0
       })
 
-      medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
+      // medCtrl.sort((a, b) => (a.Active === b.Active) ? 0 : a.Active ? -1 : 1)
 
       if(req.body.initialDate !== '') {
         medCtrl = medCtrl.filter(e => {
@@ -178,7 +183,12 @@ function SickBayMedicationControlledControl() {
         medCtrl = medCtrlArray
       }
 
+      let medCtrlActive = medCtrl.filter(obj => obj.Active === true)
+      let medCtrlNotActive = medCtrl.filter(obj => obj.Active === false)
+
       req.medCtrl = medCtrl
+      req.medCtrlActive = medCtrlActive
+      req.medCtrlNotActive = medCtrlNotActive
       req.session.medCtrlForExport = medCtrl
       next()
     }).catch(err => {next(err)})
